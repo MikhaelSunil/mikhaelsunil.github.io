@@ -18,10 +18,14 @@ window.SITE = {
   /* ---- Hero section (the top of the page) -------------------------- */
   name: "Mikhael Sunil",
   kicker: "HARDWARE MANUAL // VOL. 01",
+  /* The hero deliberately has NO job-title line under your name.
+     This tagline is still used by the CV pop-up and by search engines.
+     Set showTaglineInHero to true if you ever want it back on the page. */
   tagline: "Robotics Developer — Aerial Swarms · Model-Based & Learned Control · Rehabilitation Robotics",
+  showTaglineInHero: false,
 
   // HTML is allowed here. <strong> makes text bold.
-  intro: "Robotics developer at <strong class=\"font-bold text-ink\">Robotics Research Center</strong> and final-year B.Tech ECE student at <strong class=\"font-bold text-ink underline decoration-2 decoration-signal underline-offset-4\">Rajagiri School of Engineering &amp; Technology</strong>. I work on decentralized control for aerial swarms, model-based and learning-based control for ground and aerial manipulators, and wearable exoskeletons for rehabilitation. The common thread is hardware — most of what I build is judged by whether it survives contact with a real robot, not a simulator.",
+  intro: "I love building autonomous machines and seeing ideas actually come alive on real hardware. Most of my time goes into tinkering across the full stack—whether it’s experimenting with <strong class=\"font-bold text-ink\">model-based learning for ground and aerial manipulators</strong>, getting <strong class=\"font-bold text-ink\">aerial drone swarms</strong> to coordinate on their own, or engineering <strong class=\"font-bold text-ink\">wearable exoskeletons</strong> for rehabilitation. Those are just a few of the systems I enjoy taking from rough algorithms all the way into the real world.",
 
   /* ---- Your portrait ------------------------------------------------
      Put a photo in assets/img/ then write its path here, e.g.

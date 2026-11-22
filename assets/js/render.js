@@ -131,7 +131,28 @@ window.MSRender = (function () {
       top.appendChild(el('div', subCls, card.subtitle));
     }
     if (card.body) {
-      top.appendChild(el('p', (columns >= 4 ? 'text-xs' : 'text-sm') + ' text-ink/85 leading-relaxed mb-4', card.body));
+      var bodyCls = card.bodyClass || ((columns >= 4 ? 'text-xs' : 'text-sm') + ' text-ink/85 leading-relaxed mb-4');
+      if (Object.prototype.toString.call(card.body) === '[object Array]') {
+        /* several paragraphs */
+        var para = el('div', 'space-y-3 ' + bodyCls);
+        card.body.forEach(function (t) { para.appendChild(el('p', '', t)); });
+        top.appendChild(para);
+      } else {
+        top.appendChild(el('p', bodyCls, card.body));
+      }
+    }
+
+    /* optional numbered steps (used by the "how I work" card) */
+    if (card.steps && card.steps.length) {
+      var sul = el('ul', 'space-y-3 text-sm text-ink/90');
+      card.steps.forEach(function (st, i) {
+        var li = el('li', 'flex items-start gap-2.5');
+        var num = st.n || ('0' + (i + 1) + '.');
+        li.appendChild(el('span', 'font-mono text-xs font-bold mt-0.5 ' + textColor(st.color, 'ink'), num));
+        li.appendChild(el('span', '', (st.label ? '<strong class="text-ink">' + st.label + '</strong> ' : '') + (st.text || '')));
+        sul.appendChild(li);
+      });
+      top.appendChild(sul);
     }
 
     /* optional simple list (used by the certifications card) */
@@ -178,6 +199,18 @@ window.MSRender = (function () {
   }
 
   function blockCards(block) {
+    /* widths: [7, 5] lays the cards out on a 12-column grid instead of
+       equal columns. Otherwise columns: 1-4 gives an even grid. */
+    if (block.widths && block.widths.length) {
+      var wgrid = el('div', 'grid grid-cols-1 lg:grid-cols-12 gap-6');
+      (block.items || []).forEach(function (c, i) {
+        var card = renderCard(c, 2);
+        var w = block.widths[i] || Math.floor(12 / block.items.length);
+        card.className += ' lg:col-span-' + w;
+        wgrid.appendChild(card);
+      });
+      return wgrid;
+    }
     var columns = block.columns || 2;
     var grid = el('div', GRID[columns] || GRID[2]);
     (block.items || []).forEach(function (c) { grid.appendChild(renderCard(c, columns)); });
@@ -362,8 +395,9 @@ window.MSRender = (function () {
       case 'gallery':      return blockGallery(block);
       case 'contact':      return blockContact(block);
       case 'heading':
+        var sq = { signal: 'bg-signal', scope: 'bg-scope', ink: 'bg-ink', amber: 'bg-amberretro' }[block.color || 'amber'] || 'bg-amberretro';
         return el('div', 'font-mono text-xs font-bold uppercase tracking-widest text-ink flex items-center gap-2',
-          '<span class="w-2.5 h-2.5 bg-amberretro border border-ink inline-block"></span><span>' + (block.label || '') + '</span>');
+          '<span class="w-2.5 h-2.5 ' + sq + ' border border-ink inline-block"></span><span>' + (block.label || '') + '</span>');
       case 'html':
         return el('div', block.class || '', block.html || '');
       default:
@@ -389,7 +423,7 @@ window.MSRender = (function () {
     }
     var nameBlock = el('div', 'space-y-2');
     nameBlock.appendChild(el('h1', 'font-display font-bold text-5xl sm:text-6xl leading-[0.98] tracking-tight text-ink uppercase', S.name || ''));
-    if (S.tagline) {
+    if (S.tagline && S.showTaglineInHero !== false) {
       nameBlock.appendChild(el('p', 'font-mono text-sm sm:text-base font-bold text-signal uppercase tracking-wide pt-1', S.tagline));
     }
     left.appendChild(nameBlock);

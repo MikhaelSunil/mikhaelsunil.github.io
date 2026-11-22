@@ -36,50 +36,83 @@ window.SECTIONS = [
 
   /* ===================================================================
      SECTION 01 — ABOUT
+     Three parts: a personal note, how you work, and the four domains.
      =================================================================== */
   {
     id: "about",
     nav: "About",
     number: "01",
-    kicker: "CAPABILITY MATRIX",
+    kicker: "PROFILE & FOCUS",
     title: "About & What I Do",
-    meta: "4 CORE ENGINEERING SUBSYSTEMS",
+    meta: "BACKGROUND · APPROACH · 4 CORE DOMAINS",
     blocks: [
+
+      /* --- Part 1: who I am (wider) + how I work (narrower) --------- */
+      {
+        type: "cards",
+        widths: [7, 5],
+        items: [
+          {
+            badge: "01 // WHO I AM",
+            badgeColor: "ink",
+            kicker: "PERSONAL NOTE",
+            bodyClass: "text-sm sm:text-base text-ink/90 leading-relaxed",
+            body: [
+              "I got into robotics because I like building things that actually move, sense, and make decisions in the physical world. For me, simulation is only half the fun—the real challenge starts when noisy sensors, real motors, and unpredictable environments come into play.",
+              "I enjoy jumping between math, code, and hardware—whether that means deriving a control law, training a learning-based policy, designing a custom actuator in CAD, or debugging embedded firmware until a robot finally behaves the way it should."
+            ]
+          },
+          {
+            badge: "02 // HOW I WORK",
+            badgeColor: "amber",
+            kicker: "WORKFLOW",
+            steps: [
+              { n: "01.", color: "signal", label: "Algorithm &amp; Modeling:", text: "Formulate distributed control, estimation, and model-based learning frameworks." },
+              { n: "02.", color: "scope",  label: "Simulation &amp; Benchmarking:", text: "Validate dynamics and edge cases in ROS&nbsp;2, Gazebo, and MATLAB/Simulink." },
+              { n: "03.", color: "ink",    label: "Hardware Deployment:", text: "Build, wire, and test directly on drones, rovers, manipulators, and wearables." }
+            ]
+          }
+        ]
+      },
+
+      /* --- Part 2: the four domains --------------------------------- */
+      { type: "heading", color: "signal", label: "03 // WHAT I BUILD &amp; RESEARCH" },
+
       {
         type: "cards",
         columns: 2,
         items: [
           {
-            badge: "SPEC-01",
+            badge: "DOMAIN-01",
             badgeColor: "signal",
+            kicker: "MANIPULATION & LEARNING",
+            title: "Model-Based Learning & Manipulation",
+            body: "Researching, testing, and deploying model-based learning and adaptive control algorithms for ground and aerial manipulators—bridging physical dynamics with data-driven generalization.",
+            tags: ["Model-Based Learning", "Aerial & Ground Manipulators", "SAC Deep RL", "Sim-to-Real"]
+          },
+          {
+            badge: "DOMAIN-02",
+            badgeColor: "scope",
             kicker: "AERIAL SWARMS",
             title: "Multi-Agent Aerial Swarms",
-            body: "Experimental benchmarking and decentralized deployment of binary-measurement consensus, containment, and formation control algorithms on physical nano-drone swarms.",
-            tags: ["Crazyflie 2.1", "ROS 2", "Crazyswarm2", "Binary Consensus", "Formation Control"]
+            body: "Designing, benchmarking, and flying decentralized consensus, containment, and formation control algorithms on physical nano-drone swarms using minimal local feedback.",
+            tags: ["Crazyflie 2.1", "ROS 2", "Crazyswarm2", "Distributed Control"]
           },
           {
-            badge: "SPEC-02",
-            badgeColor: "scope",
-            kicker: "AUTONOMY & DRL",
-            title: "Autonomous Navigation & Deep RL",
-            body: "Resilient autonomy in GPS-denied and unstructured environments using probabilistic SLAM, Soft Actor-Critic (SAC) continuous control, and containerized sim-to-real pipelines.",
-            tags: ["ROS 2", "Probabilistic SLAM", "SAC Deep RL", "Gazebo / RViz", "Docker"]
-          },
-          {
-            badge: "SPEC-03",
+            badge: "DOMAIN-03",
             badgeColor: "amber",
-            kicker: "MECHATRONICS",
-            title: "Wearable & Mechatronic Systems",
-            body: "High-torque-density hybrid actuation combining 25:1 cycloidal gearboxes with cable-driven transmissions, closed-loop FOC motor control, and embedded real-time firmware.",
-            tags: ["Cycloidal Actuators", "STM32", "FOC Drivers", "Magnetic Encoders", "Fusion 360"]
+            kicker: "REHAB & MECHATRONICS",
+            title: "Wearable Exoskeletons & Actuators",
+            body: "Engineering portable rehabilitation exoskeletons combining custom 25:1 cycloidal gearboxes, cable-driven transmissions, closed-loop FOC motor control, and embedded firmware.",
+            tags: ["Cycloidal Drives", "STM32 & FOC", "Magnetic Encoders", "Fusion 360"]
           },
           {
-            badge: "SPEC-04",
+            badge: "DOMAIN-04",
             badgeColor: "ink",
-            kicker: "PERCEPTION & EMBEDDED",
-            title: "Embedded Sensor Fusion & Vision",
-            body: "Multi-sensor fusion across LiDAR, IMU, GPR, and custom CRC-checked serial networks alongside real-time UAV vision tracking and medical landmark segmentation AI.",
-            tags: ["LiDAR + IMU + GPR", "Teensy 4.0 / ESP32", "MATLAB / Simulink", "Vision AI"]
+            kicker: "AUTONOMY & EMBEDDED",
+            title: "SLAM, Sensor Fusion & Embedded Vision",
+            body: "Building GPS-denied autonomy stacks fusing LiDAR, IMU, GPR, and custom serial sensor networks alongside real-time UAV vision tracking and medical landmark AI.",
+            tags: ["Probabilistic SLAM", "LiDAR · IMU · GPR", "Teensy 4.0 / ESP32", "MATLAB / Simulink"]
           }
         ]
       }
