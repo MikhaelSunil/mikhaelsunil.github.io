@@ -11,17 +11,17 @@ window.SITE = {
   /* ---- Browser tab + search engines -------------------------------- */
   meta: {
     title: "Mikhael Sunil — Robotics & Autonomous Systems",
-    description: "Personal portfolio of Mikhael Sunil — Robotics & Autonomous Systems Engineer specializing in ROS 2, aerial drone swarms, Deep RL, and mechatronics.",
+    description: "Portfolio of Mikhael Sunil — robotics developer working on decentralized control for aerial swarms, model-based and learning-based control for ground and aerial manipulators, and rehabilitation exoskeletons.",
     url: "https://mikhaelsunil.github.io/"
   },
 
   /* ---- Hero section (the top of the page) -------------------------- */
   name: "Mikhael Sunil",
   kicker: "HARDWARE MANUAL // VOL. 01",
-  tagline: "Robotics & Autonomous Systems Engineer — ROS 2 · Aerial Swarms · Mechatronics",
+  tagline: "Robotics Developer — Aerial Swarms · Model-Based & Learned Control · Rehabilitation Robotics",
 
   // HTML is allowed here. <strong> makes text bold.
-  intro: "Robotics engineer at <strong class=\"font-bold text-ink\">Robotics Research Center</strong> and final-year B.Tech ECE student at <strong class=\"font-bold text-ink underline decoration-2 decoration-signal underline-offset-4\">Rajagiri School of Engineering &amp; Technology</strong>. I design and deploy end-to-end autonomy systems—from decentralized aerial drone swarms and deep reinforcement learning navigation to custom cycloidal-drive wearable exoskeletons.",
+  intro: "Robotics developer at <strong class=\"font-bold text-ink\">Robotics Research Center</strong> and final-year B.Tech ECE student at <strong class=\"font-bold text-ink underline decoration-2 decoration-signal underline-offset-4\">Rajagiri School of Engineering &amp; Technology</strong>. I work on decentralized control for aerial swarms, model-based and learning-based control for ground and aerial manipulators, and wearable exoskeletons for rehabilitation. The common thread is hardware — most of what I build is judged by whether it survives contact with a real robot, not a simulator.",
 
   /* ---- Your portrait ------------------------------------------------
      Put a photo in assets/img/ then write its path here, e.g.
