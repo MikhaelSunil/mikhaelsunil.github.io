@@ -141,6 +141,13 @@ body {
   background-color: rgb(var(--c-signal));
 }
 
+/* While the manipulator has hold of a tab it hangs a little higher, with a
+   deeper shadow, as though it has been lifted off the rank. */
+.nav-crate.is-carried {
+  transform: translateY(-7px);
+  box-shadow: 0 5px 0 rgb(var(--c-signal)), 4px 6px 0 rgb(var(--c-ink) / 0.55);
+}
+
 /* Hide scrollbar on mobile horizontal nav track */
 .no-scrollbar::-webkit-scrollbar { display: none; }
 .no-scrollbar {

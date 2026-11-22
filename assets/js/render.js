@@ -616,7 +616,7 @@ window.MSRender = (function () {
     }
 
     /* widen the scroll track so tabs stay readable on small screens */
-    var stage = mount('forklift-stage');
+    var stage = mount('nav-stage');
     if (stage) stage.style.minWidth = Math.max(600, items.length * 86) + 'px';
   }
 

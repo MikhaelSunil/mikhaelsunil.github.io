@@ -187,14 +187,17 @@ window.MSUI = (function () {
      2. ROBOTIC FORKLIFT NAVIGATION PHYSICS, LOCK-ON & SCROLL-SPY
      ===================================================================== */
   function initForklift() {
-    var stage = document.getElementById('forklift-stage');
-    var actor = document.getElementById('forklift-actor');
-    var flip = document.getElementById('forklift-flip');
-    var forks = document.getElementById('forklift-forks');
-    var beacon = document.getElementById('forklift-beacon');
-    var beaconGlow = document.getElementById('forklift-beacon-glow');
-    var wheelRear = document.getElementById('wheel-rear');
-    var wheelFront = document.getElementById('wheel-front');
+    var stage = document.getElementById('nav-stage');
+    var actor = document.getElementById('nav-drone');
+    var flip = document.getElementById('nav-drone-flip');
+    var shoulder = document.getElementById('nav-arm-shoulder');
+    var elbow = document.getElementById('nav-arm-elbow');
+    var jaws = document.getElementById('nav-drone-jaws');
+    var gimbal = document.getElementById('nav-gimbal');
+    var beacon = document.getElementById('nav-beacon');
+    var beaconGlow = document.getElementById('nav-beacon-glow');
+    var rotorL = document.getElementById('rotor-l');
+    var rotorR = document.getElementById('rotor-r');
     var crates = Array.prototype.slice.call(document.querySelectorAll('.nav-crate'));
     if (!stage || !actor || !crates.length) return;
 
@@ -202,8 +205,12 @@ window.MSUI = (function () {
     var hoveredNavKey = null;
     var isPointerInsideNav = false;
 
-    var curX = 0, targetX = 0, velX = 0, wheelDeg = 0, facing = 1;
-    var lockAnimTime = 0, beaconFlashTime = 0;
+    var curX = 0, targetX = 0, velX = 0, facing = 1;
+    var beaconFlashTime = 0;
+    var spin = 0;          /* rotor phase */
+    var armExt = 0;        /* 0 = stowed in flight, 1 = reaching down */
+    var carrying = null;   /* the tab currently held */
+    var bobT = 0;
 
     function getTabCenterX(key) {
       var el = null;
@@ -216,13 +223,20 @@ window.MSUI = (function () {
       return (elRect.left - stageRect.left) + (elRect.width / 2) - 31;
     }
 
+    function crateFor(key) {
+      for (var i = 0; i < crates.length; i++) {
+        if (crates[i].getAttribute('data-nav') === key) return crates[i];
+      }
+      return null;
+    }
+
     function setLockedTab(key, triggerClamp) {
       activeNavKey = key;
       crates.forEach(function (item) {
         item.classList.toggle('is-locked', item.getAttribute('data-nav') === key);
       });
       if (!isPointerInsideNav) targetX = getTabCenterX(activeNavKey);
-      if (triggerClamp) { lockAnimTime = 0.48; beaconFlashTime = 0.75; }
+      if (triggerClamp) { beaconFlashTime = 0.75; }
     }
 
     requestAnimationFrame(function () {
@@ -295,11 +309,13 @@ window.MSUI = (function () {
       }
     }, { passive: true });
 
-    /* Critically-damped spring physics loop */
+    /* Critically-damped spring for travel, plus hover, rotor spin and the
+       arm that picks a tab up on arrival and lets go when it leaves. */
     var lastTs = performance.now();
     function animate(now) {
       var dt = Math.min((now - lastTs) / 1000, 0.05);
       lastTs = now;
+      bobT += dt;
 
       var stiffness = 135, damping = 18.5;
       var force = (targetX - curX) * stiffness - velX * damping;
@@ -309,21 +325,48 @@ window.MSUI = (function () {
 
       if (Math.abs(velX) > 14) facing = velX > 0 ? 1 : -1;
 
-      var leanDeg = Math.max(-5, Math.min(5, velX * 0.014));
-      wheelDeg += dx * 9.5;
+      /* Arrived and holding station? Then reach down and grip. */
+      var settled = Math.abs(targetX - curX) < 3.5 && Math.abs(velX) < 28;
+      armExt += ((settled ? 1 : 0) - armExt) * Math.min(1, dt * 7);
 
-      actor.style.transform = 'translate3d(' + curX.toFixed(1) + 'px, 0, 0)';
-      if (flip) flip.setAttribute('transform', 'scale(' + facing + ', 1) rotate(' + (leanDeg * facing).toFixed(2) + ')');
-      if (wheelRear) wheelRear.setAttribute('transform', 'translate(-15, 7) rotate(' + (wheelDeg * facing).toFixed(1) + ')');
-      if (wheelFront) wheelFront.setAttribute('transform', 'translate(3, 7) rotate(' + (wheelDeg * facing).toFixed(1) + ')');
+      /* Pitch into the direction of travel; bob while hovering. */
+      var leanDeg = Math.max(-9, Math.min(9, velX * 0.02));
+      var bob = Math.sin(bobT * 5.2) * (0.9 + (1 - armExt) * 0.5);
 
-      if (lockAnimTime > 0) {
-        lockAnimTime = Math.max(0, lockAnimTime - dt);
-        var p = 1 - lockAnimTime / 0.48;
-        var forkY = Math.sin(p * Math.PI) * -5.5;
-        if (forks) forks.setAttribute('transform', 'translate(0, ' + forkY.toFixed(2) + ')');
-      } else if (forks) {
-        forks.setAttribute('transform', 'translate(0, 0)');
+      actor.style.transform = 'translate3d(' + curX.toFixed(1) + 'px,' + bob.toFixed(2) + 'px,0)';
+      if (flip) {
+        flip.setAttribute('transform', 'scale(' + facing + ', 1) rotate(' + (leanDeg * facing).toFixed(2) + ')');
+      }
+
+      /* Rotors: always turning, faster when it is moving. Seen edge-on, so
+         the disc width is what reads as rotation. */
+      spin += (14 + Math.min(Math.abs(velX), 900) * 0.055) * dt * 10;
+      if (rotorL) rotorL.setAttribute('rx', (Math.abs(Math.cos(spin)) * 9.6 + 0.9).toFixed(2));
+      if (rotorR) rotorR.setAttribute('rx', (Math.abs(Math.cos(spin + 1.1)) * 9.6 + 0.9).toFixed(2));
+
+      /* The manipulator is a real two-joint arm: both joints rotate, so it
+         folds up against the belly in flight and unfolds straight down to
+         grip. A little sway keeps it alive while stowed. */
+      var sway = (1 - armExt) * Math.sin(bobT * 3.1) * 3;
+      var a1 = (1 - armExt) * 95 + sway;
+      var a2 = (1 - armExt) * -165;
+      if (shoulder) shoulder.setAttribute('transform', 'rotate(' + a1.toFixed(2) + ' -4 3.4)');
+      if (elbow) elbow.setAttribute('transform', 'rotate(' + a2.toFixed(2) + ' -4 13.4)');
+      if (jaws) {
+        var js = (1 - 0.45 * armExt).toFixed(3);
+        jaws.setAttribute('transform', 'translate(-4,0) scale(' + js + ',1) translate(4,0)');
+      }
+
+      /* Camera gimbal holds level while the airframe pitches, as a real one
+         would. */
+      if (gimbal) gimbal.setAttribute('transform', 'rotate(' + (-leanDeg * facing).toFixed(2) + ' 12.5 5.6)');
+
+      /* Hand the tab over: lift the one being held, release the last one. */
+      var shouldCarry = armExt > 0.62 ? crateFor(activeNavKey) : null;
+      if (shouldCarry !== carrying) {
+        if (carrying) carrying.classList.remove('is-carried');
+        if (shouldCarry) shouldCarry.classList.add('is-carried');
+        carrying = shouldCarry;
       }
 
       if (beaconFlashTime > 0) {
