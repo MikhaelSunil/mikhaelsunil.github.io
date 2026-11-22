@@ -61,7 +61,7 @@ window.MSRender = (function () {
       left.appendChild(el('div', 'font-mono text-xs font-bold uppercase tracking-widest text-signal mb-1',
         (sec.number ? 'SECTION ' + sec.number + ' // ' : '') + (sec.kicker || '')));
     }
-    left.appendChild(el('h2', 'font-display font-bold text-3xl sm:text-4xl uppercase tracking-tight text-ink', sec.title || ''));
+    left.appendChild(el('h2', 'font-display font-bold text-3xl sm:text-4xl tracking-tight text-ink', sec.title || ''));
     wrap.appendChild(left);
     if (sec.meta) wrap.appendChild(el('div', 'font-mono text-xs text-muted uppercase', sec.meta));
     return wrap;
@@ -70,11 +70,11 @@ window.MSRender = (function () {
   /* ---------- block: cards ----------------------------------------- */
 
   function titleClassFor(card, columns) {
-    if (columns >= 4) return 'text-base uppercase leading-snug';
+    if (columns >= 4) return 'text-base leading-snug';
     if (columns === 3) return (card.span && card.span > 1) ? 'text-xl sm:text-2xl' : 'text-xl';
     if (columns === 2) {
       if (card.subtitle) return 'text-xl sm:text-2xl';
-      if (card.body) return 'text-xl uppercase';
+      if (card.body) return 'text-xl';
       return 'text-lg leading-snug';
     }
     return 'text-xl';
@@ -360,7 +360,7 @@ window.MSRender = (function () {
     var left = el('div', 'lg:col-span-5 flex flex-col justify-between space-y-6');
     var blurb = el('div', 'space-y-3');
     if (c.status)  blurb.appendChild(el('div', 'font-mono text-xs font-bold uppercase text-scope', c.status));
-    if (c.heading) blurb.appendChild(el('h3', 'font-display font-bold text-2xl text-ink uppercase', c.heading));
+    if (c.heading) blurb.appendChild(el('h3', 'font-display font-bold text-2xl text-ink', c.heading));
     if (c.blurb)   blurb.appendChild(el('p', 'text-sm text-ink/85 leading-relaxed', c.blurb));
     left.appendChild(blurb);
 
@@ -444,7 +444,7 @@ window.MSRender = (function () {
         '<span class="px-2.5 py-1 bg-ink text-cream font-bold uppercase tracking-wider">' + S.kicker + '</span>'));
     }
     var nameBlock = el('div', 'space-y-2');
-    nameBlock.appendChild(el('h1', 'font-display font-bold text-5xl sm:text-6xl leading-[0.98] tracking-tight text-ink uppercase', S.heroHeading || S.name || ''));
+    nameBlock.appendChild(el('h1', 'font-display font-bold text-5xl sm:text-6xl leading-[0.98] tracking-tight text-ink', S.heroHeading || S.name || ''));
     if (S.tagline && S.showTaglineInHero !== false) {
       nameBlock.appendChild(el('p', 'font-mono text-sm sm:text-base font-bold text-signal uppercase tracking-wide pt-1', S.tagline));
     }
@@ -614,7 +614,7 @@ window.MSRender = (function () {
     /* header */
     var head = el('div', 'border-b-2 border-ink pb-4 flex flex-col sm:flex-row sm:items-end justify-between gap-3');
     var hl = el('div');
-    hl.appendChild(el('h2', 'font-display font-bold text-3xl uppercase tracking-tight', S.name || ''));
+    hl.appendChild(el('h2', 'font-display font-bold text-3xl tracking-tight', S.name || ''));
     if (S.tagline) hl.appendChild(el('p', 'font-mono text-xs font-bold text-signal uppercase mt-1', S.tagline));
     head.appendChild(hl);
     if (cv.headerLines && cv.headerLines.length) {

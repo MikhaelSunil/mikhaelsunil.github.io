@@ -18,10 +18,10 @@
   <link rel="canonical" href="https://mikhaelsunil.github.io/" />
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23D94E28' stroke='%231C1B18' stroke-width='3'/%3E%3Ctext x='16' y='21' font-family='monospace' font-weight='bold' font-size='14' fill='%23FAF7F0' text-anchor='middle'%3EMS%3C/text%3E%3C/svg%3E" />
 
-  <!-- Google Fonts: Space Grotesk, IBM Plex Mono, DM Sans -->
+  <!-- Google Fonts: JetBrains Mono (used for everything) -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500&display=swap" rel="stylesheet" />
 
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -44,10 +44,11 @@
             kraft:      '#E5C890',
             scope:      '#2D6A4F'
           },
+          /* One typeface throughout — headings, body and labels alike. */
           fontFamily: {
-            display: ['"Space Grotesk"', 'system-ui', 'sans-serif'],
-            sans:    ['"DM Sans"', 'system-ui', 'sans-serif'],
-            mono:    ['"IBM Plex Mono"', 'ui-monospace', 'monospace']
+            display: ['"JetBrains Mono"', 'ui-monospace', 'monospace'],
+            sans:    ['"JetBrains Mono"', 'ui-monospace', 'monospace'],
+            mono:    ['"JetBrains Mono"', 'ui-monospace', 'monospace']
           },
           boxShadow: {
             hard:        '4px 4px 0px #1C1B18',
@@ -177,7 +178,7 @@
     <div class="max-w-6xl mx-auto px-3 sm:px-6 pt-2 pb-2.5">
       <div class="flex flex-col md:flex-row md:items-end justify-between gap-2 md:gap-6">
 
-        <a href="#home" id="brand-name" class="shrink-0 pb-1 font-display font-bold text-base sm:text-lg tracking-tight text-ink uppercase hover:text-signal transition-colors">
+        <a href="#home" id="brand-name" class="shrink-0 pb-1 font-display font-bold text-base sm:text-lg tracking-tight text-ink hover:text-signal transition-colors">
           Mikhael Sunil
         </a>
 

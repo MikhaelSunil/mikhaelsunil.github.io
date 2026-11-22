@@ -197,6 +197,23 @@ body {
   .retro-card, .retro-btn, .nav-crate, .gallery-figure { transition: none; }
 }
 
+
+/* =========================================================
+   MONOSPACE TUNING
+   Everything is set in JetBrains Mono, which is wider and
+   looser than a sans. These few rules keep long text readable
+   and pull the big headings back together.
+   ========================================================= */
+h1, h2 { letter-spacing: -0.05em; }
+h3 { letter-spacing: -0.035em; }
+
+/* body copy: slightly smaller, more leading than a sans needs */
+#home p.text-base { font-size: 0.95rem; line-height: 1.78; }
+@media (min-width: 640px) { #home p.text-base { font-size: 1rem; } }
+.retro-card p { line-height: 1.72; }
+
+/* mono labels keep their capitals — only the headings lost them */
+
 /* =========================================================
    PRINT STYLES FOR 1-PAGE CV MODAL
    ========================================================= */
