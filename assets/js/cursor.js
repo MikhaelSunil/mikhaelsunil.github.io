@@ -56,6 +56,7 @@ window.MSCursor = (function () {
     var px = window.innerWidth / 2, py = window.innerHeight / 2;   /* pointer */
     var dx = px, dy = py;                                          /* drone   */
     var speed = 0, heading = 0, seen = false, down = false;
+    var spinRate = 0;   /* deg/s, with a little rotor inertia */
 
     function isTextField(node) {
       if (!node || !node.closest) return false;
@@ -91,12 +92,24 @@ window.MSCursor = (function () {
         heading += diff * Math.min(1, dt * 8);
       }
 
-      /* Rotor rate: idle hover plus whatever the pointer is doing. */
-      var rate = 420 + Math.min(speed, 2600) * 1.5;      /* degrees per second */
-      ROTORS.forEach(function (r) {
-        r.angle = (r.angle + r.dir * rate * dt) % 360;
-        r.el.setAttribute('transform', 'rotate(' + r.angle.toFixed(1) + ' ' + r.x + ' ' + r.y + ')');
-      });
+      /* Rotor rate follows the pointer and falls to a dead stop when it is
+         idle. Eased rather than switched, so the blades spool up and wind
+         down instead of snapping. */
+      var target = Math.min(speed, 2600) * 1.75;
+      if (target < 45) target = 0;                      /* pointer is at rest */
+      /* Spin up a little faster than they wind down. The snap-to-zero only
+         applies while winding down — applied unconditionally it swallows the
+         first few degrees of every spin-up and slow movement never starts
+         the rotors at all. */
+      spinRate += (target - spinRate) * Math.min(1, dt * (target > spinRate ? 7 : 5.5));
+      if (target === 0 && spinRate < 14) spinRate = 0;
+
+      if (spinRate > 0) {
+        ROTORS.forEach(function (r) {
+          r.angle = (r.angle + r.dir * spinRate * dt) % 360;
+          r.el.setAttribute('transform', 'rotate(' + r.angle.toFixed(1) + ' ' + r.x + ' ' + r.y + ')');
+        });
+      }
 
       var scale = down ? 0.84 : 1;
       host.style.transform = 'translate3d(' + (dx - 18) + 'px,' + (dy - 18) + 'px,0) ' +
