@@ -25,6 +25,14 @@ You don't need to install anything. You can do all of this from a browser, even 
 
 Your site updates in **about 30–60 seconds**. Refresh the page (Ctrl+Shift+R / Cmd+Shift+R) to see it.
 
+> **If your change doesn't show up:** browsers cache CSS and JavaScript hard.
+> Open `index.html` and find the six `?v=2` version stamps near the bottom
+> (and one on the stylesheet in the `<head>`). Bump every one of them to
+> `?v=3`, then `?v=4` next time, and commit. That tells every visitor's
+> browser to fetch the new files immediately instead of waiting for its
+> cache to expire. You only need this after editing files in `content/` or
+> `assets/` — not for a text change you can already see.
+
 > **Tip:** there's also a one-key shortcut. On any page of the repo, press `.` (full stop) on your keyboard. A full code editor opens right in the browser, which is much nicer for bigger edits.
 
 ---
