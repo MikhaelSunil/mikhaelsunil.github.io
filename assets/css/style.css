@@ -308,10 +308,10 @@ body, .retro-card, .retro-btn, .nav-crate, header, .gallery-figure {
    ========================================================= */
 .hero-wave {
   display: inline-block;
-  width: 1.08em;
-  height: 0.88em;
-  vertical-align: -0.1em;
-  margin: 0 0.1em;
+  width: 1.52em;          /* sized against the heading, so it scales with it */
+  height: 1.12em;
+  vertical-align: -0.26em;
+  margin: 0 0.06em 0 0.12em;
 }
 @keyframes msWave {
   0%   { transform: rotate(0deg); }

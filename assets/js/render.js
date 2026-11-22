@@ -461,13 +461,16 @@ window.MSRender = (function () {
     var grid = el('div', 'grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-12 items-center');
 
     /* left column */
-    var left = el('div', 'md:col-span-7 space-y-6');
+    /* 8/4 rather than 7/5: the heading needs the width to keep the wave on
+       the first line. The portrait is capped at 330px anyway, so it barely
+       changes. */
+    var left = el('div', 'md:col-span-8 space-y-6');
     if (S.kicker) {
       left.appendChild(el('div', 'flex flex-wrap items-center gap-2.5 font-mono text-xs',
         '<span class="px-2.5 py-1 bg-ink text-cream font-bold uppercase tracking-wider">' + S.kicker + '</span>'));
     }
     var nameBlock = el('div', 'space-y-2');
-    nameBlock.appendChild(el('h1', 'font-display font-bold text-4xl sm:text-5xl leading-[1.06] tracking-tight text-ink', expandTokens(S.heroHeading || S.name || '')));
+    nameBlock.appendChild(el('h1', 'font-display font-bold text-3xl sm:text-4xl md:text-[2rem] lg:text-[2.85rem] xl:text-[3.2rem] leading-[1.14] tracking-tight text-ink', expandTokens(S.heroHeading || S.name || '')));
     if (S.tagline && S.showTaglineInHero !== false) {
       nameBlock.appendChild(el('p', 'font-mono text-sm sm:text-base font-bold text-signal uppercase tracking-wide pt-1', S.tagline));
     }
@@ -496,7 +499,7 @@ window.MSRender = (function () {
     grid.appendChild(left);
 
     /* right column: portrait */
-    var right = el('div', 'md:col-span-5 flex justify-center md:justify-end');
+    var right = el('div', 'md:col-span-4 flex justify-center md:justify-end');
     var mat = el('div', 'w-full max-w-[330px] bg-cream border-2 border-ink shadow-hard p-3');
     var port = el('div', 'relative aspect-[4/4.5] w-full bg-paper border-2 border-ink overflow-hidden flex items-center justify-center');
     port.innerHTML =

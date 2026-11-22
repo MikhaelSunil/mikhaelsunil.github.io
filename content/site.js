@@ -22,8 +22,10 @@ window.SITE = {
 
   /* The big heading in the hero. Delete this line and the hero falls back
      to showing "name" above.
-     Write {wave} anywhere in it to drop in the little waving smiley. */
-  heroHeading: "Glad you wandered in {wave} I'm Mikhael",
+     Write {wave} anywhere in it to drop in the little waving smiley.
+     Use &nbsp; to glue a word to the smiley so they never split across
+     lines, and <br> to force a line break. */
+  heroHeading: "Glad you wandered in&nbsp;{wave}<br>I'm Mikhael",
 
   /* The small dark badge above the heading. */
   kicker: "ABOUT ME",
