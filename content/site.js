@@ -29,6 +29,16 @@ window.SITE = {
   heroGreeting: "Glad you wandered in",
   heroHeading: "I'm Mikhael {wave}",
 
+  /* Pace of that sequence, in milliseconds. Bigger charMs = slower typing. */
+  heroTiming: {
+    startDelay: 300,   // pause before the first character
+    charMs: 70,        // per character while typing
+    dots: 3,           // dots that appear one by one after the greeting
+    dotMs: 300,        // gap between those dots
+    hold: 700,         // pause after the last dot, before the dissolve
+    dissolve: 380      // length of the fade-out
+  },
+
   /* The small dark badge above the heading. */
   kicker: "ABOUT ME",
   /* The hero deliberately has NO job-title line under your name.

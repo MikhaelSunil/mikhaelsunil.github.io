@@ -91,8 +91,13 @@ window.MSUI = (function () {
 
     if (reduce || !heading) { settle(); return; }
 
-    var CHAR = 42;          /* ms per character */
-    var HOLD = 1000;        /* how long the greeting sits before dissolving */
+    var cfg = (window.SITE && window.SITE.heroTiming) || {};
+    var CHAR = cfg.charMs != null ? cfg.charMs : 70;
+    var HOLD = cfg.hold != null ? cfg.hold : 700;
+    var DOTS = cfg.dots != null ? cfg.dots : 3;
+    var DOTMS = cfg.dotMs != null ? cfg.dotMs : 300;
+    var DISSOLVE = cfg.dissolve != null ? cfg.dissolve : 380;
+    var START = cfg.startDelay != null ? cfg.startDelay : 300;
     var timers = [];
     function at(ms, fn) { timers.push(setTimeout(fn, ms)); }
 
@@ -103,11 +108,23 @@ window.MSUI = (function () {
       return start + str.length * CHAR;
     }
 
-    var t = 260;
+    var t = START;
     if (greeting) {
-      t = typeOut(greeting, t) + HOLD;
-      at(t, function () { textEl.classList.add('is-dissolving'); });
-      t += 380;
+      t = typeOut(greeting, t);
+      /* ... one dot at a time, trailing off to the right */
+      for (var k = 1; k <= DOTS; k++) {
+        (function (n) {
+          at(t + n * DOTMS, function () {
+            textEl.textContent = greeting + new Array(n + 1).join('.');
+          });
+        })(k);
+      }
+      t += DOTS * DOTMS + HOLD;
+      at(t, function () {
+        textEl.style.transitionDuration = DISSOLVE + 'ms';
+        textEl.classList.add('is-dissolving');
+      });
+      t += DISSOLVE;
       at(t, function () {
         textEl.classList.remove('is-dissolving');
         textEl.textContent = '';
