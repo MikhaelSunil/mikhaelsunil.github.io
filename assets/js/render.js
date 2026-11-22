@@ -470,7 +470,7 @@ window.MSRender = (function () {
         '<span class="px-2.5 py-1 bg-ink text-cream font-bold uppercase tracking-wider">' + S.kicker + '</span>'));
     }
     var nameBlock = el('div', 'space-y-2');
-    nameBlock.appendChild(el('h1', 'font-display font-bold text-3xl sm:text-4xl md:text-[2rem] lg:text-[2.85rem] xl:text-[3.2rem] leading-[1.14] tracking-tight text-ink', expandTokens(S.heroHeading || S.name || '')));
+    nameBlock.appendChild(el('h1', 'font-display font-bold text-3xl sm:text-4xl md:text-[1.95rem] lg:text-[2.7rem] xl:text-[3.05rem] leading-[1.18] tracking-tight text-ink', expandTokens(S.heroHeading || S.name || '')));
     if (S.tagline && S.showTaglineInHero !== false) {
       nameBlock.appendChild(el('p', 'font-mono text-sm sm:text-base font-bold text-signal uppercase tracking-wide pt-1', S.tagline));
     }
