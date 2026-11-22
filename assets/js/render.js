@@ -477,7 +477,7 @@ window.MSRender = (function () {
        the heading readable while its text is still being typed. */
     var greeting = S.heroGreeting || '';
     var headingText = S.heroHeading || S.name || '';
-    var h1 = el('h1', 'hero-heading font-display font-bold text-[1.75rem] sm:text-[3rem] md:text-[2.4rem] lg:text-[3.2rem] xl:text-[3.6rem] leading-[1.18] tracking-tight text-ink');
+    var h1 = el('h1', 'hero-heading font-display font-bold text-[1.55rem] sm:text-[2.8rem] md:text-[2.2rem] lg:text-[2.95rem] xl:text-[3.35rem] leading-[1.18] tracking-tight text-ink');
     h1.id = 'hero-heading';
     h1.setAttribute('data-greeting', greeting);
     h1.setAttribute('data-heading', headingText.split('{wave}').join('').replace(/\s+/g, ' ').trim());

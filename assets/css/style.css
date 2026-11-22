@@ -341,16 +341,19 @@ body, .retro-card, .retro-btn, .nav-crate, header, .gallery-figure {
   width: 0;
   overflow: hidden;
   opacity: 0;
-  vertical-align: -0.4em;
+  /* The face sits in the lower part of its viewBox, so the box is raised
+     to put the face on the text's cap band rather than hanging below the
+     baseline. */
+  vertical-align: -0.3em;
   transition: width 0.42s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.4s ease;
 }
-.hero-wave-slot.is-in { width: 2.52em; opacity: 1; }
+.hero-wave-slot.is-in { width: 2.8em; opacity: 1; }
 
 .hero-wave {
   display: block;
   width: 2.4em;           /* sized against the heading, so it scales with it */
   height: 1.76em;
-  margin-left: 0.12em;
+  margin-left: 0.4em;     /* breathing room after the name */
 }
 /* One wave, then the hand fades away and stays gone — the face remains.
    The space it leaves is at the end of the line, so nothing shifts. */
