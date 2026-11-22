@@ -250,6 +250,7 @@ body, .retro-card, .retro-btn, .nav-crate, header, .gallery-figure {
 [data-theme="dark"] svg [fill="#2D6A4F"]   { fill: rgb(var(--c-scope)); }
 [data-theme="dark"] svg [stroke="#1C1B18"] { stroke: rgb(var(--c-ink)); }
 [data-theme="dark"] svg [stroke="#FAF7F0"] { stroke: rgb(var(--c-cream)); }
+[data-theme="dark"] svg [stroke="#D49B2A"] { stroke: rgb(var(--c-amber)); }
 
 /* =========================================================
    LIGHT / DARK SWITCH + SMILEY  (top right of the header)
@@ -299,6 +300,38 @@ body, .retro-card, .retro-btn, .nav-crate, header, .gallery-figure {
 
 @media (prefers-reduced-motion: reduce) {
   .theme-knob, body, .retro-card, .retro-btn, .nav-crate, header { transition: none; }
+}
+
+
+/* =========================================================
+   THE WAVING SMILEY IN THE HERO HEADING  ({wave} in site.js)
+   ========================================================= */
+.hero-wave {
+  display: inline-block;
+  width: 1.08em;
+  height: 0.88em;
+  vertical-align: -0.1em;
+  margin: 0 0.1em;
+}
+@keyframes msWave {
+  0%   { transform: rotate(0deg); }
+  8%   { transform: rotate(16deg); }
+  18%  { transform: rotate(-9deg); }
+  28%  { transform: rotate(16deg); }
+  38%  { transform: rotate(-9deg); }
+  48%  { transform: rotate(13deg); }
+  58%, 100% { transform: rotate(0deg); }
+}
+.hero-wave .wave-hand {
+  /* SVG elements default to transform-box: view-box, so the origin is in
+     viewBox units — the wrist, at the bottom of the palm. Avoids the
+     transform-box: fill-box quirks some browsers have on <g>. */
+  transform-origin: 45px 35px;
+  animation: msWave 2.4s ease-in-out infinite;
+  will-change: transform;
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-wave .wave-hand { animation: none; }
 }
 
 /* =========================================================

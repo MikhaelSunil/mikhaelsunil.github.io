@@ -21,9 +21,9 @@ window.SITE = {
   name: "Mikhael Sunil",
 
   /* The big heading in the hero. Delete this line and the hero falls back
-     to showing "name" above. It renders in capitals; to allow lower case,
-     remove the word "uppercase" from the h1 class in assets/js/render.js. */
-  heroHeading: "Hi there, I'm Mikhael",
+     to showing "name" above.
+     Write {wave} anywhere in it to drop in the little waving smiley. */
+  heroHeading: "Glad you wandered in {wave} I'm Mikhael",
 
   /* The small dark badge above the heading. */
   kicker: "ABOUT ME",

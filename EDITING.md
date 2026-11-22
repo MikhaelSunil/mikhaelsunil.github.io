@@ -57,6 +57,19 @@ Find it in `content/sections.js` and type over it. That's it.
 
 `content/site.js`, near the top — the `intro` line.
 
+### The waving smiley in the heading
+
+Write `{wave}` anywhere in `heroHeading` and it becomes the little smiley with
+the waving hand:
+
+```js
+heroHeading: "Glad you wandered in {wave} I'm Mikhael",
+```
+
+Remove `{wave}` and it's gone. It's drawn in the site's own colours, so it
+follows dark mode; to redraw it, edit `WAVE_SVG` near the top of
+`assets/js/render.js`.
+
 ### The job-title line under your name
 
 There isn't one, by design. The `tagline` in `content/site.js` still feeds the

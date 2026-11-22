@@ -17,6 +17,29 @@ window.MSRender = (function () {
 
   function mount(id) { return document.getElementById(id); }
 
+  /* Writing {wave} anywhere in heroHeading drops in the smiley-with-waving-
+     hand below. Drawn in the site's own linework so it themes with
+     everything else — an emoji would ignore the palette. */
+  var WAVE_SVG = '' +
+    '<svg class="hero-wave" viewBox="0 0 60 44" role="img" aria-label="waving hello" xmlns="http://www.w3.org/2000/svg">' +
+      '<circle cx="15" cy="26" r="12.4" fill="#D49B2A" stroke="#1C1B18" stroke-width="2.6" />' +
+      '<circle cx="10.9" cy="23" r="1.85" fill="#1C1B18" />' +
+      '<circle cx="19.1" cy="23" r="1.85" fill="#1C1B18" />' +
+      '<path d="M10 30.3 Q15 35.4 20 30.3" fill="none" stroke="#1C1B18" stroke-width="2.6" stroke-linecap="round" />' +
+      '<g class="wave-hand">' +
+        '<g fill="none" stroke-linecap="round">' +
+          '<path d="M39 25 L39 14 M43.5 25 L43.5 11 M48 25 L48 13 M52 26 L52 17.5" stroke="#1C1B18" stroke-width="6.4" />' +
+          '<path d="M39 25 L39 14 M43.5 25 L43.5 11 M48 25 L48 13 M52 26 L52 17.5" stroke="#D49B2A" stroke-width="3.2" />' +
+        '</g>' +
+        '<path d="M36 28 Q31 26.8 31.4 31.2 Q31.9 35.2 36.5 34.2" fill="#D49B2A" stroke="#1C1B18" stroke-width="2.3" stroke-linejoin="round" />' +
+        '<rect x="36" y="22" width="19" height="14" rx="5.5" fill="#D49B2A" stroke="#1C1B18" stroke-width="2.4" />' +
+      '</g>' +
+    '</svg>';
+
+  function expandTokens(text) {
+    return String(text == null ? '' : text).split('{wave}').join(WAVE_SVG);
+  }
+
   // Badge pill colour presets
   var BADGE = {
     signal: 'bg-signal text-cream border border-ink',
@@ -444,7 +467,7 @@ window.MSRender = (function () {
         '<span class="px-2.5 py-1 bg-ink text-cream font-bold uppercase tracking-wider">' + S.kicker + '</span>'));
     }
     var nameBlock = el('div', 'space-y-2');
-    nameBlock.appendChild(el('h1', 'font-display font-bold text-5xl sm:text-6xl leading-[0.98] tracking-tight text-ink', S.heroHeading || S.name || ''));
+    nameBlock.appendChild(el('h1', 'font-display font-bold text-4xl sm:text-5xl leading-[1.06] tracking-tight text-ink', expandTokens(S.heroHeading || S.name || '')));
     if (S.tagline && S.showTaglineInHero !== false) {
       nameBlock.appendChild(el('p', 'font-mono text-sm sm:text-base font-bold text-signal uppercase tracking-wide pt-1', S.tagline));
     }
