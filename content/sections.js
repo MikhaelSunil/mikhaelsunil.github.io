@@ -35,92 +35,7 @@
 window.SECTIONS = [
 
   /* ===================================================================
-     SECTION 01 — ABOUT
-     Three parts: a personal note, how you work, and the four domains.
-     =================================================================== */
-  {
-    id: "about",
-    nav: "About",
-    number: "01",
-    kicker: "PROFILE & FOCUS",
-    title: "About & What I Do",
-    meta: "BACKGROUND · APPROACH · 4 CORE DOMAINS",
-    blocks: [
-
-      /* --- Part 1: who I am (wider) + how I work (narrower) --------- */
-      {
-        type: "cards",
-        widths: [7, 5],
-        items: [
-          {
-            badge: "01 // WHO I AM",
-            badgeColor: "ink",
-            kicker: "PERSONAL NOTE",
-            bodyClass: "text-sm sm:text-base text-ink/90 leading-relaxed",
-            body: [
-              "I got into robotics because I like building things that actually move, sense, and make decisions in the physical world. For me, simulation is only half the fun—the real challenge starts when noisy sensors, real motors, and unpredictable environments come into play.",
-              "I enjoy jumping between math, code, and hardware—whether that means deriving a control law, training a learning-based policy, designing a custom actuator in CAD, or debugging embedded firmware until a robot finally behaves the way it should."
-            ]
-          },
-          {
-            badge: "02 // HOW I WORK",
-            badgeColor: "amber",
-            kicker: "WORKFLOW",
-            steps: [
-              { n: "01.", color: "signal", label: "Algorithm &amp; Modeling:", text: "Formulate distributed control, estimation, and model-based learning frameworks." },
-              { n: "02.", color: "scope",  label: "Simulation &amp; Benchmarking:", text: "Validate dynamics and edge cases in ROS&nbsp;2, Gazebo, and MATLAB/Simulink." },
-              { n: "03.", color: "ink",    label: "Hardware Deployment:", text: "Build, wire, and test directly on drones, rovers, manipulators, and wearables." }
-            ]
-          }
-        ]
-      },
-
-      /* --- Part 2: the four domains --------------------------------- */
-      { type: "heading", color: "signal", label: "03 // WHAT I BUILD &amp; RESEARCH" },
-
-      {
-        type: "cards",
-        columns: 2,
-        items: [
-          {
-            badge: "DOMAIN-01",
-            badgeColor: "signal",
-            kicker: "MANIPULATION & LEARNING",
-            title: "Model-Based Learning & Manipulation",
-            body: "Researching, testing, and deploying model-based learning and adaptive control algorithms for ground and aerial manipulators—bridging physical dynamics with data-driven generalization.",
-            tags: ["Model-Based Learning", "Aerial & Ground Manipulators", "SAC Deep RL", "Sim-to-Real"]
-          },
-          {
-            badge: "DOMAIN-02",
-            badgeColor: "scope",
-            kicker: "AERIAL SWARMS",
-            title: "Multi-Agent Aerial Swarms",
-            body: "Designing, benchmarking, and flying decentralized consensus, containment, and formation control algorithms on physical nano-drone swarms using minimal local feedback.",
-            tags: ["Crazyflie 2.1", "ROS 2", "Crazyswarm2", "Distributed Control"]
-          },
-          {
-            badge: "DOMAIN-03",
-            badgeColor: "amber",
-            kicker: "REHAB & MECHATRONICS",
-            title: "Wearable Exoskeletons & Actuators",
-            body: "Engineering portable rehabilitation exoskeletons combining custom 25:1 cycloidal gearboxes, cable-driven transmissions, closed-loop FOC motor control, and embedded firmware.",
-            tags: ["Cycloidal Drives", "STM32 & FOC", "Magnetic Encoders", "Fusion 360"]
-          },
-          {
-            badge: "DOMAIN-04",
-            badgeColor: "ink",
-            kicker: "AUTONOMY & EMBEDDED",
-            title: "SLAM, Sensor Fusion & Embedded Vision",
-            body: "Building GPS-denied autonomy stacks fusing LiDAR, IMU, GPR, and custom serial sensor networks alongside real-time UAV vision tracking and medical landmark AI.",
-            tags: ["Probabilistic SLAM", "LiDAR · IMU · GPR", "Teensy 4.0 / ESP32", "MATLAB / Simulink"]
-          }
-        ]
-      }
-    ]
-  },
-
-  /* ===================================================================
-     SECTION 02 — PROJECTS
+     SECTION 01 — PROJECTS
      To add a photo to any project, drop the image in assets/img/ and add
         image: "assets/img/my-photo.jpg",
      to that project's card.
@@ -128,7 +43,7 @@ window.SECTIONS = [
   {
     id: "projects",
     nav: "Projects",
-    number: "02",
+    number: "01",
     kicker: "HARDWARE DOSSIER",
     title: "Selected Projects",
     meta: "05 FIELD & LAB BUILDS",
@@ -185,12 +100,12 @@ window.SECTIONS = [
   },
 
   /* ===================================================================
-     SECTION 03 — EXPERIENCE
+     SECTION 02 — EXPERIENCE
      =================================================================== */
   {
     id: "experience",
     nav: "Experience",
-    number: "03",
+    number: "02",
     kicker: "ENGINEERING LOGBOOK",
     title: "Experience",
     meta: "CHRONOLOGICAL SERVICE LEDGER",
@@ -228,6 +143,84 @@ window.SECTIONS = [
           }
         ]
       }
+    ]
+  },
+
+  /* ===================================================================
+     SECTION 03 — TECH STACK
+     The four domain cards live here for now. To list your actual stack
+     (languages, frameworks, hardware, tools), there is a ready-made
+     example further down this section, switched off behind a comment.
+     =================================================================== */
+  {
+    id: "tech-stack",
+    nav: "Tech Stack",
+    number: "03",
+    kicker: "TOOLS & DOMAINS",
+    title: "Tech Stack",
+    meta: "4 CORE DOMAINS",
+    blocks: [
+      {
+        type: "cards",
+        columns: 2,
+        items: [
+          {
+            badge: "DOMAIN-01",
+            badgeColor: "signal",
+            kicker: "MANIPULATION & LEARNING",
+            title: "Model-Based Learning & Manipulation",
+            body: "Researching, testing, and deploying model-based learning and adaptive control algorithms for ground and aerial manipulators—bridging physical dynamics with data-driven generalization.",
+            tags: ["Model-Based Learning", "Aerial & Ground Manipulators", "SAC Deep RL", "Sim-to-Real"]
+          },
+          {
+            badge: "DOMAIN-02",
+            badgeColor: "scope",
+            kicker: "AERIAL SWARMS",
+            title: "Multi-Agent Aerial Swarms",
+            body: "Designing, benchmarking, and flying decentralized consensus, containment, and formation control algorithms on physical nano-drone swarms using minimal local feedback.",
+            tags: ["Crazyflie 2.1", "ROS 2", "Crazyswarm2", "Distributed Control"]
+          },
+          {
+            badge: "DOMAIN-03",
+            badgeColor: "amber",
+            kicker: "REHAB & MECHATRONICS",
+            title: "Wearable Exoskeletons & Actuators",
+            body: "Engineering portable rehabilitation exoskeletons combining custom 25:1 cycloidal gearboxes, cable-driven transmissions, closed-loop FOC motor control, and embedded firmware.",
+            tags: ["Cycloidal Drives", "STM32 & FOC", "Magnetic Encoders", "Fusion 360"]
+          },
+          {
+            badge: "DOMAIN-04",
+            badgeColor: "ink",
+            kicker: "AUTONOMY & EMBEDDED",
+            title: "SLAM, Sensor Fusion & Embedded Vision",
+            body: "Building GPS-denied autonomy stacks fusing LiDAR, IMU, GPR, and custom serial sensor networks alongside real-time UAV vision tracking and medical landmark AI.",
+            tags: ["Probabilistic SLAM", "LiDAR · IMU · GPR", "Teensy 4.0 / ESP32", "MATLAB / Simulink"]
+          }
+        ]
+      }
+
+      /* ----------------------------------------------------------------
+         READY TO FILL: a grouped list of your actual stack.
+         Delete the comment marker line below, and the matching one at the
+         end, to switch it on. Edit the tags to suit.
+         ----------------------------------------------------------------
+      ,
+      { type: "heading", color: "signal", label: "FULL STACK" },
+      {
+        type: "cards",
+        columns: 2,
+        items: [
+          { badge: "LANGUAGES", badgeColor: "ink",
+            tags: ["C++", "Python", "MATLAB", "Embedded C"] },
+          { badge: "FRAMEWORKS", badgeColor: "signal",
+            tags: ["ROS 2", "Crazyswarm2", "Nav2", "PyTorch", "Gazebo"] },
+          { badge: "HARDWARE", badgeColor: "amber",
+            tags: ["STM32", "Teensy 4.0", "ESP32", "Jetson Nano", "Crazyflie 2.1"] },
+          { badge: "TOOLS", badgeColor: "scope",
+            tags: ["Docker", "Git", "Fusion 360", "Simulink", "RViz"] }
+        ]
+      }
+         ---------------------------------------------------------------- */
     ]
   },
 

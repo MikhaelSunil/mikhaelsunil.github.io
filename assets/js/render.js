@@ -422,7 +422,7 @@ window.MSRender = (function () {
         '<span class="px-2.5 py-1 bg-ink text-cream font-bold uppercase tracking-wider">' + S.kicker + '</span>'));
     }
     var nameBlock = el('div', 'space-y-2');
-    nameBlock.appendChild(el('h1', 'font-display font-bold text-5xl sm:text-6xl leading-[0.98] tracking-tight text-ink uppercase', S.name || ''));
+    nameBlock.appendChild(el('h1', 'font-display font-bold text-5xl sm:text-6xl leading-[0.98] tracking-tight text-ink uppercase', S.heroHeading || S.name || ''));
     if (S.tagline && S.showTaglineInHero !== false) {
       nameBlock.appendChild(el('p', 'font-mono text-sm sm:text-base font-bold text-signal uppercase tracking-wide pt-1', S.tagline));
     }

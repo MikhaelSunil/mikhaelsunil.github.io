@@ -7,7 +7,7 @@ You only ever need to touch **two files**:
 | File | What's in it |
 |---|---|
 | `content/site.js` | Your name, intro paragraph, portrait photo, social links, contact settings, and the CV pop-up |
-| `content/sections.js` | Every section of the page — About, Projects, Experience, Education, Research, Contact |
+| `content/sections.js` | Every section of the page — Projects, Experience, Tech Stack, Education, Research, Contact |
 
 Everything else (`index.html`, `assets/`) is the machinery. You can leave it alone.
 
@@ -252,7 +252,7 @@ roughly 60/40:
 }
 ```
 
-That's what the About section uses for *Who I Am* beside *How I Work*.
+Handy for pairing a wide explanatory card with a narrow list beside it.
 
 ### Sub-heading colour
 

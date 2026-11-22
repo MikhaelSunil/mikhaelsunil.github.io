@@ -16,8 +16,17 @@ window.SITE = {
   },
 
   /* ---- Hero section (the top of the page) -------------------------- */
+  /* Your real name. Used by the top-left brand mark, the CV pop-up and
+     search engines — so leave it as your name. */
   name: "Mikhael Sunil",
-  kicker: "HARDWARE MANUAL // VOL. 01",
+
+  /* The big heading in the hero. Delete this line and the hero falls back
+     to showing "name" above. It renders in capitals; to allow lower case,
+     remove the word "uppercase" from the h1 class in assets/js/render.js. */
+  heroHeading: "Hi there, I'm Mikhael",
+
+  /* The small dark badge above the heading. */
+  kicker: "ABOUT ME",
   /* The hero deliberately has NO job-title line under your name.
      This tagline is still used by the CV pop-up and by search engines.
      Set showTaglineInHero to true if you ever want it back on the page. */
