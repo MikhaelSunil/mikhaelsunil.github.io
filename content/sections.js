@@ -45,12 +45,17 @@ window.SECTIONS = [
     nav: "Projects",
     number: "01",
     kicker: "HARDWARE DOSSIER",
-    title: "Selected Projects",
+    title: "Projects",
     meta: "05 FIELD & LAB BUILDS",
     blocks: [
       {
         type: "cards",
         columns: 3,
+        /* Only the first 3 show; the rest appear when the button is clicked.
+           Delete the next three lines to show them all at once. */
+        showFirst: 3,
+        moreLabel: "View All Projects",
+        lessLabel: "Show Fewer",
         items: [
           {
             badge: "PRJ-01 // PATENT FILED",

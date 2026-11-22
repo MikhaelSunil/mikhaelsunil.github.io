@@ -238,6 +238,25 @@ body: [
 ],
 ```
 
+### Show only the first few cards
+
+A `cards` block can hide everything past the first N behind a button. The
+hidden cards are still in the file — nothing is deleted:
+
+```js
+{
+  type: "cards",
+  columns: 3,
+  showFirst: 3,
+  moreLabel: "View All Projects",
+  lessLabel: "Show Fewer",
+  items: [ /* ...all of them... */ ]
+}
+```
+
+Delete the `showFirst`, `moreLabel` and `lessLabel` lines to show them all at
+once. That's what the Projects section uses.
+
 ### Uneven card widths
 
 By default `columns: 2` makes two equal halves. For a wide card beside a narrow

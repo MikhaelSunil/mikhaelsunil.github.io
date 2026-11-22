@@ -213,7 +213,29 @@ window.MSRender = (function () {
     }
     var columns = block.columns || 2;
     var grid = el('div', GRID[columns] || GRID[2]);
-    (block.items || []).forEach(function (c) { grid.appendChild(renderCard(c, columns)); });
+    var items = block.items || [];
+    var limit = block.showFirst;
+
+    items.forEach(function (c, i) {
+      var card = renderCard(c, columns);
+      if (limit && i >= limit) card.className += ' is-extra hidden';
+      grid.appendChild(card);
+    });
+
+    /* showFirst: 3 hides the rest behind a "view all" button */
+    if (limit && items.length > limit) {
+      var wrap = el('div', 'cards-expandable');
+      wrap.appendChild(grid);
+      var bar = el('div', 'flex justify-center pt-8');
+      var btn = el('button', 'retro-btn inline-flex items-center gap-2 px-6 py-3 bg-cream text-ink hover:bg-amberretro font-mono text-xs sm:text-sm font-bold uppercase tracking-wider');
+      btn.type = 'button';
+      btn.setAttribute('data-expand-cards', '');
+      btn.setAttribute('data-more', block.moreLabel || ('View All ' + items.length));
+      btn.setAttribute('data-less', block.lessLabel || 'Show Fewer');
+      bar.appendChild(btn);
+      wrap.appendChild(bar);
+      return wrap;
+    }
     return grid;
   }
 

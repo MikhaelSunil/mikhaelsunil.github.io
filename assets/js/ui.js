@@ -327,6 +327,33 @@ window.MSUI = (function () {
   }
 
   /* =====================================================================
+     4b. "VIEW ALL" CARD REVEAL
+     ===================================================================== */
+  function initExpandableCards() {
+    document.querySelectorAll('[data-expand-cards]').forEach(function (btn) {
+      var wrap = btn.closest('.cards-expandable');
+      if (!wrap) return;
+      var extras = wrap.querySelectorAll('.is-extra');
+      var expanded = false;
+
+      function paint() {
+        for (var i = 0; i < extras.length; i++) {
+          extras[i].classList.toggle('hidden', !expanded);
+        }
+        btn.innerHTML = '<span>' + (expanded ? btn.getAttribute('data-less') : btn.getAttribute('data-more')) +
+                        '</span><span aria-hidden="true">' + (expanded ? '\u2191' : '\u2193') + '</span>';
+        btn.setAttribute('aria-expanded', String(expanded));
+      }
+
+      paint();
+      btn.addEventListener('click', function () {
+        expanded = !expanded;
+        paint();
+      });
+    });
+  }
+
+  /* =====================================================================
      5. CONTACT FORM
      Sends via formEndpoint if set, else opens the visitor's mail app if
      an email is set, else just confirms locally.
@@ -396,6 +423,7 @@ window.MSUI = (function () {
     initForklift();
     var cv = initCV();
     initBibtex();
+    initExpandableCards();
     initContactForm();
 
     document.addEventListener('keydown', function (e) {
