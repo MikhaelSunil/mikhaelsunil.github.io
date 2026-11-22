@@ -4,78 +4,94 @@
    (tailwind.config) and mirrored here as CSS variables.
    ========================================================= */
 
+/* Colour tokens are RGB channels, not hex, so Tailwind can compose
+   opacity on them (text-ink/85, bg-paper/70 and so on) and so a single
+   [data-theme] swap re-skins the entire site. index.html maps these
+   onto the Tailwind palette. */
 :root {
   color-scheme: light;
-  --paper:  #F2EDE2;
-  --cream:  #FAF7F0;
-  --ink:    #1C1B18;
-  --muted:  #5B564C;
-  --signal: #D94E28;
-  --amber:  #D49B2A;
-  --kraft:  #E5C890;
-  --scope:  #2D6A4F;
+  --c-paper: 242 237 226;
+  --c-cream: 250 247 240;
+  --c-ink: 28 27 24;
+  --c-muted: 91 86 76;
+  --c-signal: 217 78 40;
+  --c-amber: 212 155 42;
+  --c-kraft: 229 200 144;
+  --c-scope: 45 106 79;
+}
+
+[data-theme="dark"] {
+  color-scheme: dark;
+  --c-paper: 26 25 23;   /* warm near-black, not blue-black */
+  --c-cream: 35 33 31;
+  --c-ink: 242 237 226;   /* text and borders invert */
+  --c-muted: 163 155 140;
+  --c-signal: 255 107 66;   /* lifted so it still reads on dark */
+  --c-amber: 232 180 74;
+  --c-kraft: 229 200 144;
+  --c-scope: 79 168 128;
 }
 
 /* Warm drafting-paper surface with fine blueprint dot matrix */
 body {
-  background-color: var(--paper);
-  color: var(--ink);
+  background-color: rgb(var(--c-paper));
+  color: rgb(var(--c-ink));
   overflow-x: hidden;
   background-image:
-    radial-gradient(rgba(28, 27, 24, 0.14) 1px, transparent 1px),
-    linear-gradient(to right, rgba(28, 27, 24, 0.035) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(28, 27, 24, 0.035) 1px, transparent 1px);
+    radial-gradient(rgb(var(--c-ink) / 0.14) 1px, transparent 1px),
+    linear-gradient(to right, rgb(var(--c-ink) / 0.035) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(var(--c-ink) / 0.035) 1px, transparent 1px);
   background-size: 20px 20px, 100px 100px, 100px 100px;
   background-position: -1px -1px;
 }
 
 /* Tactile retro card with crisp 2px charcoal border & hard 4px offset shadow */
 .retro-card {
-  background-color: var(--cream);
-  border: 2px solid var(--ink);
-  box-shadow: 4px 4px 0px var(--ink);
+  background-color: rgb(var(--c-cream));
+  border: 2px solid rgb(var(--c-ink));
+  box-shadow: 4px 4px 0px rgb(var(--c-ink));
   transition: transform 0.14s ease, box-shadow 0.14s ease;
 }
 .retro-card:hover {
   transform: translate(-2px, -2px);
-  box-shadow: 6px 6px 0px var(--ink);
+  box-shadow: 6px 6px 0px rgb(var(--c-ink));
 }
 
 /* Mechanical push-button press feel */
 .retro-btn {
-  border: 2px solid var(--ink);
-  box-shadow: 4px 4px 0px var(--ink);
+  border: 2px solid rgb(var(--c-ink));
+  box-shadow: 4px 4px 0px rgb(var(--c-ink));
   transition: transform 0.1s ease, box-shadow 0.1s ease, background-color 0.15s ease, color 0.15s ease;
 }
 .retro-btn:hover {
   transform: translate(-1px, -1px);
-  box-shadow: 5px 5px 0px var(--ink);
+  box-shadow: 5px 5px 0px rgb(var(--c-ink));
 }
 .retro-btn:active {
   transform: translate(3px, 3px);
-  box-shadow: 1px 1px 0px var(--ink);
+  box-shadow: 1px 1px 0px rgb(var(--c-ink));
 }
 
 /* Vintage diagonal hazard rail accent */
 .hazard-rail {
   background-image: repeating-linear-gradient(
     -45deg,
-    var(--ink),
-    var(--ink) 5px,
-    var(--amber) 5px,
-    var(--amber) 10px
+    rgb(var(--c-ink)),
+    rgb(var(--c-ink)) 5px,
+    rgb(var(--c-amber)) 5px,
+    rgb(var(--c-amber)) 10px
   );
 }
 
 /* Halftone background for retro portrait placeholder */
 .halftone-dots {
-  background-image: radial-gradient(rgba(28, 27, 24, 0.15) 1px, transparent 1px);
+  background-image: radial-gradient(rgb(var(--c-ink) / 0.15) 1px, transparent 1px);
   background-size: 6px 6px;
 }
 
 /* Subtle vintage stamp rotation */
 .retro-stamp {
-  border: 2px dashed var(--scope);
+  border: 2px dashed rgb(var(--c-scope));
   transform: rotate(-2deg);
 }
 
@@ -95,25 +111,25 @@ body {
   position: relative;
   flex: 1 1 0;
   min-width: 62px;
-  border: 2px solid var(--ink);
-  background-color: var(--cream);
-  box-shadow: 2px 2px 0px var(--ink);
+  border: 2px solid rgb(var(--c-ink));
+  background-color: rgb(var(--c-cream));
+  box-shadow: 2px 2px 0px rgb(var(--c-ink));
   transition: transform 0.16s cubic-bezier(0.22, 1, 0.36, 1),
               background-color 0.15s ease,
               border-color 0.15s ease,
               box-shadow 0.15s ease;
 }
 .nav-crate:hover {
-  background-color: var(--paper);
+  background-color: rgb(var(--c-paper));
   transform: translateY(-1px);
 }
 /* Locked-in tactile detent state when selected */
 .nav-crate.is-locked {
-  background-color: var(--cream);
-  border-color: var(--signal);
-  box-shadow: 0 3px 0 var(--signal), 3px 3px 0 var(--ink);
+  background-color: rgb(var(--c-cream));
+  border-color: rgb(var(--c-signal));
+  box-shadow: 0 3px 0 rgb(var(--c-signal)), 3px 3px 0 rgb(var(--c-ink));
   transform: translateY(-3px);
-  color: var(--signal);
+  color: rgb(var(--c-signal));
 }
 .nav-crate.is-locked::after {
   content: '';
@@ -122,7 +138,7 @@ body {
   right: 6px;
   bottom: -2px;
   height: 3px;
-  background-color: var(--signal);
+  background-color: rgb(var(--c-signal));
 }
 
 /* Hide scrollbar on mobile horizontal nav track */
@@ -172,23 +188,23 @@ body {
    PHOTO GALLERY BLOCKS
    ========================================================= */
 .gallery-figure {
-  background-color: var(--cream);
-  border: 2px solid var(--ink);
-  box-shadow: 4px 4px 0px var(--ink);
+  background-color: rgb(var(--c-cream));
+  border: 2px solid rgb(var(--c-ink));
+  box-shadow: 4px 4px 0px rgb(var(--c-ink));
   padding: 0.5rem;
   transition: transform 0.14s ease, box-shadow 0.14s ease;
 }
 .gallery-figure:hover {
   transform: translate(-2px, -2px);
-  box-shadow: 6px 6px 0px var(--ink);
+  box-shadow: 6px 6px 0px rgb(var(--c-ink));
 }
 .gallery-figure img {
   display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border: 2px solid var(--ink);
-  background-color: var(--paper);
+  border: 2px solid rgb(var(--c-ink));
+  background-color: rgb(var(--c-paper));
 }
 
 /* Respect reduced-motion preferences */
@@ -214,10 +230,82 @@ h3 { letter-spacing: -0.035em; }
 
 /* mono labels keep their capitals — only the headings lost them */
 
+
+/* =========================================================
+   DARK MODE
+   ========================================================= */
+body, .retro-card, .retro-btn, .nav-crate, header, .gallery-figure {
+  transition: background-color 0.25s ease, color 0.25s ease,
+              border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+/* The drone, forklift and portrait artwork have their colours baked into
+   the SVG markup. Remap those exact values when the theme flips. */
+[data-theme="dark"] svg [fill="#FAF7F0"]   { fill: rgb(var(--c-cream)); }
+[data-theme="dark"] svg [fill="#F2EDE2"]   { fill: rgb(var(--c-paper)); }
+[data-theme="dark"] svg [fill="#E8E0CE"]   { fill: rgb(var(--c-cream)); }
+[data-theme="dark"] svg [fill="#1C1B18"]   { fill: rgb(var(--c-ink)); }
+[data-theme="dark"] svg [fill="#D94E28"]   { fill: rgb(var(--c-signal)); }
+[data-theme="dark"] svg [fill="#D49B2A"]   { fill: rgb(var(--c-amber)); }
+[data-theme="dark"] svg [fill="#2D6A4F"]   { fill: rgb(var(--c-scope)); }
+[data-theme="dark"] svg [stroke="#1C1B18"] { stroke: rgb(var(--c-ink)); }
+[data-theme="dark"] svg [stroke="#FAF7F0"] { stroke: rgb(var(--c-cream)); }
+
+/* =========================================================
+   LIGHT / DARK SWITCH + SMILEY  (top right of the header)
+   ========================================================= */
+.theme-zone { display: flex; align-items: center; gap: 0.625rem; }
+
+.theme-switch {
+  position: relative;
+  width: 58px; height: 28px;
+  padding: 0;
+  cursor: pointer;
+  border: 2px solid rgb(var(--c-ink));
+  border-radius: 999px;
+  background: rgb(var(--c-paper));
+  box-shadow: 2px 2px 0 rgb(var(--c-ink));
+  transition: background-color 0.25s ease, border-color 0.25s ease;
+}
+.theme-switch:active { transform: translate(1px, 1px); box-shadow: 1px 1px 0 rgb(var(--c-ink)); }
+.theme-knob {
+  position: absolute; top: 1px; left: 1px;
+  width: 22px; height: 22px;
+  border: 2px solid rgb(var(--c-ink));
+  border-radius: 50%;
+  background: rgb(var(--c-amber));
+  transition: transform 0.22s cubic-bezier(0.22, 1, 0.36, 1), background-color 0.25s ease;
+}
+[data-theme="dark"] .theme-knob { transform: translateX(30px); background: rgb(var(--c-scope)); }
+.theme-ic {
+  position: absolute; top: 50%; transform: translateY(-50%);
+  font-size: 10px; line-height: 1; font-weight: 700;
+  color: rgb(var(--c-ink)); opacity: 0.7;
+  transition: opacity 0.2s ease;
+}
+.theme-ic.sun  { right: 7px; }
+.theme-ic.moon { left: 8px; opacity: 0; }
+[data-theme="dark"] .theme-ic.sun  { opacity: 0; }
+[data-theme="dark"] .theme-ic.moon { opacity: 0.7; }
+
+.theme-smiley { width: 30px; height: 30px; flex: 0 0 auto; }
+.theme-smiley .face { fill: rgb(var(--c-amber)); stroke: rgb(var(--c-ink)); stroke-width: 2.5; }
+[data-theme="dark"] .theme-smiley .face { fill: rgb(var(--c-scope)); }
+.theme-smiley .feat { stroke: rgb(var(--c-ink)); stroke-width: 2.5; stroke-linecap: round; fill: none; }
+.theme-smiley .pupil { fill: rgb(var(--c-ink)); }
+.theme-smiley .eye-shut { display: none; }
+[data-theme="dark"] .theme-smiley .eye-open { display: none; }
+[data-theme="dark"] .theme-smiley .eye-shut { display: block; }
+
+@media (prefers-reduced-motion: reduce) {
+  .theme-knob, body, .retro-card, .retro-btn, .nav-crate, header { transition: none; }
+}
+
 /* =========================================================
    PRINT STYLES FOR 1-PAGE CV MODAL
    ========================================================= */
 @media print {
+  :root, [data-theme="dark"] { --c-ink: 28 27 24; --c-cream: 255 255 255; --c-paper: 255 255 255; --c-muted: 91 86 76; }
   body * { visibility: hidden !important; }
   #cv-print-sheet,
   #cv-print-sheet * { visibility: visible !important; }

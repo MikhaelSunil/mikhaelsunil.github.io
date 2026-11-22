@@ -24,6 +24,46 @@ window.MSUI = (function () {
   }
 
   /* =====================================================================
+     0. LIGHT / DARK THEME
+     The theme is already applied by the inline script in index.html so
+     nothing flashes. This wires the switch, remembers the choice, and
+     tells the canvas robot to repaint.
+     ===================================================================== */
+  function initTheme() {
+    var root = document.documentElement;
+    var btn = document.getElementById('theme-toggle');
+
+    function current() { return root.getAttribute('data-theme') === 'dark' ? 'dark' : 'light'; }
+
+    function apply(theme) {
+      root.setAttribute('data-theme', theme);
+      if (btn) btn.setAttribute('aria-checked', String(theme === 'dark'));
+      try { localStorage.setItem('ms-theme', theme); } catch (e) {}
+      window.dispatchEvent(new CustomEvent('ms:themechange', { detail: { theme: theme } }));
+    }
+
+    apply(current());
+
+    if (btn) {
+      btn.addEventListener('click', function () {
+        apply(current() === 'dark' ? 'light' : 'dark');
+      });
+    }
+
+    /* Follow the system setting until the visitor picks for themselves. */
+    try {
+      var mq = window.matchMedia('(prefers-color-scheme: dark)');
+      var onChange = function (e) {
+        var chosen = null;
+        try { chosen = localStorage.getItem('ms-theme'); } catch (err) {}
+        if (!chosen) apply(e.matches ? 'dark' : 'light');
+      };
+      if (mq.addEventListener) mq.addEventListener('change', onChange);
+      else if (mq.addListener) mq.addListener(onChange);
+    } catch (e) {}
+  }
+
+  /* =====================================================================
      1. SPINNING DRONE BOOT SEQUENCE (~2.0s)
      ===================================================================== */
   function initBoot() {
@@ -419,6 +459,7 @@ window.MSUI = (function () {
      INIT
      ===================================================================== */
   function init() {
+    initTheme();
     var boot = initBoot();
     initForklift();
     var cv = initCV();

@@ -30,6 +30,26 @@ window.MSArm = (function () {
     sizeCanvas();
     window.addEventListener('resize', sizeCanvas);
 
+    /* Colours come from the CSS tokens so the robot follows the theme. */
+    var PAL = {};
+    function token(name, fallback) {
+      var v = '';
+      try { v = getComputedStyle(document.documentElement).getPropertyValue(name).trim(); } catch (e) {}
+      return v || fallback;
+    }
+    function refreshPalette() {
+      PAL.ink    = token('--c-ink',    '28 27 24');
+      PAL.cream  = token('--c-cream',  '250 247 240');
+      PAL.paper  = token('--c-paper',  '242 237 226');
+      PAL.signal = token('--c-signal', '217 78 40');
+      PAL.kraft  = token('--c-kraft',  '229 200 144');
+    }
+    function C(triplet, alpha) {
+      return alpha == null ? 'rgb(' + triplet + ')' : 'rgb(' + triplet + ' / ' + alpha + ')';
+    }
+    refreshPalette();
+    window.addEventListener('ms:themechange', refreshPalette);
+
     /* Workspace geometry (290x155) */
     var TABLE_Y = 144;
     var BASE_L = { x: 42, y: 138 };
@@ -217,20 +237,20 @@ window.MSArm = (function () {
       ctx.fillStyle = palette.shade;
       ctx.fillRect(x, y + FOLDED_H * 0.56, FOLDED_W, FOLDED_H * 0.44);
 
-      ctx.strokeStyle = '#1C1B18';
+      ctx.strokeStyle = C(PAL.ink);
       ctx.lineWidth = 1.5;
       ctx.strokeRect(x, y, FOLDED_W, FOLDED_H);
 
       ctx.beginPath();
       ctx.moveTo(x + 2, y + FOLDED_H * 0.54);
       ctx.lineTo(x + FOLDED_W - 2, y + FOLDED_H * 0.54);
-      ctx.strokeStyle = 'rgba(28, 27, 24, 0.55)';
+      ctx.strokeStyle = C(PAL.ink, 0.55);
       ctx.lineWidth = 1;
       ctx.stroke();
 
       ctx.beginPath();
       ctx.arc(cx, y + 1, 3.2, 0.1 * Math.PI, 0.9 * Math.PI);
-      ctx.strokeStyle = 'rgba(28, 27, 24, 0.45)';
+      ctx.strokeStyle = C(PAL.ink, 0.45);
       ctx.stroke();
       ctx.restore();
     }
@@ -252,7 +272,7 @@ window.MSArm = (function () {
       var bodyHalfW = lerp(26, FOLDED_W / 2, sideFold);
 
       ctx.fillStyle = palette.fill;
-      ctx.strokeStyle = '#1C1B18';
+      ctx.strokeStyle = C(PAL.ink);
       ctx.lineWidth = 1.5;
       ctx.beginPath();
       ctx.rect(CENTER_X - bodyHalfW, topY, bodyHalfW * 2, botY - topY);
@@ -287,7 +307,7 @@ window.MSArm = (function () {
       if (sideFold > 0.05 && halfFold < 0.85) {
         ctx.save();
         ctx.setLineDash([2.5, 2.5]);
-        ctx.strokeStyle = 'rgba(28, 27, 24, 0.35)';
+        ctx.strokeStyle = C(PAL.ink, 0.35);
         ctx.lineWidth = 1;
         ctx.beginPath();
         ctx.moveTo(CENTER_X - bodyHalfW + 5, topY + 2);
@@ -302,29 +322,29 @@ window.MSArm = (function () {
         var foldH = (botY - topY) * Math.min(1, 0.45 + halfFold * 0.55);
         ctx.fillStyle = palette.shade;
         ctx.fillRect(CENTER_X - bodyHalfW, botY - foldH * 0.52, bodyHalfW * 2, foldH * 0.52);
-        ctx.strokeStyle = '#1C1B18';
+        ctx.strokeStyle = C(PAL.ink);
         ctx.lineWidth = 1.4;
         ctx.strokeRect(CENTER_X - bodyHalfW, topY, bodyHalfW * 2, botY - topY);
 
         ctx.beginPath();
         ctx.moveTo(CENTER_X - bodyHalfW + 2, topY + (botY - topY) * 0.52);
         ctx.lineTo(CENTER_X + bodyHalfW - 2, topY + (botY - topY) * 0.52);
-        ctx.strokeStyle = 'rgba(28, 27, 24, 0.55)';
+        ctx.strokeStyle = C(PAL.ink, 0.55);
         ctx.lineWidth = 1;
         ctx.stroke();
       } else {
         ctx.beginPath();
         ctx.arc(CENTER_X, topY, 6, 0.1 * Math.PI, 0.9 * Math.PI);
-        ctx.fillStyle = '#F2EDE2';
+        ctx.fillStyle = C(PAL.paper);
         ctx.fill();
-        ctx.strokeStyle = '#1C1B18';
+        ctx.strokeStyle = C(PAL.ink);
         ctx.lineWidth = 1.3;
         ctx.stroke();
 
         ctx.beginPath();
         ctx.moveTo(CENTER_X - bodyHalfW + 3, botY - 4);
         ctx.lineTo(CENTER_X + bodyHalfW - 3, botY - 4);
-        ctx.strokeStyle = 'rgba(28, 27, 24, 0.28)';
+        ctx.strokeStyle = C(PAL.ink, 0.28);
         ctx.lineWidth = 1;
         ctx.stroke();
       }
@@ -336,37 +356,37 @@ window.MSArm = (function () {
       var ik = solveIK(base, ee.x, ee.y);
       var elbow = ik.elbow, wrist = ik.wrist;
 
-      ctx.fillStyle = '#1C1B18';
+      ctx.fillStyle = C(PAL.ink);
       ctx.fillRect(base.x - 11, TABLE_Y - 5.5, 22, 5.5);
-      ctx.fillStyle = '#FAF7F0';
-      ctx.strokeStyle = '#1C1B18';
+      ctx.fillStyle = C(PAL.cream);
+      ctx.strokeStyle = C(PAL.ink);
       ctx.lineWidth = 1.5;
       ctx.fillRect(base.x - 6.5, TABLE_Y - 10, 13, 4.5);
       ctx.strokeRect(base.x - 6.5, TABLE_Y - 10, 13, 4.5);
 
       ctx.lineCap = 'round';
-      ctx.strokeStyle = '#1C1B18';
+      ctx.strokeStyle = C(PAL.ink);
       ctx.lineWidth = 7.4;
       ctx.beginPath();
       ctx.moveTo(base.x, base.y);
       ctx.lineTo(elbow.x, elbow.y);
       ctx.stroke();
 
-      ctx.strokeStyle = '#FAF7F0';
+      ctx.strokeStyle = C(PAL.cream);
       ctx.lineWidth = 3.8;
       ctx.beginPath();
       ctx.moveTo(base.x, base.y);
       ctx.lineTo(elbow.x, elbow.y);
       ctx.stroke();
 
-      ctx.strokeStyle = '#1C1B18';
+      ctx.strokeStyle = C(PAL.ink);
       ctx.lineWidth = 5.8;
       ctx.beginPath();
       ctx.moveTo(elbow.x, elbow.y);
       ctx.lineTo(wrist.x, wrist.y);
       ctx.stroke();
 
-      ctx.strokeStyle = '#E5C890';
+      ctx.strokeStyle = C(PAL.kraft);
       ctx.lineWidth = 2.4;
       ctx.beginPath();
       ctx.moveTo(elbow.x, elbow.y);
@@ -374,7 +394,7 @@ window.MSArm = (function () {
       ctx.stroke();
 
       var spread = 3.2 + jawOpen * 3.8;
-      ctx.fillStyle = '#1C1B18';
+      ctx.fillStyle = C(PAL.ink);
       ctx.fillRect(wrist.x - 6.5, wrist.y, 13, 2.8);
       ctx.fillRect(wrist.x - spread - 1.6, wrist.y + 2.8, 2, 7.2);
       ctx.fillRect(wrist.x + spread - 0.4, wrist.y + 2.8, 2, 7.2);
@@ -382,15 +402,15 @@ window.MSArm = (function () {
       [{ pt: base, r: 4.6 }, { pt: elbow, r: 4.0 }, { pt: wrist, r: 3.0 }].forEach(function (j) {
         ctx.beginPath();
         ctx.arc(j.pt.x, j.pt.y, j.r, 0, Math.PI * 2);
-        ctx.fillStyle = '#FAF7F0';
+        ctx.fillStyle = C(PAL.cream);
         ctx.fill();
-        ctx.strokeStyle = '#1C1B18';
+        ctx.strokeStyle = C(PAL.ink);
         ctx.lineWidth = 1.5;
         ctx.stroke();
 
         ctx.beginPath();
         ctx.arc(j.pt.x, j.pt.y, j.r * 0.44, 0, Math.PI * 2);
-        ctx.fillStyle = '#D94E28';
+        ctx.fillStyle = C(PAL.signal);
         ctx.fill();
       });
     }
@@ -398,14 +418,14 @@ window.MSArm = (function () {
     function renderScene() {
       ctx.clearRect(0, 0, W, H);
 
-      ctx.strokeStyle = '#1C1B18';
+      ctx.strokeStyle = C(PAL.ink);
       ctx.lineWidth = 1.5;
       ctx.beginPath();
       ctx.moveTo(14, TABLE_Y);
       ctx.lineTo(W - 8, TABLE_Y);
       ctx.stroke();
 
-      ctx.fillStyle = '#1C1B18';
+      ctx.fillStyle = C(PAL.ink);
       ctx.fillRect(CENTER_X - 34, TABLE_Y, 68, 2);
       ctx.fillRect(STACK_X - 20, TABLE_Y, 40, 2.2);
 

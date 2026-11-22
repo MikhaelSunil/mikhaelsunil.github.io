@@ -45,7 +45,7 @@ window.SECTIONS = [
     nav: "Projects",
     number: "01",
     kicker: "HARDWARE DOSSIER",
-    title: "Projects",
+    title: "Projects & Research",
     meta: "05 FIELD & LAB BUILDS",
     blocks: [
       {

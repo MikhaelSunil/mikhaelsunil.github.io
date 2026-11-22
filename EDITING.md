@@ -171,7 +171,36 @@ Messages then land in your inbox and the visitor never leaves the page.
 
 ### Change the colours
 
-In `index.html` find the `colors:` block, and in `assets/css/style.css` find `:root`. Change the same value in both places. `signal` is the orange, `ink` the near-black, `paper` the background.
+All colours live in **one place now**: `assets/css/style.css`, at the top. There
+are two blocks — `:root` for light mode and `[data-theme="dark"]` for dark.
+
+They're written as red/green/blue numbers rather than hex codes, because that's
+what lets the site fade between the two themes and keeps see-through shades
+(like faint borders) working:
+
+```css
+:root {
+  --c-signal: 217 78 40;   /* the orange */
+  --c-ink:     28 27 24;   /* text and borders */
+  --c-paper:  242 237 226; /* page background */
+}
+```
+
+Change a number and it changes everywhere — cards, buttons, nav, even the
+drone and the robot arms. You don't need to touch `index.html`.
+
+To convert a hex code: `#D94E28` becomes `217 78 40`. Search for "hex to rgb"
+and any converter will give you the three numbers.
+
+### Dark mode
+
+Visitors toggle it with the switch at the top right. Their choice is
+remembered, and on a first visit the site follows whatever their device is set
+to. To change how dark mode looks, edit the `[data-theme="dark"]` block in
+`assets/css/style.css`.
+
+To remove dark mode entirely, delete the `.theme-zone` block from
+`index.html` — the switch disappears and everyone gets light mode.
 
 ---
 
