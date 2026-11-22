@@ -470,7 +470,23 @@ window.MSRender = (function () {
         '<span class="px-2.5 py-1 bg-ink text-cream font-bold uppercase tracking-wider">' + S.kicker + '</span>'));
     }
     var nameBlock = el('div', 'space-y-2');
-    nameBlock.appendChild(el('h1', 'font-display font-bold text-3xl sm:text-4xl md:text-[1.95rem] lg:text-[2.7rem] xl:text-[3.05rem] leading-[1.18] tracking-tight text-ink', expandTokens(S.heroHeading || S.name || '')));
+
+    /* The heading is typed by assets/js/ui.js. It is built as empty spans
+       plus a caret; the wave slot is zero-width until the smiley arrives, so
+       the greeting gets the full column to itself. A plain aria-label keeps
+       the heading readable while its text is still being typed. */
+    var greeting = S.heroGreeting || '';
+    var headingText = S.heroHeading || S.name || '';
+    var h1 = el('h1', 'hero-heading font-display font-bold text-[1.75rem] sm:text-[3rem] md:text-[2.4rem] lg:text-[3.2rem] xl:text-[3.6rem] leading-[1.18] tracking-tight text-ink');
+    h1.id = 'hero-heading';
+    h1.setAttribute('data-greeting', greeting);
+    h1.setAttribute('data-heading', headingText.split('{wave}').join('').replace(/\s+/g, ' ').trim());
+    h1.setAttribute('aria-label', (greeting ? greeting + ' \u2014 ' : '') + headingText.split('{wave}').join('').replace(/\s+/g, ' ').trim());
+    h1.innerHTML =
+      '<span id="hero-text" class="hero-text" aria-hidden="true"></span>' +
+      '<span id="hero-caret" class="hero-caret" aria-hidden="true"></span>' +
+      '<span id="hero-wave-slot" class="hero-wave-slot" aria-hidden="true">' + WAVE_SVG + '</span>';
+    nameBlock.appendChild(h1);
     if (S.tagline && S.showTaglineInHero !== false) {
       nameBlock.appendChild(el('p', 'font-mono text-sm sm:text-base font-bold text-signal uppercase tracking-wide pt-1', S.tagline));
     }

@@ -64,6 +64,64 @@ window.MSUI = (function () {
   }
 
   /* =====================================================================
+     0b. HERO INTRO
+     Types the greeting, dissolves it, types the heading, then brings the
+     smiley in to wave once. Anyone who asked for reduced motion gets the
+     finished state straight away.
+     ===================================================================== */
+  function initHeroIntro() {
+    var h1 = document.getElementById('hero-heading');
+    if (!h1) return;
+    var textEl = document.getElementById('hero-text');
+    var caret = document.getElementById('hero-caret');
+    var slot = document.getElementById('hero-wave-slot');
+    if (!textEl) return;
+
+    var greeting = h1.getAttribute('data-greeting') || '';
+    var heading = h1.getAttribute('data-heading') || '';
+
+    var reduce = false;
+    try { reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) {}
+
+    function settle() {
+      textEl.textContent = heading;
+      if (caret) caret.classList.add('is-done');
+      if (slot) { slot.classList.add('no-hand'); slot.classList.add('is-in'); }
+    }
+
+    if (reduce || !heading) { settle(); return; }
+
+    var CHAR = 42;          /* ms per character */
+    var HOLD = 1000;        /* how long the greeting sits before dissolving */
+    var timers = [];
+    function at(ms, fn) { timers.push(setTimeout(fn, ms)); }
+
+    function typeOut(str, start) {
+      for (var i = 0; i <= str.length; i++) {
+        (function (n) { at(start + n * CHAR, function () { textEl.textContent = str.slice(0, n); }); })(i);
+      }
+      return start + str.length * CHAR;
+    }
+
+    var t = 260;
+    if (greeting) {
+      t = typeOut(greeting, t) + HOLD;
+      at(t, function () { textEl.classList.add('is-dissolving'); });
+      t += 380;
+      at(t, function () {
+        textEl.classList.remove('is-dissolving');
+        textEl.textContent = '';
+      });
+      t += 60;
+    }
+    t = typeOut(heading, t) + 200;
+    at(t, function () {
+      if (caret) caret.classList.add('is-done');
+      if (slot) slot.classList.add('is-in');
+    });
+  }
+
+  /* =====================================================================
      1. SPINNING DRONE BOOT SEQUENCE (~2.0s)
      ===================================================================== */
   function initBoot() {
@@ -460,6 +518,7 @@ window.MSUI = (function () {
      ===================================================================== */
   function init() {
     initTheme();
+    initHeroIntro();
     var boot = initBoot();
     initForklift();
     var cv = initCV();

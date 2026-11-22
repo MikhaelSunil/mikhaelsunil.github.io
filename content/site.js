@@ -20,12 +20,14 @@ window.SITE = {
      search engines — so leave it as your name. */
   name: "Mikhael Sunil",
 
-  /* The big heading in the hero. Delete this line and the hero falls back
-     to showing "name" above.
-     Write {wave} anywhere in it to drop in the little waving smiley.
-     Use &nbsp; to glue a word to the smiley so they never split across
-     lines, and <br> to force a line break. */
-  heroHeading: "Glad you wandered in&nbsp;{wave}<br>I'm Mikhael",
+  /* The hero heading types itself out when the page loads:
+       1. heroGreeting is typed, held for a moment, then dissolves
+       2. heroHeading is typed in its place and stays
+       3. the smiley arrives, waves once, and its hand fades away
+     Set heroGreeting to "" to skip straight to the heading.
+     Write {wave} in heroHeading to place the smiley. */
+  heroGreeting: "Glad you wandered in",
+  heroHeading: "I'm Mikhael {wave}",
 
   /* The small dark badge above the heading. */
   kicker: "ABOUT ME",
