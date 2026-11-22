@@ -53,9 +53,16 @@ If the page ever comes up blank after an edit, you broke one of those three. Pre
 
 Find it in `content/sections.js` and type over it. That's it.
 
-### Change your intro paragraph or job title
+### Change your intro paragraph
 
-`content/site.js`, near the top — the `tagline` and `intro` lines.
+`content/site.js`, near the top — the `intro` line.
+
+### The job-title line under your name
+
+There isn't one, by design. The `tagline` in `content/site.js` still feeds the
+CV pop-up and what search engines show, but it's hidden on the page itself by
+`showTaglineInHero: false`. Change that to `true` if you ever want it back
+under your name.
 
 ### Add your portrait photo
 
@@ -218,6 +225,43 @@ Every one is optional except `title`.
 | `footer` | A bottom bar: `{left: "NATIONAL FINALS", right: "✓"}` |
 | `span` | Make the card wider: `2` means it takes two columns |
 | `link` | A button: `{label: "Read paper", url: "https://..."}` |
+| `steps` | A numbered workflow list: `[{n: "01.", color: "signal", label: "Design:", text: "..."}]` |
+| `bodyClass` | Override the body styling, e.g. `"text-sm sm:text-base text-ink/90 leading-relaxed"` |
+
+`body` can also be a **list of strings** instead of one string, which gives you
+several paragraphs in the same card:
+
+```js
+body: [
+  "First paragraph.",
+  "Second paragraph."
+],
+```
+
+### Uneven card widths
+
+By default `columns: 2` makes two equal halves. For a wide card beside a narrow
+one, use `widths` instead — the numbers are columns out of 12, so `[7, 5]` is
+roughly 60/40:
+
+```js
+{
+  type: "cards",
+  widths: [7, 5],
+  items: [ /* ...two cards... */ ]
+}
+```
+
+That's what the About section uses for *Who I Am* beside *How I Work*.
+
+### Sub-heading colour
+
+A `heading` block's little square is amber by default. `color` accepts
+`"signal"`, `"scope"`, `"ink"` or `"amber"`:
+
+```js
+{ type: "heading", color: "signal", label: "03 // WHAT I BUILD &amp; RESEARCH" },
+```
 
 ---
 
