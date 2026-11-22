@@ -369,9 +369,46 @@ body, .retro-card, .retro-btn, .nav-crate, header, .gallery-figure {
 /* If the sequence is skipped, the hand is simply never shown. */
 .hero-wave-slot.no-hand .wave-hand { display: none; }
 @media (prefers-reduced-motion: reduce) {
+  .drone-cursor { display: none; }
   .hero-wave-slot.is-in .wave-hand { animation: none; }
   .hero-caret { animation: none; }
   .hero-text, .hero-wave-slot { transition: none; }
+}
+
+
+/* =========================================================
+   DRONE CURSOR
+   Added by assets/js/cursor.js, and only for a real mouse.
+   The native cursor is hidden by a class the script adds, so
+   if the script never runs the pointer stays normal.
+   ========================================================= */
+.drone-cursor {
+  position: fixed;
+  top: 0; left: 0;
+  width: 36px; height: 36px;
+  z-index: 60;
+  pointer-events: none;
+  opacity: 0;
+  will-change: transform;
+  transition: opacity 0.18s ease;
+}
+.drone-cursor.is-live { opacity: 1; }
+.drone-cursor.is-hidden { opacity: 0; }
+.drone-cursor svg { display: block; width: 100%; height: 100%; overflow: visible; }
+
+html.has-drone-cursor,
+html.has-drone-cursor body,
+html.has-drone-cursor a,
+html.has-drone-cursor button,
+html.has-drone-cursor label,
+html.has-drone-cursor summary {
+  cursor: none;
+}
+/* Text fields keep a real caret — you cannot type accurately without one. */
+html.has-drone-cursor input,
+html.has-drone-cursor textarea,
+html.has-drone-cursor [contenteditable="true"] {
+  cursor: text;
 }
 
 /* =========================================================
