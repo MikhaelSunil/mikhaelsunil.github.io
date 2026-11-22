@@ -34,7 +34,7 @@ window.SITE = {
   showTaglineInHero: false,
 
   // HTML is allowed here. <strong> makes text bold.
-  intro: "I love building autonomous machines and seeing ideas actually come alive on real hardware. Most of my time goes into tinkering across the full stack—whether it’s experimenting with <strong class=\"font-bold text-ink\">model-based learning for ground and aerial manipulators</strong>, getting <strong class=\"font-bold text-ink\">aerial drone swarms</strong> to coordinate on their own, or engineering <strong class=\"font-bold text-ink\">wearable exoskeletons</strong> for rehabilitation. Those are just a few of the systems I enjoy taking from rough algorithms all the way into the real world.",
+  intro: "Just too osessed on designing and building robots and seeing ideas actually come alive on real hardware. Most of my time goes into tinkering across the full stack,whether it’s experimenting with <strong class=\"font-bold text-ink\">model-based learning for ground and aerial manipulators</strong>, getting <strong class=\"font-bold text-ink\">aerial drone swarms</strong> to coordinate on their own, or engineering <strong class=\"font-bold text-ink\">wearable exoskeletons</strong> for rehabilitation. Those are just a few of the systems I enjoy taking from rough algorithms all the way into the real world.",
 
   /* ---- Your portrait ------------------------------------------------
      Put a photo in assets/img/ then write its path here, e.g.
