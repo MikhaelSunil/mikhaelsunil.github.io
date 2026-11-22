@@ -1,8 +1,327 @@
-mikhaelsunil
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+  <!-- ===================================================================
+       These tags are overwritten at load time from content/site.js (meta).
+       Edit them there, not here — these are only the no-JavaScript values.
+       =================================================================== -->
+  <title>Mikhael Sunil — Robotics &amp; Autonomous Systems</title>
+  <meta name="description" content="Personal portfolio of Mikhael Sunil — Robotics &amp; Autonomous Systems Engineer specializing in ROS 2, aerial drone swarms, Deep RL, and mechatronics." />
+  <meta name="author" content="Mikhael Sunil" />
+  <meta property="og:title" content="Mikhael Sunil — Robotics &amp; Autonomous Systems" />
+  <meta property="og:description" content="ROS 2, multi-agent aerial swarms, autonomous navigation, and wearable mechatronic systems." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://mikhaelsunil.github.io/" />
+  <link rel="canonical" href="https://mikhaelsunil.github.io/" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23D94E28' stroke='%231C1B18' stroke-width='3'/%3E%3Ctext x='16' y='21' font-family='monospace' font-weight='bold' font-size='14' fill='%23FAF7F0' text-anchor='middle'%3EMS%3C/text%3E%3C/svg%3E" />
 
+  <!-- Google Fonts: Space Grotesk, IBM Plex Mono, DM Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
 
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
 
-<hr>
+  <!-- ===================================================================
+       DESIGN TOKENS — change a colour here and it changes site-wide.
+       Mirror any colour change in assets/css/style.css (:root) too.
+       =================================================================== -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            paper:      '#F2EDE2',
+            cream:      '#FAF7F0',
+            ink:        '#1C1B18',
+            muted:      '#5B564C',
+            signal:     '#D94E28',
+            amberretro: '#D49B2A',
+            kraft:      '#E5C890',
+            scope:      '#2D6A4F'
+          },
+          fontFamily: {
+            display: ['"Space Grotesk"', 'system-ui', 'sans-serif'],
+            sans:    ['"DM Sans"', 'system-ui', 'sans-serif'],
+            mono:    ['"IBM Plex Mono"', 'ui-monospace', 'monospace']
+          },
+          boxShadow: {
+            hard:        '4px 4px 0px #1C1B18',
+            'hard-sm':   '2px 2px 0px #1C1B18',
+            'hard-lg':   '6px 6px 0px #1C1B18',
+            'hard-signal': '4px 4px 0px #D94E28'
+          }
+        }
+      }
+    };
+  </script>
 
-<h1>
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+
+<body class="font-sans text-ink antialiased selection:bg-signal selection:text-cream">
+
+  <!-- =========================================================
+       SPINNING DRONE LOADING SCREEN (~2.0s)
+       ========================================================= -->
+  <div id="boot-overlay" role="dialog" aria-modal="true" aria-label="Flight Controller Boot Sequence"
+       class="fixed inset-0 z-50 bg-paper flex items-center justify-center p-4 sm:p-6">
+    <div class="w-full max-w-md bg-cream border-2 border-ink shadow-hard-lg p-5 sm:p-6">
+      <div class="flex items-center justify-between border-b-2 border-ink pb-2.5 mb-4">
+        <div class="flex items-center gap-2 font-mono text-xs font-bold uppercase tracking-wider">
+          <span class="w-2.5 h-2.5 bg-signal border border-ink inline-block"></span>
+          <span>SYS_BOOT // REV.84</span>
+        </div>
+        <button id="skip-boot-btn" type="button"
+                class="font-mono text-[11px] font-bold uppercase px-2.5 py-1 bg-paper border-2 border-ink shadow-hard-sm hover:bg-amberretro transition-colors">
+          SKIP [ESC]
+        </button>
+      </div>
+
+      <div class="flex justify-center py-2">
+        <div class="relative w-48 h-48 bg-paper border-2 border-ink flex items-center justify-center overflow-hidden">
+          <div class="absolute inset-0 pointer-events-none">
+            <div class="absolute top-1/2 inset-x-0 h-[1px] bg-ink/15"></div>
+            <div class="absolute left-1/2 inset-y-0 w-[1px] bg-ink/15"></div>
+            <span class="absolute top-1.5 left-2 font-mono text-[9px] text-muted">QUAD_04</span>
+            <span class="absolute bottom-1.5 right-2 font-mono text-[9px] text-scope font-bold">14,200 RPM</span>
+          </div>
+
+          <svg viewBox="0 0 220 220" class="w-44 h-44 drone-hover" xmlns="http://www.w3.org/2000/svg" aria-label="Spinning Quadcopter Drone">
+            <circle cx="52" cy="52" r="34" fill="rgba(217,78,40,0.07)" stroke="#1C1B18" stroke-width="1.2" stroke-dasharray="4 4" />
+            <circle cx="168" cy="52" r="34" fill="rgba(45,106,79,0.07)" stroke="#1C1B18" stroke-width="1.2" stroke-dasharray="4 4" />
+            <circle cx="52" cy="168" r="34" fill="rgba(45,106,79,0.07)" stroke="#1C1B18" stroke-width="1.2" stroke-dasharray="4 4" />
+            <circle cx="168" cy="168" r="34" fill="rgba(217,78,40,0.07)" stroke="#1C1B18" stroke-width="1.2" stroke-dasharray="4 4" />
+
+            <line x1="52" y1="52" x2="168" y2="168" stroke="#1C1B18" stroke-width="10" stroke-linecap="round" />
+            <line x1="52" y1="52" x2="168" y2="168" stroke="#FAF7F0" stroke-width="3" stroke-linecap="round" stroke-dasharray="8 6" />
+            <line x1="168" y1="52" x2="52" y2="168" stroke="#1C1B18" stroke-width="10" stroke-linecap="round" />
+            <line x1="168" y1="52" x2="52" y2="168" stroke="#FAF7F0" stroke-width="3" stroke-linecap="round" stroke-dasharray="8 6" />
+
+            <rect x="85" y="76" width="50" height="68" rx="6" fill="#FAF7F0" stroke="#1C1B18" stroke-width="3" />
+            <rect x="93" y="84" width="34" height="22" fill="#D94E28" stroke="#1C1B18" stroke-width="2" />
+            <polygon points="110,64 103,75 117,75" fill="#D94E28" stroke="#1C1B18" stroke-width="1.5" />
+            <rect x="95" y="114" width="30" height="20" fill="#1C1B18" />
+            <circle cx="102" cy="124" r="2.8" fill="#2D6A4F" />
+            <circle cx="110" cy="124" r="2.8" fill="#D49B2A" />
+            <circle cx="118" cy="124" r="2.8" fill="#D94E28" />
+
+            <circle cx="52" cy="52" r="8.5" fill="#FAF7F0" stroke="#1C1B18" stroke-width="2.5" />
+            <circle cx="168" cy="52" r="8.5" fill="#FAF7F0" stroke="#1C1B18" stroke-width="2.5" />
+            <circle cx="52" cy="168" r="8.5" fill="#FAF7F0" stroke="#1C1B18" stroke-width="2.5" />
+            <circle cx="168" cy="168" r="8.5" fill="#FAF7F0" stroke="#1C1B18" stroke-width="2.5" />
+
+            <g class="rotor-cw">
+              <ellipse cx="52" cy="52" rx="31" ry="4.8" fill="#1C1B18" opacity="0.88" />
+              <ellipse cx="52" cy="52" rx="4.8" ry="31" fill="#D94E28" opacity="0.65" />
+              <circle cx="52" cy="52" r="3.8" fill="#FAF7F0" stroke="#1C1B18" stroke-width="1.5" />
+            </g>
+            <g class="rotor-ccw">
+              <ellipse cx="168" cy="52" rx="31" ry="4.8" fill="#1C1B18" opacity="0.88" />
+              <ellipse cx="168" cy="52" rx="4.8" ry="31" fill="#2D6A4F" opacity="0.65" />
+              <circle cx="168" cy="52" r="3.8" fill="#FAF7F0" stroke="#1C1B18" stroke-width="1.5" />
+            </g>
+            <g class="rotor-ccw">
+              <ellipse cx="52" cy="168" rx="31" ry="4.8" fill="#1C1B18" opacity="0.88" />
+              <ellipse cx="52" cy="168" rx="4.8" ry="31" fill="#2D6A4F" opacity="0.65" />
+              <circle cx="52" cy="168" r="3.8" fill="#FAF7F0" stroke="#1C1B18" stroke-width="1.5" />
+            </g>
+            <g class="rotor-cw">
+              <ellipse cx="168" cy="168" rx="31" ry="4.8" fill="#1C1B18" opacity="0.88" />
+              <ellipse cx="168" cy="168" rx="4.8" ry="31" fill="#D94E28" opacity="0.65" />
+              <circle cx="168" cy="168" r="3.8" fill="#FAF7F0" stroke="#1C1B18" stroke-width="1.5" />
+            </g>
+          </svg>
+        </div>
+      </div>
+
+      <div class="mt-4 bg-ink text-cream font-mono text-[11px] p-3 border-2 border-ink space-y-1">
+        <div id="boot-step-1" class="flex justify-between opacity-0 transition-opacity duration-200">
+          <span>&gt; INITIALIZING FLIGHT CONTROLLER...</span>
+          <span class="text-amberretro font-bold">OK</span>
+        </div>
+        <div id="boot-step-2" class="flex justify-between opacity-0 transition-opacity duration-200">
+          <span>&gt; CALIBRATING IMU &amp; FORKLIFT RAIL...</span>
+          <span class="text-amberretro font-bold">OK</span>
+        </div>
+        <div id="boot-step-3" class="flex justify-between opacity-0 transition-opacity duration-200">
+          <span>&gt; LOADING HARDWARE MANUAL...</span>
+          <span class="text-signal font-bold">READY</span>
+        </div>
+      </div>
+
+      <div class="mt-3 h-2.5 w-full bg-paper border-2 border-ink overflow-hidden">
+        <div id="boot-bar" class="h-full bg-signal w-0 transition-all duration-300 ease-linear"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast notification -->
+  <div id="toast" role="status" aria-live="polite"
+       class="fixed top-28 right-4 sm:right-6 z-40 translate-y-2 opacity-0 pointer-events-none transition-all duration-200 bg-ink text-cream border-2 border-ink shadow-hard-signal px-4 py-2 font-mono text-xs flex items-center gap-2">
+    <span class="w-2 h-2 bg-amberretro inline-block"></span>
+    <span id="toast-msg">DONE</span>
+  </div>
+
+  <!-- =========================================================
+       STICKY ROBOTIC FORKLIFT NAVIGATION BAR
+       The tabs themselves are generated from content/sections.js
+       ========================================================= -->
+  <header id="forklift-header" class="sticky top-0 z-30 bg-cream border-b-2 border-ink">
+    <div class="h-1.5 w-full hazard-rail border-b border-ink"></div>
+
+    <div class="max-w-6xl mx-auto px-3 sm:px-6 pt-2 pb-2.5">
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-2 md:gap-6">
+
+        <a href="#home" id="brand-name" class="shrink-0 pb-1 font-display font-bold text-base sm:text-lg tracking-tight text-ink uppercase hover:text-signal transition-colors">
+          Mikhael Sunil
+        </a>
+
+        <div id="forklift-nav-zone" class="relative flex-1 max-w-3xl overflow-x-auto no-scrollbar pt-1">
+          <div id="forklift-stage" class="relative">
+
+            <!-- Overhead rail the forklift rides along -->
+            <div id="forklift-rail" class="relative h-[40px] w-full select-none pointer-events-none">
+              <div class="absolute bottom-[5px] inset-x-0 h-[4px] bg-paper border-y border-ink"></div>
+              <div class="absolute bottom-[1px] inset-x-0 h-[2px] bg-ink/25"></div>
+
+              <div id="forklift-actor" class="absolute bottom-[3px] left-0 will-change-transform"
+                   style="width: 62px; height: 38px; transform: translateX(0px);">
+                <svg id="forklift-svg" viewBox="0 0 68 42" class="w-full h-full overflow-visible" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <g id="forklift-body" transform="translate(34, 21)">
+                    <g id="forklift-flip">
+                      <rect x="-12" y="-19" width="6" height="3" fill="#1C1B18" />
+                      <path id="forklift-beacon" d="M-11.5 -19 A2.5 2.5 0 0 1 -6.5 -19 Z" fill="#D49B2A" stroke="#1C1B18" stroke-width="1.2" />
+                      <circle id="forklift-beacon-glow" cx="-9" cy="-20" r="6" fill="#2D6A4F" opacity="0" />
+
+                      <path d="M-19 -6 L-16 -16 L-1 -16 L3 -6" fill="#FAF7F0" stroke="#1C1B18" stroke-width="2" stroke-linejoin="round" />
+                      <rect x="-13" y="-12" width="10" height="5" rx="1.5" fill="#1C1B18" />
+                      <circle cx="-6" cy="-9.5" r="1.3" fill="#2D6A4F" />
+
+                      <path d="M-23 5 L-23 -4 C-23 -6 -21 -7 -18 -7 L7 -7 L9 5 Z" fill="#D94E28" stroke="#1C1B18" stroke-width="2" stroke-linejoin="round" />
+                      <rect x="-21" y="-2" width="9" height="4" fill="#D49B2A" stroke="#1C1B18" stroke-width="1.2" />
+
+                      <rect x="8" y="-18" width="4.5" height="26" fill="#FAF7F0" stroke="#1C1B18" stroke-width="1.8" />
+                      <line x1="10.2" y1="-16" x2="10.2" y2="6" stroke="#1C1B18" stroke-width="1" stroke-dasharray="2 2" />
+
+                      <g id="forklift-forks" transform="translate(0, 0)">
+                        <rect x="12.5" y="-2" width="3.2" height="10" fill="#1C1B18" />
+                        <path d="M15 6 L26 6 L26 9.5 L13.5 9.5 Z" fill="#1C1B18" />
+                        <rect x="23" y="9" width="3" height="2.8" fill="#D94E28" stroke="#1C1B18" stroke-width="0.9" />
+                      </g>
+
+                      <g id="wheel-rear" transform="translate(-15, 7)">
+                        <circle cx="0" cy="0" r="6" fill="#1C1B18" />
+                        <circle cx="0" cy="0" r="3" fill="#FAF7F0" />
+                        <line x1="-3" y1="0" x2="3" y2="0" stroke="#1C1B18" stroke-width="1.3" />
+                        <line x1="0" y1="-3" x2="0" y2="3" stroke="#1C1B18" stroke-width="1.3" />
+                      </g>
+
+                      <g id="wheel-front" transform="translate(3, 7)">
+                        <circle cx="0" cy="0" r="6" fill="#1C1B18" />
+                        <circle cx="0" cy="0" r="3" fill="#D49B2A" />
+                        <line x1="-3" y1="0" x2="3" y2="0" stroke="#1C1B18" stroke-width="1.3" />
+                        <line x1="0" y1="-3" x2="0" y2="3" stroke="#1C1B18" stroke-width="1.3" />
+                      </g>
+                    </g>
+                  </g>
+                </svg>
+              </div>
+            </div>
+
+            <!-- Nav tabs are injected here by assets/js/render.js -->
+            <nav id="nav-track" class="nav-track" aria-label="Primary Navigation"></nav>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </header>
+
+  <!-- =========================================================
+       PAGE CONTENT — built from content/site.js + sections.js
+       ========================================================= -->
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 pt-10 pb-24 sm:pt-14 sm:pb-28 space-y-20 sm:space-y-24">
+
+    <!-- Hero -->
+    <section id="home" class="scroll-mt-32" aria-label="Introduction and Portrait"></section>
+
+    <!-- Every other section -->
+    <div id="sections-root" class="space-y-20 sm:space-y-24"></div>
+
+    <noscript>
+      <div class="retro-card p-6 font-mono text-sm">
+        This portfolio is assembled in the browser. Please enable JavaScript,
+        or reach Mikhael Sunil at
+        <a class="underline" href="https://github.com/MikhaelSunil">github.com/MikhaelSunil</a>.
+      </div>
+    </noscript>
+
+    <!-- Footer -->
+    <footer class="pt-5 border-t-2 border-ink flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 font-mono text-[11px] text-muted">
+      <div>&copy; <span id="footer-year">2026</span> <span id="footer-note"></span></div>
+      <div class="flex items-center gap-3">
+        <button id="replay-boot-btn" type="button" title="Replay Drone Boot Loader" aria-label="Replay Drone Boot Loader"
+                class="inline-flex items-center gap-1.5 px-2.5 py-1 bg-cream border-2 border-ink shadow-hard-sm text-ink font-bold hover:bg-amberretro transition-colors">
+          <svg viewBox="0 0 16 16" class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+            <path d="M13.5 8a5.5 5.5 0 1 1-1.6-3.9" stroke-linecap="round" />
+            <path d="M13.5 2.5v3h-3" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+          <span>REPLAY DRONE</span>
+        </button>
+      </div>
+    </footer>
+
+  </main>
+
+  <!-- =========================================================
+       1-PAGE CV POP-UP — contents come from site.js (cv)
+       ========================================================= -->
+  <div id="cv-modal" role="dialog" aria-modal="true" aria-labelledby="cv-modal-title"
+       class="hidden fixed inset-0 z-50 bg-ink/60 backdrop-blur-[1px] flex items-center justify-center p-3 sm:p-6 overflow-y-auto">
+    <div id="cv-print-sheet" class="w-full max-w-3xl bg-cream border-2 border-ink shadow-hard-lg my-auto max-h-[90vh] overflow-y-auto">
+      <div class="no-print sticky top-0 z-10 bg-ink text-cream px-5 py-3 flex items-center justify-between gap-3 border-b-2 border-ink">
+        <div class="font-mono text-xs font-bold uppercase tracking-wider">
+          CURRICULUM VITAE // 1-PAGE SUMMARY
+        </div>
+        <div class="flex items-center gap-2">
+          <button id="print-cv-btn" type="button"
+                  class="px-3 py-1 bg-amberretro text-ink border border-cream font-mono text-xs font-bold uppercase hover:bg-cream transition-colors">
+            Print / Save PDF
+          </button>
+          <button id="close-cv-btn" type="button" aria-label="Close CV"
+                  class="px-2.5 py-1 bg-signal text-cream border border-cream font-mono text-xs font-bold uppercase hover:bg-cream hover:text-ink transition-colors">
+            &#10005; Close
+          </button>
+        </div>
+      </div>
+      <div id="cv-body" class="p-6 sm:p-8 space-y-6 text-ink"></div>
+    </div>
+  </div>
+
+  <!-- Bottom-right dual-arm cloth-folding robot -->
+  <canvas id="seamless-arm-canvas" aria-hidden="true"
+          class="fixed bottom-[12px] right-[14px] z-20 pointer-events-none select-none w-[216px] h-[116px] sm:w-[290px] sm:h-[155px]"></canvas>
+
+  <!-- =========================================================
+       SCRIPTS — content first, then the renderer, then behaviour
+       ========================================================= -->
+  <script src="content/site.js"></script>
+  <script src="content/sections.js"></script>
+  <script src="assets/js/render.js"></script>
+  <script src="assets/js/ui.js"></script>
+  <script src="assets/js/armbot.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      window.MSRender.renderAll();
+      window.MSUI.init();
+      window.MSArm.init();
+    });
+  </script>
+</body>
+</html>
