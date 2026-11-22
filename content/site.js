@@ -47,7 +47,6 @@ window.SITE = {
      "action": "cv"  opens the CV pop-up.
      "href":   "#projects"  jumps to a section, or use a full URL.   */
   buttons: [
-    { label: "View Projects", href: "#projects", style: "primary" },
     { label: "Download CV", action: "cv", style: "secondary" }
   ],
 
