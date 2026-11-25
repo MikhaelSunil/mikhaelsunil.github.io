@@ -137,13 +137,6 @@ window.PROJECTS = [
           ]
         },
         {
-          type: "figure",
-          src: "assets/media/ncf/real-asmc-v1.webp",
-          alt: "Real drone comparison: adaptive sliding-mode control with model v1 against PX4's own controller",
-          caption: "A separate, later bench: the learned model paired with an adaptive sliding-mode controller tracks a small figure 8 to about 1 cm where PX4's own controller manages 5.2 cm, mostly by removing a steady 2.5 cm offset. Single flights — as the figure itself says, repeat before quoting."
-        },
-
-        {
           type: "callout",
           tone: "warn",
           heading: "What these numbers do and do not show",
@@ -151,8 +144,7 @@ window.PROJECTS = [
           items: [
             "The Gazebo comparisons are NCF <em>plus an attitude controller</em> against PX4's position controller. That is a change of controller as well as a change of model, so the headline percentages are not attributable to the learned model alone.",
             "The real flight was flown with the model on only. About <strong>85% of the applied correction came from the measured residual</strong> through the disturbance observer — so the learned model is doing a minority of the work in that number.",
-            "The Isaac Gym controller has no attitude integrator, so part of that 91% is the model doing a job an integrator would otherwise have done.",
-            "The adaptive sliding-mode figures are single flights. They have not been repeated enough times to quote as a result."
+            "The Isaac Gym controller has no attitude integrator, so part of that 91% is the model doing a job an integrator would otherwise have done."
           ]
         },
         {
