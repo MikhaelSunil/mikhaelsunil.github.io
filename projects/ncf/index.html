@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script>
+    (function () {
+      var t = 'light';
+      try {
+        t = localStorage.getItem('ms-theme') ||
+            (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      } catch (e) {}
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+    /* every asset path in the content files is written from the site root */
+    window.MS_BASE = '../../';
+  </script>
+
+  <title>NCF — Learning the Forces a Drone Cannot Model | Mikhael Sunil</title>
+  <meta name="description" content="A context-conditioned neural ODE for the residual force on a drone with an arm, deployed onboard at 20 Hz and flown through a mid-air payload release." />
+  <meta name="author" content="Mikhael Sunil" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23D94E28' stroke='%231C1B18' stroke-width='3'/%3E%3Ctext x='16' y='21' font-family='monospace' font-weight='bold' font-size='14' fill='%23FAF7F0' text-anchor='middle'%3EMS%3C/text%3E%3C/svg%3E" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: { extend: {
+        colors: {
+          paper:'rgb(var(--c-paper) / <alpha-value>)', cream:'rgb(var(--c-cream) / <alpha-value>)',
+          ink:'rgb(var(--c-ink) / <alpha-value>)', muted:'rgb(var(--c-muted) / <alpha-value>)',
+          signal:'rgb(var(--c-signal) / <alpha-value>)', amberretro:'rgb(var(--c-amber) / <alpha-value>)',
+          kraft:'rgb(var(--c-kraft) / <alpha-value>)', scope:'rgb(var(--c-scope) / <alpha-value>)'
+        },
+        fontFamily: {
+          display:['"JetBrains Mono"','ui-monospace','monospace'],
+          sans:['"JetBrains Mono"','ui-monospace','monospace'],
+          mono:['"JetBrains Mono"','ui-monospace','monospace']
+        },
+        boxShadow: {
+          hard:'4px 4px 0px rgb(var(--c-ink))', 'hard-sm':'2px 2px 0px rgb(var(--c-ink))',
+          'hard-lg':'6px 6px 0px rgb(var(--c-ink))', 'hard-signal':'4px 4px 0px rgb(var(--c-signal))'
+        }
+      }}
+    };
+  </script>
+  <link rel="stylesheet" href="../../assets/css/style.css?v=9" />
+</head>
+
+<body class="font-sans text-ink antialiased selection:bg-signal selection:text-cream">
+
+  <header class="subpage-header sticky top-0 z-30">
+    <div class="h-1.5 w-full hazard-rail border-b border-ink"></div>
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between gap-4">
+      <a href="../../index.html" class="font-display font-bold text-base sm:text-lg tracking-tight text-ink hover:text-signal transition-colors">Mikhael Sunil</a>
+      <div class="flex items-center gap-3">
+        <a href="../../index.html#projects" class="retro-btn px-3 py-1.5 bg-cream hover:bg-amberretro font-mono text-[11px] font-bold uppercase">&larr; Portfolio</a>
+        <div class="theme-zone">
+          <button id="theme-toggle" type="button" class="theme-switch" role="switch" aria-checked="false" aria-label="Switch between light and dark mode">
+            <span class="theme-ic sun" aria-hidden="true">&#9728;</span>
+            <span class="theme-ic moon" aria-hidden="true">&#9790;</span>
+            <span class="theme-knob"></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-5xl mx-auto px-4 sm:px-6 pt-10 pb-24 sm:pt-14">
+    <div id="detail-root" class="space-y-9"></div>
+    <noscript>
+      <div class="retro-card p-6 font-mono text-sm mt-10">
+        This page is assembled in the browser. Please enable JavaScript, or reach
+        Mikhael Sunil at <a class="underline" href="https://github.com/MikhaelSunil">github.com/MikhaelSunil</a>.
+      </div>
+    </noscript>
+
+    <footer class="mt-16 pt-5 border-t-2 border-ink font-mono text-[11px] text-muted flex flex-wrap gap-3 justify-between">
+      <div>&copy; <span id="footer-year">2026</span> MIKHAEL SUNIL — ROBOTICS HARDWARE MANUAL</div>
+      <a href="../../index.html" class="underline hover:text-signal">Back to the portfolio</a>
+    </footer>
+  </main>
+
+  <script src="../../content/site.js?v=9"></script>
+  <script src="../../content/projects.js?v=9"></script>
+  <script src="../../assets/js/projects.js?v=9"></script>
+  <script src="../../assets/js/ui.js?v=9"></script>
+  <script src="../../assets/js/cursor.js?v=9"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var y = document.getElementById('footer-year');
+      if (y) y.textContent = new Date().getFullYear();
+      /* the only line that changes when you copy this folder for a new project */
+      window.MSProjects.renderDetail('ncf', document.getElementById('detail-root'));
+      window.MSUI.init();
+      window.MSCursor.init();
+    });
+  </script>
+</body>
+</html>

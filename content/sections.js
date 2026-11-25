@@ -36,9 +36,9 @@ window.SECTIONS = [
 
   /* ===================================================================
      SECTION 01 — PROJECTS
-     To add a photo to any project, drop the image in assets/img/ and add
-        image: "assets/img/my-photo.jpg",
-     to that project's card.
+     The cards themselves live in content/projects.js. The three marked
+     featured show here; the button underneath goes to the showcase page
+     at projects/, which lists them all.
      =================================================================== */
   {
     id: "projects",
@@ -46,61 +46,9 @@ window.SECTIONS = [
     number: "01",
     kicker: "HARDWARE DOSSIER",
     title: "Projects & Research",
-    meta: "05 FIELD & LAB BUILDS",
+    meta: "SELECTED WORK",
     blocks: [
-      {
-        type: "cards",
-        columns: 3,
-        /* Only the first 3 show; the rest appear when the button is clicked.
-           Delete the next three lines to show them all at once. */
-        showFirst: 3,
-        moreLabel: "View All Projects",
-        lessLabel: "Show Fewer",
-        items: [
-          {
-            badge: "PRJ-01 // PATENT FILED",
-            badgeColor: "signal",
-            kicker: "AICTE IBIP · 202541109767",
-            kickerColor: "scope",
-            span: 2,
-            title: "PHYSIOBOT — Wearable Upper-Limb Robotic Exoskeleton",
-            body: "Portable rear-mounted rehabilitation exoskeleton for shoulder and elbow physiotherapy. Pairs custom 25:1 cycloidal gear actuators with cable-driven shoulder abduction/adduction transmission, STM32 embedded control, FOC drivers, and magnetic encoders—achieving smooth shoulder flexion up to 150°.",
-            tags: ["25:1 Cycloidal Drive", "Cable-Driven", "STM32 & FOC", "Magnetic Encoders"]
-          },
-          {
-            badge: "PRJ-02",
-            badgeColor: "amber",
-            kicker: "AERIAL SWARMS",
-            title: "Distributed Containment-Consensus Control for Heterogeneous Drone Swarm",
-            body: "Fully decentralized single- and double-integrator consensus on Crazyflie 2.1 nano-drones using only discretized binary relative position feedback (±1 per axis) with ROS 2 and Crazyswarm2.",
-            tags: ["Crazyflie 2.1", "ROS 2", "Crazyswarm2"]
-          },
-          {
-            badge: "PRJ-03",
-            badgeColor: "scope",
-            kicker: "FIELD ROBOTICS",
-            title: "GeoScout — 6WD Autonomous Mine-Mapping Rover",
-            body: "Six-wheel-drive GPS-denied exploration rover powered by Jetson Nano/RPi and Teensy 4.0, fusing 3D LiDAR, IMU, Ground-Penetrating Radar (GPR), and hazardous gas sensors for real-time ROS 2 SLAM.",
-            tags: ["ROS 2 SLAM", "Jetson / Teensy 4.0", "LiDAR · GPR"]
-          },
-          {
-            badge: "PRJ-04",
-            badgeColor: "ink",
-            kicker: "DEEP RL",
-            title: "Deep RL (SAC) Mapless Autonomous Navigation",
-            body: "Containerized Soft Actor-Critic (SAC) navigation stack replacing classical planners with continuous control and automatic entropy tuning on TurtleBot3 in ROS 2 Foxy and Gazebo Classic.",
-            tags: ["SAC DRL", "ROS 2 Foxy", "Docker · TurtleBot3"]
-          },
-          {
-            badge: "PRJ-05",
-            badgeColor: "paper",
-            kicker: "UAV VISION",
-            title: "Vision-Based UAV Path Following & Landing",
-            body: "Real-time image segmentation, centroid path prediction, yaw-rate correction, and autonomous landing-marker descent deployed on the Parrot Mambo minidrone via MATLAB/Simulink.",
-            tags: ["MATLAB / Simulink", "Parrot Mambo", "Vision Control"]
-          }
-        ]
-      }
+      { type: "featured-projects", moreLabel: "View all projects" }
     ]
   },
 

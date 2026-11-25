@@ -435,6 +435,10 @@ window.MSRender = (function () {
   function renderBlock(block) {
     switch (block.type) {
       case 'cards':        return blockCards(block);
+      case 'featured-projects':
+        return (window.MSProjects && window.MSProjects.renderFeatured)
+          ? window.MSProjects.renderFeatured(block)
+          : el('p', 'font-mono text-xs text-signal', 'assets/js/projects.js is not loaded');
       case 'ledger':       return blockLedger(block);
       case 'publications': return blockPublications(block);
       case 'gallery':      return blockGallery(block);

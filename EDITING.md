@@ -8,6 +8,7 @@ You only ever need to touch **two files**:
 |---|---|
 | `content/site.js` | Your name, intro paragraph, portrait photo, social links, contact settings, and the CV pop-up |
 | `content/sections.js` | Every section of the page — Projects, Experience, Tech Stack, Education, Research, Contact |
+| `content/projects.js` | Every project: the cards, and the write-ups behind them |
 
 Everything else (`index.html`, `assets/`) is the machinery. You can leave it alone.
 
@@ -118,7 +119,48 @@ Upload it to `assets/img/`, then add an `image` line to that project in `content
 
 ### Add a new project
 
-Copy an existing project block — from its opening `{` to its closing `},` — paste it below, and edit the text. Keep it inside the `items: [ ... ]` brackets.
+Projects live in their own file now: **`content/projects.js`**. That one list
+feeds three places:
+
+- the **three featured cards** on the home page (the ones marked `featured: true`)
+- the **showcase page** at `/projects/`, which lists all of them
+- a **detail page** at `/projects/<slug>/`, for any project that has a `detail` block
+
+Copy a project block, paste it where you want it in the order, and edit the text.
+
+**To feature it on the home page**, add `featured: true`. Keep that to three —
+more and the row stops being a row.
+
+**To give it a picture on the card**, add:
+```js
+media: { src: "assets/media/my-project/hero.gif", alt: "what it shows" },
+```
+Image paths are always written from the site root like that, wherever they are
+used. The page works out the rest.
+
+**To give it a full write-up page:**
+
+1. Fill in the `detail` block. The available block types are listed in a
+   comment at the top of `content/projects.js` — prose, steps, figure,
+   figures, table, callout, tags.
+2. Copy the folder `projects/ncf/` to `projects/<your-slug>/`.
+3. Open the new `index.html` and change the one line near the bottom that
+   says `renderDetail('ncf', ...)` to your slug. Update the `<title>` and
+   `<meta name="description">` at the top too.
+
+A project **without** a `detail` block simply isn't clickable, which is the
+right behaviour — no dead links.
+
+### The limitations callout
+
+Research projects usually need caveats stated rather than buried. That is what
+`callout` is for:
+
+```js
+{ type: "callout", tone: "warn", heading: "What these numbers do not show",
+  body: ["..."], items: ["caveat", "caveat"] },
+```
+`tone: "warn"` gives an orange edge, `tone: "info"` a green one.
 
 ### Add a whole new section
 
@@ -290,8 +332,9 @@ body: [
 
 ### Show only the first few cards
 
-A `cards` block can hide everything past the first N behind a button. The
-hidden cards are still in the file — nothing is deleted:
+Used by `cards` blocks (not by Projects, which links to its own showcase page).
+It hides everything past the first N behind a button; the hidden cards are
+still in the file:
 
 ```js
 {
@@ -304,8 +347,7 @@ hidden cards are still in the file — nothing is deleted:
 }
 ```
 
-Delete the `showFirst`, `moreLabel` and `lessLabel` lines to show them all at
-once. That's what the Projects section uses.
+Delete the `showFirst`, `moreLabel` and `lessLabel` lines to show them all at once.
 
 ### Uneven card widths
 

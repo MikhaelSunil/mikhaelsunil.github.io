@@ -421,6 +421,71 @@ html.has-drone-cursor [contenteditable="true"] {
   cursor: text;
 }
 
+
+/* =========================================================
+   PROJECT CARDS, FIGURES AND CALLOUTS
+   Driven by content/projects.js via assets/js/projects.js.
+   ========================================================= */
+.project-card { overflow: hidden; }
+a.project-card { text-decoration: none; color: inherit; display: flex; }
+a.project-card:hover .project-more { gap: 0.6rem; }
+a.project-card:focus-visible { outline: 3px solid rgb(var(--c-signal)); outline-offset: 3px; }
+.project-more { transition: gap 0.15s ease; }
+
+/* Media sits at the top of the card and is the first thing you see. */
+.project-media {
+  border-bottom: 2px solid rgb(var(--c-ink));
+  background: rgb(var(--c-paper));
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+}
+.project-media img {
+  display: block;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+a.project-card:hover .project-media img { transform: scale(1.03); }
+
+/* Figures on a detail page */
+.project-figure {
+  margin: 0;
+  background: rgb(var(--c-cream));
+  border: 2px solid rgb(var(--c-ink));
+  box-shadow: 4px 4px 0 rgb(var(--c-ink));
+  padding: 0.6rem;
+}
+.project-figure img {
+  display: block;
+  width: 100%; height: auto;
+  border: 2px solid rgb(var(--c-ink));
+  background: #FFFFFF;      /* plots are drawn on white; keep them readable in dark mode */
+}
+.project-figure.is-hero img { aspect-ratio: 16 / 9; object-fit: cover; background: rgb(var(--c-paper)); }
+.project-figure figcaption { padding: 0 0.15rem 0.1rem; }
+
+/* Callouts: limitations and research notes */
+.project-callout {
+  border: 2px solid rgb(var(--c-ink));
+  background: rgb(var(--c-cream));
+  box-shadow: 4px 4px 0 rgb(var(--c-ink));
+  padding: 1.15rem 1.25rem;
+  position: relative;
+}
+.project-callout.is-warn { border-left-width: 8px; border-left-color: rgb(var(--c-signal)); }
+.project-callout.is-info { border-left-width: 8px; border-left-color: rgb(var(--c-scope)); }
+.callout-dot { width: 0.6rem; height: 0.6rem; display: inline-block; border: 1px solid rgb(var(--c-ink)); }
+.is-warn .callout-dot { background: rgb(var(--c-signal)); }
+.is-info .callout-dot { background: rgb(var(--c-scope)); }
+
+/* Slim header used by the sub-pages */
+.subpage-header { background: rgb(var(--c-cream)); border-bottom: 2px solid rgb(var(--c-ink)); }
+
+@media (prefers-reduced-motion: reduce) {
+  .project-media img, .project-more { transition: none; }
+  a.project-card:hover .project-media img { transform: none; }
+}
+
 /* =========================================================
    PRINT STYLES FOR 1-PAGE CV MODAL
    ========================================================= */
