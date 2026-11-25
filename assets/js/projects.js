@@ -28,9 +28,15 @@ window.MSProjects = (function () {
     paper:  'bg-paper text-ink border border-ink'
   };
 
-  function all() { return window.PROJECTS || []; }
+  /* An archived project drops out of every listing and its detail page stops
+     serving the write-up. Good for shelving a project; NOT a way to keep
+     something confidential — the data file and images would still sit in the
+     repo and be downloadable. For that, take it out of the repo. */
+  function all() {
+    return (window.PROJECTS || []).filter(function (p) { return !p.archived; });
+  }
   function bySlug(s) {
-    var p = all();
+    var p = window.PROJECTS || [];
     for (var i = 0; i < p.length; i++) if (p[i].slug === s) return p[i];
     return null;
   }
@@ -235,6 +241,11 @@ window.MSProjects = (function () {
   function renderDetail(slug, host) {
     if (!host) return;
     var p = bySlug(slug);
+    if (p && p.archived) {
+      host.appendChild(el('div', 'retro-card p-6 font-mono text-sm',
+        'This write-up is not published yet.<br><a class="underline text-signal" href="' + url('index.html') + '">Back to the portfolio</a>'));
+      return;
+    }
     if (!p || !p.detail) {
       host.appendChild(el('p', 'font-mono text-sm text-signal',
         'No project found for "' + String(slug) + '". Check the slug in content/projects.js.'));

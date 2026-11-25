@@ -1,13 +1,12 @@
 # Media
 
-Photos, GIFs and result figures for the project pages. One folder per project,
-e.g. `ncf/`.
+Photos, GIFs and result figures for the project pages. One folder per project.
 
 Reference them from `content/projects.js` with a path written from the site
 root, whichever page uses them:
 
 ```js
-media: { src: "assets/media/ncf/real-flight.gif", alt: "..." },
+media: { src: "assets/media/my-project/hero.gif", alt: "..." },
 ```
 
 **Keep them small.** These load on the page, not from a repo browser:

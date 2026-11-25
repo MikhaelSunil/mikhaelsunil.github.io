@@ -143,13 +143,31 @@ used. The page works out the rest.
 1. Fill in the `detail` block. The available block types are listed in a
    comment at the top of `content/projects.js` — prose, steps, figure,
    figures, table, callout, tags.
-2. Copy the folder `projects/ncf/` to `projects/<your-slug>/`.
+2. Copy the folder `projects/_template/` to `projects/<your-slug>/`.
 3. Open the new `index.html` and change the one line near the bottom that
-   says `renderDetail('ncf', ...)` to your slug. Update the `<title>` and
+   says `renderDetail('your-slug', ...)` to your slug. Update the `<title>` and
    `<meta name="description">` at the top too.
 
 A project **without** a `detail` block simply isn't clickable, which is the
 right behaviour — no dead links.
+
+### Hiding a project
+
+Add `archived: true` to it in `content/projects.js`:
+
+```js
+{ slug: "something", archived: true, ... }
+```
+
+It drops off the home page, off the showcase, and out of the "other projects"
+row, and its detail page stops serving the write-up. Remove the line to bring
+it back.
+
+> **This hides a project; it does not keep it confidential.** `content/projects.js`
+> and everything in `assets/media/` are published with the site and can be
+> downloaded by anyone who knows the path, archived or not. If something must
+> stay private — unpublished research, anything under embargo — take it out of
+> the repository rather than flagging it.
 
 ### The limitations callout
 
