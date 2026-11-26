@@ -49,12 +49,12 @@ window.PROJECTS = [
     slug: "swarm-consensus",
     code: "PRJ-02",
     featured: true,
-    status: "Published",
+    status: "ICAART 2026",
     kicker: "AERIAL SWARMS",
     badgeColor: "scope",
-    title: "Distributed Containment-Consensus Control for a Heterogeneous Drone Swarm",
-    summary: "Fully decentralised single- and double-integrator consensus on Crazyflie 2.1 nano-drones using only discretised binary relative position feedback — one bit per axis — with ROS 2 and Crazyswarm2. Benchmarked on physical hardware, not just in simulation.",
-    tags: ["Crazyflie 2.1", "ROS 2", "Crazyswarm2", "Binary Feedback"]
+    title: "Binary-Measurement Consensus & Formation Control on a Crazyflie Swarm",
+    summary: "Six consensus and formation-control protocols put on five Crazyflie 2.1 nano-quadrotors and benchmarked against their own simulations. Four of them fly on one bit per axis — only the <em>sign</em> of a neighbour's relative position, no velocity measurement at all. Nearly all consensus work stops at simulation; this reports what actually survives sensor noise, latency and a 10 Hz loop.",
+    tags: ["5 × Crazyflie 2.1", "ROS 2 Jazzy", "Gazebo Harmonic", "Lighthouse + EKF", "Binary feedback"]
   },
 
   /* =====================================================================
