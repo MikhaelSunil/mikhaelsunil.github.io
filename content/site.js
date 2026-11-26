@@ -54,7 +54,7 @@ window.SITE = {
      Put a photo in assets/img/ then write its path here, e.g.
          photo: "assets/img/portrait.jpg",
      Leave it as "" to show the illustrated placeholder instead.      */
-  photo: "",
+  photo: "assets/img/portrait.webp",
   photoAlt: "Portrait of Mikhael Sunil",
 
   /* ---- Hero buttons ------------------------------------------------

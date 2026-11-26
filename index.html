@@ -77,7 +77,7 @@
     };
   </script>
 
-  <link rel="stylesheet" href="assets/css/style.css?v=15" />
+  <link rel="stylesheet" href="assets/css/style.css?v=16" />
 </head>
 
 <body class="font-sans text-ink antialiased selection:bg-signal selection:text-cream">
@@ -93,10 +93,9 @@
           <span class="w-2.5 h-2.5 bg-signal border border-ink inline-block"></span>
           <span>SYS_BOOT // REV.84</span>
         </div>
-        <button id="skip-boot-btn" type="button"
-                class="font-mono text-[11px] font-bold uppercase px-2.5 py-1 bg-paper border-2 border-ink shadow-hard-sm hover:bg-amberretro transition-colors">
-          SKIP [ESC]
-        </button>
+        <span class="font-mono text-[11px] font-bold uppercase tracking-wider text-muted">
+          PLEASE WAIT
+        </span>
       </div>
 
       <div class="flex justify-center py-2">
@@ -377,19 +376,19 @@
   <!-- =========================================================
        SCRIPTS — content first, then the renderer, then behaviour
 
-       The ?v=15 on each file is a cache-buster. Browsers hang on to CSS and
+       The ?v=16 on each file is a cache-buster. Browsers hang on to CSS and
        JS, so after you edit anything in content/ or assets/, bump that
        number (v=3, v=4 ...) on EVERY line below and visitors get the new
        version straight away instead of whenever their cache expires.
        ========================================================= -->
-  <script src="content/site.js?v=15"></script>
-  <script src="content/sections.js?v=15"></script>
-  <script src="content/projects.js?v=15"></script>
-  <script src="assets/js/projects.js?v=15"></script>
-  <script src="assets/js/render.js?v=15"></script>
-  <script src="assets/js/ui.js?v=15"></script>
-  <script src="assets/js/armbot.js?v=15"></script>
-  <script src="assets/js/cursor.js?v=15"></script>
+  <script src="content/site.js?v=16"></script>
+  <script src="content/sections.js?v=16"></script>
+  <script src="content/projects.js?v=16"></script>
+  <script src="assets/js/projects.js?v=16"></script>
+  <script src="assets/js/render.js?v=16"></script>
+  <script src="assets/js/ui.js?v=16"></script>
+  <script src="assets/js/armbot.js?v=16"></script>
+  <script src="assets/js/cursor.js?v=16"></script>
   <script>
     document.addEventListener('DOMContentLoaded', function () {
       window.MSRender.renderAll();

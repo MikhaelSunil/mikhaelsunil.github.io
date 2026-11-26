@@ -89,7 +89,7 @@ window.MSUI = (function () {
       if (slot) { slot.classList.add('no-hand'); slot.classList.add('is-in'); }
     }
 
-    if (reduce || !heading) { settle(); return; }
+    if (reduce || !heading) { settle(); return { play: settle }; }
 
     var cfg = (window.SITE && window.SITE.heroTiming) || {};
     var CHAR = cfg.charMs != null ? cfg.charMs : 70;
@@ -107,6 +107,14 @@ window.MSUI = (function () {
       }
       return start + str.length * CHAR;
     }
+
+    function play() {
+    timers.forEach(function (x) { clearTimeout(x); });
+    timers = [];
+    textEl.textContent = '';
+    textEl.classList.remove('is-dissolving');
+    if (caret) caret.classList.remove('is-done');
+    if (slot) slot.classList.remove('is-in');
 
     var t = START;
     if (greeting) {
@@ -136,6 +144,9 @@ window.MSUI = (function () {
       if (caret) caret.classList.add('is-done');
       if (slot) slot.classList.add('is-in');
     });
+    }
+
+    return { play: play };
   }
 
   /* =====================================================================
@@ -143,8 +154,10 @@ window.MSUI = (function () {
      ===================================================================== */
   function initBoot() {
     var overlay = document.getElementById('boot-overlay');
-    var skipBtn = document.getElementById('skip-boot-btn');
     var replayBtn = document.getElementById('replay-boot-btn');
+    var done = [];
+    function onDone(fn) { done.push(fn); }
+    function fireDone() { done.forEach(function (fn) { fn(); }); }
     var steps = [
       document.getElementById('boot-step-1'),
       document.getElementById('boot-step-2'),
@@ -154,25 +167,35 @@ window.MSUI = (function () {
     var timers = [];
 
     var enabled = !(window.SITE && window.SITE.bootScreen === false);
-    if (!overlay) return { dismiss: function () {}, isOpen: function () { return false; } };
-
-    if (!enabled) {
-      overlay.remove();
-      if (replayBtn) replayBtn.remove();
-      return { dismiss: function () {}, isOpen: function () { return false; } };
+    /* Nothing to boot: whatever was waiting on it should just start. */
+    if (!overlay || !enabled) {
+      if (overlay) overlay.remove();
+      if (!overlay && !enabled) { /* nothing to clean up */ }
+      if (!enabled && replayBtn) replayBtn.remove();
+      return {
+        onDone: function (fn) { fn(); },
+        isOpen: function () { return false; }
+      };
     }
 
     function clearTimers() {
       timers.forEach(function (t) { clearTimeout(t); });
       timers = [];
     }
+    /* The boot runs to the end: there is no skip, and the page behind it
+       does not scroll while it is up. */
     function dismiss() {
       clearTimers();
       overlay.classList.add('boot-hidden');
+      document.documentElement.classList.remove('is-booting');
+      fireDone();
     }
     function run() {
       clearTimers();
+      document.documentElement.classList.add('is-booting');
       overlay.classList.remove('boot-hidden');
+      /* a replay from half way down the page should start at the top */
+      if (window.pageYOffset) { try { window.scrollTo(0, 0); } catch (e) {} }
       steps.forEach(function (el) { if (el) el.classList.add('opacity-0'); });
       if (bar) bar.style.width = '10%';
       timers.push(setTimeout(function () {
@@ -190,12 +213,11 @@ window.MSUI = (function () {
       timers.push(setTimeout(dismiss, 2000));
     }
 
-    if (skipBtn) skipBtn.addEventListener('click', dismiss);
     if (replayBtn) replayBtn.addEventListener('click', run);
     run();
 
     return {
-      dismiss: dismiss,
+      onDone: onDone,
       isOpen: function () { return !overlay.classList.contains('boot-hidden'); }
     };
   }
@@ -578,8 +600,11 @@ window.MSUI = (function () {
      ===================================================================== */
   function init() {
     initTheme();
-    initHeroIntro();
+    var hero = initHeroIntro();
     var boot = initBoot();
+    /* the name types itself in once the drone has finished spinning up,
+       so the animation is not playing unseen behind the overlay */
+    boot.onDone(function () { if (hero && hero.play) hero.play(); });
     initForklift();
     var cv = initCV();
     initBibtex();
@@ -588,8 +613,8 @@ window.MSUI = (function () {
 
     document.addEventListener('keydown', function (e) {
       if (e.key !== 'Escape') return;
-      if (boot.isOpen()) boot.dismiss();
-      else if (cv.isOpen()) cv.close();
+      if (boot.isOpen()) return;   /* the boot sequence is not skippable */
+      if (cv.isOpen()) cv.close();
     });
   }
 

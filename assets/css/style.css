@@ -514,3 +514,7 @@ a.project-card:hover .project-media video { transform: scale(1.03); }
   }
   .no-print { display: none !important; }
 }
+
+
+/* The boot sequence runs to the end: nothing behind it scrolls meanwhile. */
+html.is-booting, html.is-booting body { overflow: hidden; }
