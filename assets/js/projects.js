@@ -180,15 +180,29 @@ window.MSProjects = (function () {
         var w = el('div', 'space-y-3');
         if (b.heading) w.appendChild(el('h3', 'font-display font-bold text-xl text-ink', b.heading));
         (b.body || []).forEach(function (t) {
-          w.appendChild(el('p', 'text-[15px] leading-relaxed text-ink/90 max-w-3xl', t));
+          w.appendChild(el('p', 'text-[15px] leading-relaxed text-ink/90 max-w-4xl', t));
         });
         return w;
+      }
+
+      /* two short prose items side by side, so a wide page is not half empty */
+      case 'prose-pair': {
+        var pr = el('div', 'grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-10 items-start');
+        (b.items || []).forEach(function (it) {
+          var col = el('div', 'space-y-3');
+          if (it.heading) col.appendChild(el('h3', 'font-display font-bold text-xl text-ink', it.heading));
+          (it.body || []).forEach(function (t) {
+            col.appendChild(el('p', 'text-[15px] leading-relaxed text-ink/90', t));
+          });
+          pr.appendChild(col);
+        });
+        return pr;
       }
 
       case 'steps': {
         var s = el('div', 'space-y-3');
         if (b.heading) s.appendChild(el('h3', 'font-display font-bold text-xl text-ink mb-1', b.heading));
-        var ul = el('ul', 'space-y-3 max-w-3xl');
+        var ul = el('ul', 'grid grid-cols-1 lg:grid-cols-2 gap-3 items-start');
         (b.items || []).forEach(function (it) {
           var li = el('li', 'flex items-start gap-3 retro-card p-4');
           li.appendChild(el('span', 'font-mono text-xs font-bold text-signal mt-0.5 shrink-0', it.n || ''));
@@ -198,6 +212,45 @@ window.MSProjects = (function () {
         });
         s.appendChild(ul);
         return s;
+      }
+
+      /* A protocol: prose on the left, its clips on the right. Fills the page
+         width without stretching the text to an unreadable line length, and
+         gives the architecture diagram roughly twice the width it had in a
+         three-across row. */
+      case 'protocol': {
+        var row = el('div', 'grid grid-cols-1 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] gap-6 lg:gap-8 items-start');
+
+        var txt = el('div', 'space-y-3');
+        if (b.heading) txt.appendChild(el('h3', 'font-display font-bold text-xl text-ink', b.heading));
+        (b.body || []).forEach(function (t) {
+          txt.appendChild(el('p', 'text-[15px] leading-relaxed text-ink/90', t));
+        });
+        row.appendChild(txt);
+
+        var media = el('div', 'space-y-4');
+        if (b.arch) {
+          media.appendChild(figure(b.arch, b.heading + ' — control architecture',
+            'Control architecture: the per-agent signal path, with the law simulated top-right.'));
+        }
+        var pair = el('div', 'grid grid-cols-1 sm:grid-cols-2 gap-4');
+        if (b.hardware) {
+          pair.appendChild(figure(b.hardware, b.heading + ' — flown on the Crazyflie swarm',
+            'The real five-Crazyflie swarm, replayed from the .mcap log in Foxglove.'));
+        }
+        if (b.sim) {
+          pair.appendChild(figure(b.sim, b.heading + ' — Gazebo simulation', 'The same law in Gazebo Harmonic.'));
+        }
+        if (pair.childNodes.length) media.appendChild(pair);
+        row.appendChild(media);
+
+        var wrap = el('div', 'space-y-5');
+        wrap.appendChild(row);
+        if (b.results) {
+          /* full page width: these plots are 1600 px of small axis labels */
+          wrap.appendChild(figure(b.results, b.heading + ' — simulation and hardware traces', b.resultsCaption));
+        }
+        return wrap;
       }
 
       case 'figure':
@@ -231,7 +284,7 @@ window.MSProjects = (function () {
           tb.appendChild(row);
         });
         tbl.appendChild(tb); box.appendChild(tbl); t.appendChild(box);
-        if (b.note) t.appendChild(el('p', 'font-mono text-[11px] leading-relaxed text-muted max-w-3xl', b.note));
+        if (b.note) t.appendChild(el('p', 'font-mono text-[11px] leading-relaxed text-muted max-w-4xl', b.note));
         return t;
       }
 
@@ -241,10 +294,10 @@ window.MSProjects = (function () {
         c.appendChild(el('div', 'font-mono text-xs font-bold uppercase tracking-widest mb-3 flex items-center gap-2',
           '<span class="callout-dot"></span><span>' + (b.heading || '') + '</span>'));
         (b.body || []).forEach(function (t) {
-          c.appendChild(el('p', 'text-sm leading-relaxed text-ink/90 mb-2 max-w-3xl', t));
+          c.appendChild(el('p', 'text-sm leading-relaxed text-ink/90 mb-2', t));
         });
         if (b.items && b.items.length) {
-          var ul = el('ul', 'space-y-2 mt-2 max-w-3xl');
+          var ul = el('ul', 'space-y-2 mt-2');
           b.items.forEach(function (t) {
             var li = el('li', 'text-sm leading-relaxed text-ink/90 pl-4 relative');
             li.innerHTML = '<span class="absolute left-0 top-[0.55em] w-1.5 h-1.5 bg-ink inline-block"></span>' + t;
@@ -297,7 +350,7 @@ window.MSProjects = (function () {
     if (p.kicker) badges.appendChild(el('span', 'text-muted font-semibold uppercase', p.kicker));
     head.appendChild(badges);
     head.appendChild(el('h1', 'font-display font-bold text-3xl sm:text-4xl lg:text-[2.6rem] leading-[1.14] tracking-tight text-ink', p.title));
-    if (d.tagline) head.appendChild(el('p', 'text-base sm:text-lg leading-relaxed text-ink/85 max-w-3xl', d.tagline));
+    if (d.tagline) head.appendChild(el('p', 'text-base sm:text-lg leading-relaxed text-ink/85 max-w-4xl', d.tagline));
     host.appendChild(head);
 
     if (d.facts && d.facts.length) {

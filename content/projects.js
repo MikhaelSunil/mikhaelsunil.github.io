@@ -73,20 +73,23 @@ window.PROJECTS = [
       ],
 
       blocks: [
-        {
-          type: "prose",
-          heading: "The gap",
-          body: [
-            "Consensus theory for multi-agent systems is mature. Validation of it mostly is not — the overwhelming majority of published protocols are demonstrated in simulation and never leave it. A simulated agent has exact state, instant communication and no actuator of its own to fight.",
-            "A real swarm has none of those. Sensor noise, communication latency, actuation uncertainty and disturbance can degrade a protocol or destabilise it outright, and which protocols survive that is not something theory predicts for you. This work implements <strong>six</strong> protocol families on the same five-drone Crazyflie swarm, flies four of them, and reports the trade-offs side by side."
-          ]
-        },
-        {
-          type: "prose",
-          heading: "One bit per axis",
-          body: [
-            "Most consensus laws assume each agent can measure its neighbour's relative position, and often relative velocity too, as a precise real number. That is an expensive assumption: it buys you convergence proofs at the cost of sensing that small or cheap platforms do not have.",
-            "The protocols benchmarked here need only the <strong>sign</strong> of the difference — <code>+1</code>, <code>0</code> or <code>−1</code> on each axis. One bit per axis per neighbour. Several of them additionally need <strong>no velocity measurement at all</strong>, reconstructing what they need through an internal dynamic state. That is what makes them interesting for swarms built from minimal hardware, and what makes it worth knowing whether they actually hold up in the air."
+                {
+          type: "prose-pair",
+          items: [
+            {
+              heading: "The gap",
+              body: [
+              "Consensus theory for multi-agent systems is mature. Validation of it mostly is not — the overwhelming majority of published protocols are demonstrated in simulation and never leave it. A simulated agent has exact state, instant communication and no actuator of its own to fight.",
+              "A real swarm has none of those. Sensor noise, communication latency, actuation uncertainty and disturbance can degrade a protocol or destabilise it outright, and which protocols survive that is not something theory predicts for you. This work implements <strong>six</strong> protocol families on the same five-drone Crazyflie swarm, flies four of them, and reports the trade-offs side by side."
+              ]
+            },
+            {
+              heading: "One bit per axis",
+              body: [
+              "Most consensus laws assume each agent can measure its neighbour's relative position, and often relative velocity too, as a precise real number. That is an expensive assumption: it buys you convergence proofs at the cost of sensing that small or cheap platforms do not have.",
+              "The protocols benchmarked here need only the <strong>sign</strong> of the difference — <code>+1</code>, <code>0</code> or <code>−1</code> on each axis. One bit per axis per neighbour. Several of them additionally need <strong>no velocity measurement at all</strong>, reconstructing what they need through an internal dynamic state. That is what makes them interesting for swarms built from minimal hardware, and what makes it worth knowing whether they actually hold up in the air."
+              ]
+            }
           ]
         },
 
@@ -107,131 +110,79 @@ window.PROJECTS = [
 
         { type: "heading2", label: "The six protocols" },
 
-        {
-          type: "prose",
+                {
+          type: "protocol",
           heading: "1 — Finite-time consensus from binary information",
           body: [
             "The simplest of the set: each agent moves on the sign of its position difference with each neighbour, nothing more. Gains <code>a_ij = 1</code>, <code>k = 0.5</code>.",
             "<strong>In simulation</strong> it reaches ideal finite-time convergence with stable agreement and negligible chattering. <strong>On hardware</strong> convergence is confirmed, but with post-consensus drift — attributable to sensor noise and delay rather than to anything unstable in the algorithm. Convergence is sharp in simulation and slightly oscillatory in the air, which is the protocol's robustness and its sensitivity to real sensing showing up in the same trace."
-          ]
+          ],
+          arch: "assets/media/swarm/p1-arch.mp4",
+          hardware: "assets/media/swarm/p1-hw.mp4",
+          sim: "assets/media/swarm/p1-sim.mp4",
+          results: "assets/media/swarm/p1-results.webp",
+          resultsCaption: "Left: simulation, x-position of all five agents against time. Right: the same quantity from the flown swarm (cf03, cf07, cf05, cf10, cf08) with the 3-D trajectories beside it. The agreement value is reached in both; the hardware trace carries the sensor noise and the post-consensus drift the simulation does not have."
         },
-        {
-          type: "figures",
-          columns: 3,
-          items: [
-            { src: "assets/media/swarm/p1-arch.mp4", alt: "Control architecture for Finite-time consensus from binary information", caption: "Control architecture — the per-agent signal path, with the law simulated top-right." },
-            { src: "assets/media/swarm/p1-hw.mp4", alt: "Crazyflie swarm flying Finite-time consensus from binary information", caption: "The real five-Crazyflie swarm, replayed from the .mcap log in Foxglove." },
-            { src: "assets/media/swarm/p1-sim.mp4", alt: "Gazebo simulation of Finite-time consensus from binary information", caption: "The same law in Gazebo Harmonic." }
-          ]
-        },
-        {
-          type: "figure",
-          src: "assets/media/swarm/p1-results.webp",
-          alt: "Simulation and hardware x-position traces for Finite-time consensus from binary information",
-          caption: "Left: simulation, x-position of all five agents against time. Right: the same quantity from the flown swarm (cf03, cf07, cf05, cf10, cf08) with the 3-D trajectories beside it. The agreement value is reached in both; the hardware trace carries the sensor noise and the post-consensus drift the simulation does not have."
-        },
-        {
-          type: "prose",
+                {
+          type: "protocol",
           heading: "2 — Mixed fractional-order, fixed-time",
           body: [
             "Two fractional exponents in one law, <code>0 &lt; α &lt; 1 &lt; β</code>: the lower exponent drives rapid convergence once errors are small, the higher one handles large errors. Gains <code>α = 0.5</code>, <code>β = 1.5</code>, <code>k₁ = 0.4</code>, <code>k₂ = 0.2</code>.",
             "<strong>In simulation</strong>, smooth convergence with minimal to no oscillation or chattering. <strong>On hardware</strong>, convergence confirmed with post-consensus drift and slight scatter. The steady convergence reproduces in the air with mild overshoot afterwards — the most precise of the flown protocols, and the one that damps oscillation best."
-          ]
+          ],
+          arch: "assets/media/swarm/p2-arch.mp4",
+          hardware: "assets/media/swarm/p2-hw.mp4",
+          sim: "assets/media/swarm/p2-sim.mp4",
+          results: "assets/media/swarm/p2-results.webp",
+          resultsCaption: "Simulation left, hardware right. Convergence is smooth in both. The late excursions on the right-hand trace are the end of the run, not part of the consensus phase."
         },
-        {
-          type: "figures",
-          columns: 3,
-          items: [
-            { src: "assets/media/swarm/p2-arch.mp4", alt: "Control architecture for Mixed fractional-order, fixed-time", caption: "Control architecture — the per-agent signal path, with the law simulated top-right." },
-            { src: "assets/media/swarm/p2-hw.mp4", alt: "Crazyflie swarm flying Mixed fractional-order, fixed-time", caption: "The real five-Crazyflie swarm, replayed from the .mcap log in Foxglove." },
-            { src: "assets/media/swarm/p2-sim.mp4", alt: "Gazebo simulation of Mixed fractional-order, fixed-time", caption: "The same law in Gazebo Harmonic." }
-          ]
-        },
-        {
-          type: "figure",
-          src: "assets/media/swarm/p2-results.webp",
-          alt: "Simulation and hardware x-position traces for Mixed fractional-order, fixed-time",
-          caption: "Simulation left, hardware right. Convergence is smooth in both. The late excursions on the right-hand trace are the end of the run, not part of the consensus phase."
-        },
-        {
-          type: "prose",
+                {
+          type: "protocol",
           heading: "3 — Velocity-free consensus-containment",
           body: [
             "Second-order agent dynamics with <strong>no explicit velocity measurement</strong>. Each agent computes acceleration commands from an internal dynamic state, and binary interactions with neighbours and with boundary agents keep the swarm inside a prescribed interval. Gains <code>a_ij = 1</code>, bounds <code>x_min = −1</code>, <code>x_max = +1</code>.",
             "<strong>In simulation</strong> the protocol drives every agent into the <code>[−1, +1]</code> bound with finite-time convergence and moderate stability. <strong>On hardware</strong> the bound-constrained behaviour reproduces almost exactly, confirming robust containment, though as expected no averaging of states occurs beyond the imposed limits. The approach is sharp in simulation and shows medium oscillatory drift in flight."
-          ]
+          ],
+          arch: "assets/media/swarm/p3-arch.mp4",
+          hardware: "assets/media/swarm/p3-hw.mp4",
+          sim: "assets/media/swarm/p3-sim.mp4",
+          results: "assets/media/swarm/p3-results.webp",
+          resultsCaption: "Simulation left, hardware right. The bound-constrained behaviour reproduces closely in flight, with the medium oscillatory drift described above."
         },
-        {
-          type: "figures",
-          columns: 3,
-          items: [
-            { src: "assets/media/swarm/p3-arch.mp4", alt: "Control architecture for Velocity-free consensus-containment", caption: "Control architecture — the per-agent signal path, with the law simulated top-right." },
-            { src: "assets/media/swarm/p3-hw.mp4", alt: "Crazyflie swarm flying Velocity-free consensus-containment", caption: "The real five-Crazyflie swarm, replayed from the .mcap log in Foxglove." },
-            { src: "assets/media/swarm/p3-sim.mp4", alt: "Gazebo simulation of Velocity-free consensus-containment", caption: "The same law in Gazebo Harmonic." }
-          ]
-        },
-        {
-          type: "figure",
-          src: "assets/media/swarm/p3-results.webp",
-          alt: "Simulation and hardware x-position traces for Velocity-free consensus-containment",
-          caption: "Simulation left, hardware right. The bound-constrained behaviour reproduces closely in flight, with the medium oscillatory drift described above."
-        },
-        {
-          type: "prose",
+                {
+          type: "protocol",
           heading: "4 — Second-order formation tracking of a target",
           body: [
             "The most capable of the flown set: a tanh-based second-order law with internal filter states that lets the swarm hold a geometric formation while tracking a moving target, assuming constant target velocity. Each agent needs only its own position and velocity — no measurement of neighbouring states at all. Gains <code>K₁ = K₂ = K₃ = K₄ = 1.0</code>.",
             "<strong>In simulation</strong> the agents settle into a precise square with moderate convergence speed, high stability and minimal oscillation. <strong>On hardware</strong> a stable square is achieved too, with slight lateral drift and an altitude offset; the formation stays steady at higher <code>z</code>, which is a good sign for robustness. The experiment shows slight post-formation scatter and small vertical oscillations from sensing noise and estimator delay."
-          ]
+          ],
+          arch: "assets/media/swarm/p4-arch.mp4",
+          hardware: "assets/media/swarm/p4-hw.mp4",
+          sim: "assets/media/swarm/p4-sim.mp4",
+          results: "assets/media/swarm/p4-results.webp",
+          resultsCaption: "Simulation left, hardware right. The square forms in both; the right-hand trace shows the post-formation scatter and the small vertical oscillations that come from estimator delay."
         },
-        {
-          type: "figures",
-          columns: 3,
-          items: [
-            { src: "assets/media/swarm/p4-arch.mp4", alt: "Control architecture for Second-order formation tracking of a target", caption: "Control architecture — the per-agent signal path, with the law simulated top-right." },
-            { src: "assets/media/swarm/p4-hw.mp4", alt: "Crazyflie swarm flying Second-order formation tracking of a target", caption: "The real five-Crazyflie swarm, replayed from the .mcap log in Foxglove." },
-            { src: "assets/media/swarm/p4-sim.mp4", alt: "Gazebo simulation of Second-order formation tracking of a target", caption: "The same law in Gazebo Harmonic." }
-          ]
-        },
-        {
-          type: "figure",
-          src: "assets/media/swarm/p4-results.webp",
-          alt: "Simulation and hardware x-position traces for Second-order formation tracking of a target",
-          caption: "Simulation left, hardware right. The square forms in both; the right-hand trace shows the post-formation scatter and the small vertical oscillations that come from estimator delay."
-        },
-        {
-          type: "prose",
+                {
+          type: "protocol",
           heading: "5 — Consensus-tracking with a discontinuous Γ(·)  ·  simulation only",
           body: [
             "Here the continuous auxiliary function is replaced with the discontinuous choice <code>Γ(ζ) = k₂·sign(ζ)</code>, and the law is extended to track a moving target. The five agents communicate over a fixed chain, cf1↔cf2↔cf3↔cf4↔cf5, and <strong>only the median agent cf3 senses the circular reference directly</strong> — everyone else reaches the target through the chain.",
             "Starting from widely scattered spawn points, the swarm holds position through a 30 s takeoff and then converges onto the moving target over roughly 90 s of tracking, with a brief transient overshoot near <code>t ≈ 115 s</code> before settling to within 0.2–0.4 m of the reference.",
             "<strong>This one was not flown.</strong> Real-world validation on the physical swarm is left for future work."
-          ]
+          ],
+          arch: "assets/media/swarm/p5-arch.mp4",
+          sim: "assets/media/swarm/p5-sim.mp4"
         },
-        {
-          type: "figures",
-          columns: 2,
-          items: [
-            { src: "assets/media/swarm/p5-arch.mp4", alt: "Control architecture for Consensus-tracking with a discontinuous Γ(", caption: "Control architecture — the per-agent signal path, with the law simulated top-right." },
-            { src: "assets/media/swarm/p5-sim.mp4", alt: "Gazebo simulation of Consensus-tracking with a discontinuous Γ(", caption: "The same law in Gazebo Harmonic." }
-          ]
-        },
-        {
-          type: "prose",
+                {
+          type: "protocol",
           heading: "6 — Formation plus target capturing  ·  simulation only",
           body: [
             "The same chain and the same pinned leader, but now with a desired 1-D line formation: offsets <code>d_i ∈ {−0.8, −0.4, 0, 0.4, 0.8} m</code> along <code>x</code>, with cf3 (its own offset zero) driving directly at the reference.",
             "From the same scattered spawn points the swarm converges over about 90–100 s, with a moderate transient bump near <code>t ≈ 100 s</code>. Crucially it settles into <em>distinguishable</em> relative offsets rather than collapsing to a point — a final spread of roughly 1.4 m across the line against a nominal 1.6 m design width — confirming that the inter-agent geometry is preserved while the whole formation is pulled along by the target.",
             "<strong>Also not flown.</strong> Hardware deployment and further gain tuning are left for future work."
-          ]
-        },
-        {
-          type: "figures",
-          columns: 2,
-          items: [
-            { src: "assets/media/swarm/p6-arch.mp4", alt: "Control architecture for Formation plus target capturing", caption: "Control architecture — the per-agent signal path, with the law simulated top-right." },
-            { src: "assets/media/swarm/p6-sim.mp4", alt: "Gazebo simulation of Formation plus target capturing", caption: "The same law in Gazebo Harmonic." }
-          ]
+          ],
+          arch: "assets/media/swarm/p6-arch.mp4",
+          sim: "assets/media/swarm/p6-sim.mp4"
         },
 
         {
