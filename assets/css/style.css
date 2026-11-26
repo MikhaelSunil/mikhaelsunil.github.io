@@ -439,13 +439,15 @@ a.project-card:focus-visible { outline: 3px solid rgb(var(--c-signal)); outline-
   aspect-ratio: 16 / 9;
   overflow: hidden;
 }
-.project-media img {
+.project-media img,
+.project-media video {
   display: block;
   width: 100%; height: 100%;
   object-fit: cover;
   transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
 }
-a.project-card:hover .project-media img { transform: scale(1.03); }
+a.project-card:hover .project-media img,
+a.project-card:hover .project-media video { transform: scale(1.03); }
 
 /* Figures on a detail page */
 .project-figure {
@@ -455,13 +457,17 @@ a.project-card:hover .project-media img { transform: scale(1.03); }
   box-shadow: 4px 4px 0 rgb(var(--c-ink));
   padding: 0.6rem;
 }
-.project-figure img {
+.project-figure img,
+.project-figure video {
   display: block;
   width: 100%; height: auto;
   border: 2px solid rgb(var(--c-ink));
   background: #FFFFFF;      /* plots are drawn on white; keep them readable in dark mode */
 }
-.project-figure.is-hero img { aspect-ratio: 16 / 9; object-fit: cover; background: rgb(var(--c-paper)); }
+.project-figure.is-hero img,
+.project-figure.is-hero video { aspect-ratio: 16 / 9; object-fit: cover; background: rgb(var(--c-paper)); }
+/* clips are screen captures on their own dark background — do not force white behind them */
+.project-figure video { background: #0B0B0C; }
 .project-figure figcaption { padding: 0 0.15rem 0.1rem; }
 
 /* Callouts: limitations and research notes */
@@ -482,8 +488,9 @@ a.project-card:hover .project-media img { transform: scale(1.03); }
 .subpage-header { background: rgb(var(--c-cream)); border-bottom: 2px solid rgb(var(--c-ink)); }
 
 @media (prefers-reduced-motion: reduce) {
-  .project-media img, .project-more { transition: none; }
-  a.project-card:hover .project-media img { transform: none; }
+  .project-media img, .project-media video, .project-more { transition: none; }
+  a.project-card:hover .project-media img,
+  a.project-card:hover .project-media video { transform: none; }
 }
 
 /* =========================================================

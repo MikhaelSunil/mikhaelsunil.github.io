@@ -54,6 +54,12 @@ window.PROJECTS = [
     badgeColor: "scope",
     title: "Binary-Measurement Consensus & Formation Control on a Crazyflie Swarm",
     summary: "Six consensus and formation-control protocols put on five Crazyflie 2.1 nano-quadrotors and benchmarked against their own simulations. Four of them fly on one bit per axis — only the <em>sign</em> of a neighbour's relative position, no velocity measurement at all. Nearly all consensus work stops at simulation; this reports what actually survives sensor noise, latency and a 10 Hz loop.",
+    media: {
+      src: "assets/media/swarm/p1-hw.mp4",
+      poster: "assets/media/swarm/card-poster.webp",
+      alt: "Five Crazyflie 2.1 nano-quadrotors reaching consensus in the Lighthouse arena",
+      caption: "Five Crazyflie 2.1s reaching consensus on one bit per axis, replayed in Foxglove from the flight log."
+    },
     tags: ["5 × Crazyflie 2.1", "ROS 2 Jazzy", "Gazebo Harmonic", "Lighthouse + EKF", "Binary feedback"],
 
     detail: {
@@ -110,12 +116,42 @@ window.PROJECTS = [
           ]
         },
         {
+          type: "figures",
+          columns: 3,
+          items: [
+            { src: "assets/media/swarm/p1-arch.mp4", alt: "Control architecture for Finite-time consensus from binary information", caption: "Control architecture — the per-agent signal path, with the law simulated top-right." },
+            { src: "assets/media/swarm/p1-hw.mp4", alt: "Crazyflie swarm flying Finite-time consensus from binary information", caption: "The real five-Crazyflie swarm, replayed from the .mcap log in Foxglove." },
+            { src: "assets/media/swarm/p1-sim.mp4", alt: "Gazebo simulation of Finite-time consensus from binary information", caption: "The same law in Gazebo Harmonic." }
+          ]
+        },
+        {
+          type: "figure",
+          src: "assets/media/swarm/p1-results.webp",
+          alt: "Simulation and hardware x-position traces for Finite-time consensus from binary information",
+          caption: "Left: simulation, x-position of all five agents against time. Right: the same quantity from the flown swarm (cf03, cf07, cf05, cf10, cf08) with the 3-D trajectories beside it. The agreement value is reached in both; the hardware trace carries the sensor noise and the post-consensus drift the simulation does not have."
+        },
+        {
           type: "prose",
           heading: "2 — Mixed fractional-order, fixed-time",
           body: [
             "Two fractional exponents in one law, <code>0 &lt; α &lt; 1 &lt; β</code>: the lower exponent drives rapid convergence once errors are small, the higher one handles large errors. Gains <code>α = 0.5</code>, <code>β = 1.5</code>, <code>k₁ = 0.4</code>, <code>k₂ = 0.2</code>.",
             "<strong>In simulation</strong>, smooth convergence with minimal to no oscillation or chattering. <strong>On hardware</strong>, convergence confirmed with post-consensus drift and slight scatter. The steady convergence reproduces in the air with mild overshoot afterwards — the most precise of the flown protocols, and the one that damps oscillation best."
           ]
+        },
+        {
+          type: "figures",
+          columns: 3,
+          items: [
+            { src: "assets/media/swarm/p2-arch.mp4", alt: "Control architecture for Mixed fractional-order, fixed-time", caption: "Control architecture — the per-agent signal path, with the law simulated top-right." },
+            { src: "assets/media/swarm/p2-hw.mp4", alt: "Crazyflie swarm flying Mixed fractional-order, fixed-time", caption: "The real five-Crazyflie swarm, replayed from the .mcap log in Foxglove." },
+            { src: "assets/media/swarm/p2-sim.mp4", alt: "Gazebo simulation of Mixed fractional-order, fixed-time", caption: "The same law in Gazebo Harmonic." }
+          ]
+        },
+        {
+          type: "figure",
+          src: "assets/media/swarm/p2-results.webp",
+          alt: "Simulation and hardware x-position traces for Mixed fractional-order, fixed-time",
+          caption: "Simulation left, hardware right. Convergence is smooth in both. The late excursions on the right-hand trace are the end of the run, not part of the consensus phase."
         },
         {
           type: "prose",
@@ -126,12 +162,42 @@ window.PROJECTS = [
           ]
         },
         {
+          type: "figures",
+          columns: 3,
+          items: [
+            { src: "assets/media/swarm/p3-arch.mp4", alt: "Control architecture for Velocity-free consensus-containment", caption: "Control architecture — the per-agent signal path, with the law simulated top-right." },
+            { src: "assets/media/swarm/p3-hw.mp4", alt: "Crazyflie swarm flying Velocity-free consensus-containment", caption: "The real five-Crazyflie swarm, replayed from the .mcap log in Foxglove." },
+            { src: "assets/media/swarm/p3-sim.mp4", alt: "Gazebo simulation of Velocity-free consensus-containment", caption: "The same law in Gazebo Harmonic." }
+          ]
+        },
+        {
+          type: "figure",
+          src: "assets/media/swarm/p3-results.webp",
+          alt: "Simulation and hardware x-position traces for Velocity-free consensus-containment",
+          caption: "Simulation left, hardware right. The bound-constrained behaviour reproduces closely in flight, with the medium oscillatory drift described above."
+        },
+        {
           type: "prose",
           heading: "4 — Second-order formation tracking of a target",
           body: [
             "The most capable of the flown set: a tanh-based second-order law with internal filter states that lets the swarm hold a geometric formation while tracking a moving target, assuming constant target velocity. Each agent needs only its own position and velocity — no measurement of neighbouring states at all. Gains <code>K₁ = K₂ = K₃ = K₄ = 1.0</code>.",
             "<strong>In simulation</strong> the agents settle into a precise square with moderate convergence speed, high stability and minimal oscillation. <strong>On hardware</strong> a stable square is achieved too, with slight lateral drift and an altitude offset; the formation stays steady at higher <code>z</code>, which is a good sign for robustness. The experiment shows slight post-formation scatter and small vertical oscillations from sensing noise and estimator delay."
           ]
+        },
+        {
+          type: "figures",
+          columns: 3,
+          items: [
+            { src: "assets/media/swarm/p4-arch.mp4", alt: "Control architecture for Second-order formation tracking of a target", caption: "Control architecture — the per-agent signal path, with the law simulated top-right." },
+            { src: "assets/media/swarm/p4-hw.mp4", alt: "Crazyflie swarm flying Second-order formation tracking of a target", caption: "The real five-Crazyflie swarm, replayed from the .mcap log in Foxglove." },
+            { src: "assets/media/swarm/p4-sim.mp4", alt: "Gazebo simulation of Second-order formation tracking of a target", caption: "The same law in Gazebo Harmonic." }
+          ]
+        },
+        {
+          type: "figure",
+          src: "assets/media/swarm/p4-results.webp",
+          alt: "Simulation and hardware x-position traces for Second-order formation tracking of a target",
+          caption: "Simulation left, hardware right. The square forms in both; the right-hand trace shows the post-formation scatter and the small vertical oscillations that come from estimator delay."
         },
         {
           type: "prose",
@@ -143,12 +209,28 @@ window.PROJECTS = [
           ]
         },
         {
+          type: "figures",
+          columns: 2,
+          items: [
+            { src: "assets/media/swarm/p5-arch.mp4", alt: "Control architecture for Consensus-tracking with a discontinuous Γ(", caption: "Control architecture — the per-agent signal path, with the law simulated top-right." },
+            { src: "assets/media/swarm/p5-sim.mp4", alt: "Gazebo simulation of Consensus-tracking with a discontinuous Γ(", caption: "The same law in Gazebo Harmonic." }
+          ]
+        },
+        {
           type: "prose",
           heading: "6 — Formation plus target capturing  ·  simulation only",
           body: [
             "The same chain and the same pinned leader, but now with a desired 1-D line formation: offsets <code>d_i ∈ {−0.8, −0.4, 0, 0.4, 0.8} m</code> along <code>x</code>, with cf3 (its own offset zero) driving directly at the reference.",
             "From the same scattered spawn points the swarm converges over about 90–100 s, with a moderate transient bump near <code>t ≈ 100 s</code>. Crucially it settles into <em>distinguishable</em> relative offsets rather than collapsing to a point — a final spread of roughly 1.4 m across the line against a nominal 1.6 m design width — confirming that the inter-agent geometry is preserved while the whole formation is pulled along by the target.",
             "<strong>Also not flown.</strong> Hardware deployment and further gain tuning are left for future work."
+          ]
+        },
+        {
+          type: "figures",
+          columns: 2,
+          items: [
+            { src: "assets/media/swarm/p6-arch.mp4", alt: "Control architecture for Formation plus target capturing", caption: "Control architecture — the per-agent signal path, with the law simulated top-right." },
+            { src: "assets/media/swarm/p6-sim.mp4", alt: "Gazebo simulation of Formation plus target capturing", caption: "The same law in Gazebo Harmonic." }
           ]
         },
 

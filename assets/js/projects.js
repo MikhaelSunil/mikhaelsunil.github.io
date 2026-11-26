@@ -54,11 +54,7 @@ window.MSProjects = (function () {
     /* media first: this is the thing people look at */
     if (p.media && p.media.src) {
       var fig = el('div', 'project-media');
-      var img = el('img');
-      img.src = url(p.media.src);
-      img.alt = p.media.alt || p.title || '';
-      img.loading = 'lazy';
-      fig.appendChild(img);
+      fig.appendChild(mediaNode(p.media.src, p.media.alt || p.title || '', p.media.poster));
       node.appendChild(fig);
     }
 
@@ -127,13 +123,50 @@ window.MSProjects = (function () {
 
   /* ---------- the detail page ----------------------------------------- */
 
-  function figure(src, alt, caption, cls) {
-    var f = el('figure', 'project-figure' + (cls ? ' ' + cls : ''));
+  /* A page can carry twenty clips. Only the ones on screen are allowed to run,
+     so the browser is never decoding the whole set at once. */
+  var seen = null;
+  function watch(v) {
+    if (!window.IntersectionObserver) return;
+    if (!seen) {
+      seen = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          var t = e.target;
+          if (e.isIntersecting) { var r = t.play(); if (r && r.catch) r.catch(function () {}); }
+          else if (!t.paused) t.pause();
+        });
+      }, { rootMargin: '150px 0px' });
+    }
+    v.autoplay = false;
+    requestAnimationFrame(function () { seen.observe(v); });
+  }
+
+  function isVideo(src) { return /\.(mp4|webm)(\?|$)/i.test(src || ''); }
+
+  /* a still image or a silent looping clip, depending on the file extension */
+  function mediaNode(src, alt, poster) {
+    if (isVideo(src)) {
+      var v = el('video');
+      v.src = url(src);
+      v.autoplay = true; v.loop = true; v.muted = true; v.playsInline = true;
+      v.setAttribute('muted', '');
+      v.setAttribute('playsinline', '');
+      v.preload = 'metadata';
+      watch(v);
+      if (poster) v.poster = url(poster);
+      if (alt) v.setAttribute('aria-label', alt);
+      return v;
+    }
     var img = el('img');
     img.src = url(src);
     img.alt = alt || '';
     img.loading = 'lazy';
-    f.appendChild(img);
+    return img;
+  }
+
+  function figure(src, alt, caption, cls, poster) {
+    var f = el('figure', 'project-figure' + (cls ? ' ' + cls : ''));
+    f.appendChild(mediaNode(src, alt, poster));
     if (caption) f.appendChild(el('figcaption', 'font-mono text-[11px] leading-relaxed text-muted pt-2.5', caption));
     return f;
   }
@@ -168,11 +201,11 @@ window.MSProjects = (function () {
       }
 
       case 'figure':
-        return figure(b.src, b.alt, b.caption);
+        return figure(b.src, b.alt, b.caption, b.hero ? 'is-hero' : null, b.poster);
 
       case 'figures': {
         var g = el('div', 'grid grid-cols-1 ' + (b.columns === 2 ? 'lg:grid-cols-2' : 'lg:grid-cols-3') + ' gap-5');
-        (b.items || []).forEach(function (it) { g.appendChild(figure(it.src, it.alt, it.caption)); });
+        (b.items || []).forEach(function (it) { g.appendChild(figure(it.src, it.alt, it.caption, null, it.poster)); });
         return g;
       }
 
@@ -278,10 +311,10 @@ window.MSProjects = (function () {
       host.appendChild(strip);
     }
 
-    if (d.hero && d.hero.src) host.appendChild(figure(d.hero.src, d.hero.alt, d.hero.caption, 'is-hero'));
-    if (p.media && p.media.src) {
-      host.appendChild(figure(p.media.src, p.media.alt,
-        'The same figure eight flown with the model on, through the 0.3 kg release at 25 s.'));
+    if (d.hero && d.hero.src) {
+      host.appendChild(figure(d.hero.src, d.hero.alt, d.hero.caption, 'is-hero', d.hero.poster));
+    } else if (p.media && p.media.src) {
+      host.appendChild(figure(p.media.src, p.media.alt, p.media.caption, 'is-hero', p.media.poster));
     }
 
     (d.blocks || []).forEach(function (b) { host.appendChild(detailBlock(b)); });

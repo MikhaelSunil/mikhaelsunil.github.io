@@ -407,3 +407,24 @@ Every change you make is a commit, and every commit can be undone:
 3. Click **Revert**
 
 The site goes back to how it was a minute later.
+
+## Clips (.mp4) in figures
+
+Any figure whose `src` ends in `.mp4` or `.webm` renders as a silent,
+looping clip instead of an image. It only plays while it is on screen.
+
+```js
+{ type: "figure", src: "assets/media/swarm/p1-hw.mp4",
+  poster: "assets/media/swarm/card-poster.webp",   // optional still
+  alt: "...", caption: "..." }
+```
+
+The same holds for a card's `media.src`, so a project card can lead with a
+clip. Give a `poster` there — it is what shows before the clip starts.
+
+Animated GIFs are 5–10× larger than the same clip as MP4. Convert them:
+
+```bash
+ffmpeg -i in.gif -movflags +faststart -pix_fmt yuv420p -an \
+  -vf "scale='min(1280,iw)':-2:flags=lanczos" -c:v libx264 -crf 26 out.mp4
+```
