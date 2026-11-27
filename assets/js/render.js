@@ -394,7 +394,7 @@ window.MSRender = (function () {
       /* the organisation, with its mark: a supplied logo if there is one,
          otherwise a stencilled monogram plate, which keeps the row
          consistent without borrowing anyone's artwork */
-      var nameRow = el('div', 'flex items-start gap-3');
+      var nameRow = el('div', 'flex items-center gap-3.5');
       if (r.logo || r.mark) {
         var badge = el('span', 'org-mark' + (r.logo ? ' has-logo' : '') + (r.logoDark ? ' is-dark' : ''));
         if (r.logo) {
@@ -410,14 +410,14 @@ window.MSRender = (function () {
         nameRow.appendChild(badge);
       }
       var names = el('div', 'min-w-0');
-      if (r.org)  names.appendChild(el('h3', 'font-display font-bold text-lg sm:text-xl leading-tight ' + textColor(r.orgColor, 'ink'), r.org));
-      if (r.role) names.appendChild(el('div', 'font-mono text-xs sm:text-[13px] font-bold uppercase tracking-wider text-signal mt-1', r.role));
+      if (r.org)  names.appendChild(el('h3', 'font-display font-bold text-xl sm:text-2xl leading-tight ' + textColor(r.orgColor, 'ink'), r.org));
+      if (r.role) names.appendChild(el('div', 'font-mono text-[10px] sm:text-[11px] font-semibold uppercase tracking-[0.14em] text-muted mt-1', r.role));
       nameRow.appendChild(names);
       what.appendChild(nameRow);
 
       var pts = r.points || (r.body ? [r.body] : []);
       if (pts.length) {
-        var ul = el('ul', 'mt-3 space-y-1.5 sm:pl-[3.65rem]');
+        var ul = el('ul', 'mt-3 space-y-1.5 sm:pl-[4.25rem]');
         pts.forEach(function (t) {
           ul.appendChild(el('li', 'exp-point text-sm leading-relaxed text-ink/85', t));
         });

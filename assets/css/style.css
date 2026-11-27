@@ -914,33 +914,43 @@ html { overflow-x: clip; }
   .exp-date, .exp-pin, .exp-pin > span { transition: none; }
 }
 
-/* The organisation mark beside each experience entry: a real logo when
-   one is supplied, otherwise a stencilled monogram on a plate. */
+/* The organisation mark beside each experience entry: the logo itself,
+   unframed, at a size you can actually read. */
 .org-mark {
   flex: 0 0 auto;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 2.75rem;
-  height: 2.75rem;
+  width: 3.4rem;
+  height: 3.4rem;
+}
+.org-mark img { width: 100%; height: 100%; object-fit: contain; display: block; }
+
+/* the monogram fallback still needs a plate to sit on */
+.org-mark:not(.has-logo) {
   background: rgb(var(--c-cream));
   border: 2px solid rgb(var(--c-ink));
   box-shadow: 3px 3px 0 rgb(var(--c-ink));
-  overflow: hidden;
 }
-.org-mark.has-logo { background: #fff; padding: 0.3rem; }
-.org-mark img { width: 100%; height: 100%; object-fit: contain; display: block; }
 .org-mark-text {
   font-family: 'JetBrains Mono', ui-monospace, monospace;
   font-weight: 800;
-  font-size: 0.95rem;
+  font-size: 1.05rem;
   letter-spacing: -0.02em;
   color: rgb(var(--c-ink));
 }
-.org-mark-text.is-long { font-size: 0.68rem; letter-spacing: 0; }
+.org-mark-text.is-long { font-size: 0.72rem; letter-spacing: 0; }
 
-/* a logo keeps its own colours, so give it a light tile in dark mode too */
-[data-theme="dark"] .org-mark.has-logo { background: #F4F1EA; }
+/* Two of these are light artwork drawn on black. Unframed they would
+   vanish on drafting paper, so those two keep a dark tile — the
+   smallest backing that keeps them legible. */
+.org-mark.has-logo.is-dark,
+[data-theme="dark"] .org-mark.has-logo.is-dark {
+  background: #0B0B0C;
+  padding: 0.3rem;
+}
+
+
 
 /* two of the marks are light artwork on black and need the tile to match */
 .org-mark.has-logo.is-dark,

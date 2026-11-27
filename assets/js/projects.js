@@ -369,10 +369,11 @@ window.MSProjects = (function () {
       host.appendChild(strip);
     }
 
+    /* Only an explicit detail.hero opens the write-up. The card's media is
+       chosen to work as a thumbnail, which is a different job, and
+       repeating it here would just delay the actual content. */
     if (d.hero && d.hero.src) {
       host.appendChild(figure(d.hero.src, d.hero.alt, d.hero.caption, 'is-hero', d.hero.poster));
-    } else if (p.media && p.media.src) {
-      host.appendChild(figure(p.media.src, p.media.alt, p.media.caption, 'is-hero', p.media.poster));
     }
 
     (d.blocks || []).forEach(function (b) { host.appendChild(detailBlock(b)); });
