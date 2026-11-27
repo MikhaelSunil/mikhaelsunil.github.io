@@ -548,12 +548,13 @@ html { overflow-x: clip; }
   margin-left: -50vw;
   overflow: hidden;
   pointer-events: none;
-  /* dissolve into the paper instead of ending on a ruled edge, so the
-     band never reads as the top border of the section below it */
+  /* Dissolve into the paper at the bottom rather than ending on a ruled
+     edge, so the band never reads as the top border of the section below.
+     The top stays hard, tucked under the header. */
   -webkit-mask-image: linear-gradient(to bottom,
-      transparent 0%, #000 12%, #000 46%, rgba(0,0,0,0.45) 74%, transparent 100%);
+      #000 0%, #000 46%, rgba(0,0,0,0.45) 74%, transparent 100%);
           mask-image: linear-gradient(to bottom,
-      transparent 0%, #000 12%, #000 46%, rgba(0,0,0,0.45) 74%, transparent 100%);
+      #000 0%, #000 46%, rgba(0,0,0,0.45) 74%, transparent 100%);
 }
 
 .hero-slide {
@@ -561,6 +562,13 @@ html { overflow-x: clip; }
   inset: 0;
   opacity: 0;
   transition: opacity 1.4s ease-in-out;
+  /* the side edges dissolve the same way the bottom does. This lives on
+     the slide rather than the band so the two gradients simply nest,
+     instead of needing mask-composite. The scrim above is left whole. */
+  -webkit-mask-image: linear-gradient(to right,
+      transparent 0%, #000 13%, #000 87%, transparent 100%);
+          mask-image: linear-gradient(to right,
+      transparent 0%, #000 13%, #000 87%, transparent 100%);
 }
 .hero-slide.is-on { opacity: 0.5; }
 
