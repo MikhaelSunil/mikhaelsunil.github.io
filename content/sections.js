@@ -167,79 +167,55 @@ window.SECTIONS = [
 
   /* ===================================================================
      SECTION 04 — TECH STACK
-     The four domain cards live here for now. To list your actual stack
-     (languages, frameworks, hardware, tools), there is a ready-made
-     example further down this section, switched off behind a comment.
+     A ladder: one plate per layer, hardware at the foot. Add a tool by
+     dropping a string into the right `items` list.
      =================================================================== */
   {
     id: "tech-stack",
     nav: "Tech Stack",
     number: "04",
-    kicker: "TOOLS & DOMAINS",
+    kicker: "THE STACK, BOTTOM TO TOP",
     title: "Tech Stack",
-    meta: "4 CORE DOMAINS",
+    meta: "4 LAYERS // L1 → L4",
     blocks: [
       {
-        type: "cards",
-        columns: 2,
-        items: [
+        type: "prose",
+        body: [
+          "Every layer, from the crimp tool to the policy. Read it from the bottom up: each one only works because the one under it does."
+        ]
+      },
+      {
+        type: "stack",
+        layers: [
           {
-            badge: "DOMAIN-01",
-            badgeColor: "signal",
-            kicker: "MANIPULATION & LEARNING",
-            title: "Model-Based Learning & Manipulation",
-            body: "Researching, testing, and deploying model-based learning and adaptive control algorithms for ground and aerial manipulators—bridging physical dynamics with data-driven generalization.",
-            tags: ["Model-Based Learning", "Aerial & Ground Manipulators", "SAC Deep RL", "Sim-to-Real"]
+            code: "L4",
+            name: "Intelligence",
+            note: "What it decides",
+            items: ["PyTorch", "SAC deep RL", "Model-based learning", "Sim-to-real transfer", "OpenCV", "MATLAB · Simulink"]
           },
           {
-            badge: "DOMAIN-02",
-            badgeColor: "scope",
-            kicker: "AERIAL SWARMS",
-            title: "Multi-Agent Aerial Swarms",
-            body: "Designing, benchmarking, and flying decentralized consensus, containment, and formation control algorithms on physical nano-drone swarms using minimal local feedback.",
-            tags: ["Crazyflie 2.1", "ROS 2 Jazzy", "Binary feedback", "Distributed Control"]
+            code: "L3",
+            name: "Autonomy",
+            note: "Where it is, where it goes",
+            items: ["Distributed consensus", "Containment & formation", "Probabilistic SLAM", "EKF & sensor fusion",
+                    "Optimisation-based planning", "Adaptive control", "FOC motor control", "PX4"]
           },
           {
-            badge: "DOMAIN-03",
-            badgeColor: "amber",
-            kicker: "REHAB & MECHATRONICS",
-            title: "Wearable Exoskeletons & Actuators",
-            body: "Engineering portable rehabilitation exoskeletons combining custom 25:1 cycloidal gearboxes, cable-driven transmissions, closed-loop FOC motor control, and embedded firmware.",
-            tags: ["Cycloidal Drives", "STM32 & FOC", "Magnetic Encoders", "Fusion 360"]
+            code: "L2",
+            name: "Middleware",
+            note: "How the parts talk",
+            items: ["ROS 2 Jazzy", "Gazebo Harmonic", "ros_gz_bridge", "Foxglove", "rosbag · .mcap",
+                    "Docker", "Python", "C++", "Embedded C"]
           },
           {
-            badge: "DOMAIN-04",
-            badgeColor: "ink",
-            kicker: "AUTONOMY & EMBEDDED",
-            title: "SLAM, Sensor Fusion & Embedded Vision",
-            body: "Building GPS-denied autonomy stacks fusing LiDAR, IMU, GPR, and custom serial sensor networks alongside real-time UAV vision tracking and medical landmark AI.",
-            tags: ["Probabilistic SLAM", "LiDAR · IMU · GPR", "Teensy 4.0 / ESP32", "MATLAB / Simulink"]
+            code: "L1",
+            name: "Hardware",
+            note: "What I crimp, wire and fly",
+            items: ["Crazyflie 2.1", "STM32", "Teensy 4.0", "ESP32", "Jetson Nano", "Lighthouse tracking",
+                    "LiDAR · IMU · GPR", "Cycloidal drives", "Magnetic encoders", "Fusion 360"]
           }
         ]
       }
-
-      /* ----------------------------------------------------------------
-         READY TO FILL: a grouped list of your actual stack.
-         Delete the comment marker line below, and the matching one at the
-         end, to switch it on. Edit the tags to suit.
-         ----------------------------------------------------------------
-      ,
-      { type: "heading", color: "signal", label: "FULL STACK" },
-      {
-        type: "cards",
-        columns: 2,
-        items: [
-          { badge: "LANGUAGES", badgeColor: "ink",
-            tags: ["C++", "Python", "MATLAB", "Embedded C"] },
-          { badge: "FRAMEWORKS", badgeColor: "signal",
-            tags: ["ROS 2", "Crazyswarm2", "Nav2", "PyTorch", "Gazebo"] },
-          { badge: "HARDWARE", badgeColor: "amber",
-            tags: ["STM32", "Teensy 4.0", "ESP32", "Jetson Nano", "Crazyflie 2.1"] },
-          { badge: "TOOLS", badgeColor: "scope",
-            tags: ["Docker", "Git", "Fusion 360", "Simulink", "RViz"] }
-        ]
-      }
-         ---------------------------------------------------------------- */
     ]
   },
 

@@ -674,3 +674,83 @@ html { overflow-x: clip; }
   .spec-plate { transition: none; }
   .spec-plate:hover { transform: none; box-shadow: 4px 4px 0 rgb(var(--c-ink)); }
 }
+
+
+/* =====================================================================
+   THE STACK LADDER  (Tech Stack section)
+   ===================================================================== */
+.stack-ladder { position: relative; padding-left: 2.6rem; }
+
+/* the rail: a solid line with a dotted twin, like a drawing datum */
+.stack-ladder::before,
+.stack-ladder::after {
+  content: '';
+  position: absolute;
+  top: 1.4rem;
+  bottom: 1.4rem;
+  width: 0;
+}
+.stack-ladder::before { left: 0.85rem; border-left: 2px solid rgb(var(--c-ink)); }
+.stack-ladder::after  { left: 1.5rem; border-left: 2px dotted rgb(var(--c-ink) / 0.35); }
+
+.stack-layer { position: relative; margin-bottom: 1.1rem; }
+.stack-layer:last-child { margin-bottom: 0; }
+
+/* the tick on the rail, level with each plate */
+.stack-pin {
+  position: absolute;
+  left: -2.6rem;
+  top: 1.65rem;
+  width: 2.6rem;
+  height: 2px;
+  background: rgb(var(--c-ink));
+}
+.stack-pin > span {
+  position: absolute;
+  left: 0.35rem;
+  top: -0.3rem;
+  width: 0.65rem;
+  height: 0.65rem;
+  background: rgb(var(--c-signal));
+  border: 2px solid rgb(var(--c-ink));
+}
+
+/* the layer number, stencilled on a plate */
+.stack-code {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 3.1rem;
+  padding: 0.3rem 0.5rem;
+  font-size: 1.15rem;
+  letter-spacing: 0.04em;
+  color: rgb(var(--c-ink));
+  background: rgb(var(--c-paper));
+  border: 2px solid rgb(var(--c-ink));
+  box-shadow: 3px 3px 0 rgb(var(--c-ink));
+}
+
+.stack-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.25rem 0.55rem;
+  background: rgb(var(--c-paper));
+  border: 1px solid rgb(var(--c-ink));
+  color: rgb(var(--c-ink));
+  transition: background-color 0.15s ease;
+}
+.stack-chip:hover { background: rgb(var(--c-amberretro)); }
+.stack-chip-dot {
+  width: 0.35rem;
+  height: 0.35rem;
+  background: rgb(var(--c-signal));
+  flex: 0 0 auto;
+}
+
+@media (max-width: 640px) {
+  .stack-ladder { padding-left: 1.6rem; }
+  .stack-ladder::after { display: none; }
+  .stack-pin { left: -1.6rem; width: 1.6rem; }
+}
+@media (prefers-reduced-motion: reduce) { .stack-chip { transition: none; } }

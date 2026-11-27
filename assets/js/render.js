@@ -270,6 +270,37 @@ window.MSRender = (function () {
     return row;
   }
 
+  /* The stack as a ladder: one plate per layer, hardware at the foot,
+     read bottom to top. The rail down the left side is drawn in CSS. */
+  function blockStack(block) {
+    var wrap = el('div', 'stack-ladder');
+    (block.layers || []).forEach(function (L) {
+      var row = el('div', 'stack-layer');
+      row.appendChild(el('span', 'stack-pin', '<span></span>'));
+
+      var card = el('div', 'retro-card p-4 sm:p-5 grid grid-cols-1 md:grid-cols-[13rem_1fr] gap-4 md:gap-6 items-start');
+
+      var head = el('div', 'flex items-center gap-3.5');
+      head.appendChild(el('span', 'stack-code font-mono font-bold', L.code || ''));
+      var names = el('div', '');
+      names.appendChild(el('div', 'font-display font-bold text-lg leading-tight text-ink', L.name || ''));
+      if (L.note) names.appendChild(el('div', 'font-mono text-[11px] uppercase tracking-wider text-muted mt-0.5', L.note));
+      head.appendChild(names);
+      card.appendChild(head);
+
+      var chips = el('div', 'flex flex-wrap gap-2 md:border-l-2 md:border-ink/20 md:pl-6');
+      (L.items || []).forEach(function (it) {
+        chips.appendChild(el('span', 'stack-chip font-mono text-[11px] sm:text-xs',
+          '<span class="stack-chip-dot"></span>' + it));
+      });
+      card.appendChild(chips);
+
+      row.appendChild(card);
+      wrap.appendChild(row);
+    });
+    return wrap;
+  }
+
   function blockCards(block) {
     /* widths: [7, 5] lays the cards out on a 12-column grid instead of
        equal columns. Otherwise columns: 1-4 gives an even grid. */
@@ -484,6 +515,7 @@ window.MSRender = (function () {
   function renderBlock(block) {
     switch (block.type) {
       case 'about':        return blockAbout(block);
+      case 'stack':        return blockStack(block);
       case 'cards':        return blockCards(block);
       case 'featured-projects':
         return (window.MSProjects && window.MSProjects.renderFeatured)
