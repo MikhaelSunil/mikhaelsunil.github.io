@@ -937,3 +937,28 @@ html { overflow-x: clip; }
 /* two of the marks are light artwork on black and need the tile to match */
 .org-mark.has-logo.is-dark,
 [data-theme="dark"] .org-mark.has-logo.is-dark { background: #0B0B0C; padding: 0.22rem; }
+
+/* A card with no photograph yet: drafting paper with the project code
+   stencilled on it, so the grid keeps its rhythm. */
+.project-media.is-blank {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(var(--c-paper));
+  background-image:
+    linear-gradient(rgb(var(--c-ink) / 0.09) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(var(--c-ink) / 0.09) 1px, transparent 1px);
+  background-size: 22px 22px, 22px 22px;
+  border-bottom: 2px solid rgb(var(--c-ink));
+}
+.project-media-code {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-weight: 800;
+  font-size: 1.5rem;
+  letter-spacing: 0.18em;
+  color: rgb(var(--c-ink) / 0.3);
+}
+/* the wide cards give their media more room */
+.project-card.is-wide .project-media.is-blank { aspect-ratio: 21 / 9; }

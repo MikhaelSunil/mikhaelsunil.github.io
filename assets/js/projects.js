@@ -51,12 +51,17 @@ window.MSProjects = (function () {
       node.setAttribute('aria-label', p.title + ' — read more');
     }
 
-    /* media first: this is the thing people look at */
+    /* media first: this is the thing people look at. Where a project has
+       no photograph yet, a drawn panel keeps the card the right shape
+       instead of leaving a hole. */
+    var fig = el('div', 'project-media');
     if (p.media && p.media.src) {
-      var fig = el('div', 'project-media');
       fig.appendChild(mediaNode(p.media.src, p.media.alt || p.title || '', p.media.poster));
-      node.appendChild(fig);
+    } else {
+      fig.classList.add('is-blank');
+      fig.innerHTML = '<span class="project-media-code">' + (p.code || '') + '</span>';
     }
+    node.appendChild(fig);
 
     var body = el('div', 'p-5 sm:p-6 flex flex-col flex-1');
 
@@ -94,24 +99,22 @@ window.MSProjects = (function () {
     return g;
   }
 
-  /* ---------- home page: the featured few + a link to the rest -------- */
+  /* ---------- home page: every project, in a mixed rhythm ------------- */
 
+  /* Two wide cards then three narrow ones, repeating. The wide ones carry
+     the media at a size worth looking at; the rest keep the page from
+     becoming a column of identical blocks. */
   function renderFeatured(block) {
-    var wrap = el('div');
-    var featured = all().filter(function (p) { return p.featured; });
-    wrap.appendChild(grid(featured, 3));
-
-    var rest = all().length - featured.length;
-    if (rest > 0) {
-      var bar = el('div', 'flex justify-center pt-8');
-      var a = el('a', 'retro-btn inline-flex items-center gap-2 px-6 py-3 bg-cream text-ink hover:bg-amberretro font-mono text-xs sm:text-sm font-bold uppercase tracking-wider',
-        (block && block.moreLabel ? block.moreLabel : 'View all projects') +
-        ' <span class="text-muted">(' + all().length + ')</span> <span aria-hidden="true">&rarr;</span>');
-      a.href = url('projects/');
-      bar.appendChild(a);
-      wrap.appendChild(bar);
-    }
-    return wrap;
+    var list = all();
+    var g = el('div', 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-6 items-start');
+    list.forEach(function (p, i) {
+      var wide = (i % 5) < 2;                       /* 2 wide, then 3 */
+      var c = card(p);
+      c.className += wide ? ' lg:col-span-3' : ' lg:col-span-2';
+      if (wide) c.classList.add('is-wide');
+      g.appendChild(c);
+    });
+    return g;
   }
 
   /* ---------- the showcase page --------------------------------------- */

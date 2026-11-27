@@ -80,7 +80,7 @@ window.SECTIONS = [
     title: "Projects & Research",
     meta: "SELECTED WORK",
     blocks: [
-      { type: "featured-projects", moreLabel: "View all projects" }
+      { type: "featured-projects" }
     ]
   },
 
