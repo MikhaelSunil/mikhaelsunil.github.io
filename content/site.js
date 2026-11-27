@@ -137,18 +137,33 @@ window.SITE = {
         half: true,
         items: [
           {
-            heading: "Robotics Research Center",
-            meta: "Autonomy & Control",
-            body: "End-to-end autonomy pipelines, sensor fusion, motion planning, and sim-to-real policy transfer."
+            heading: "Research Assistant — Robotics Research Center",
+            meta: "May 2026 – Present · Aerial Manipulation",
+            body: "Learning-based adaptive control for an aerial manipulator with a moving arm and changing payload. Validated in PX4 and Gazebo against the stock controller; hardware flight testing underway."
           },
           {
-            heading: "Research Intern — MuSiC@IISERB, IISER Bhopal",
-            meta: "May – Aug 2025 · Aerial Swarms",
-            body: "Experimental benchmarking of binary-measurement consensus & formation control on Crazyflie 2.1 swarms using ROS 2 & Crazyswarm2."
+            heading: "Robotics Engineer — Botnova Robotics",
+            meta: "Aug 2025 – May 2026 · Field Robotics",
+            body: "Software and system architecture for Zerion, an autonomous solar-panel cleaning robot, for reliable navigation on inclined terrain. Embedded telemetry and communication pipelines."
           },
           {
-            heading: "R&D & Open-Source Collaborations",
-            meta: "BotNova Robotics · Mercedes-Benz · Bitcraze · IMRC Labs"
+            heading: "Project Developer — Mercedes-Benz Coastal Star",
+            meta: "May – Nov 2025 · Computer Vision"
+          },
+          {
+            heading: "Research Project Intern — IISER Bhopal",
+            meta: "May – Jul 2025 · Aerial Swarms",
+            body: "Benchmarked six consensus, containment and formation-control protocols on a five-drone Crazyflie 2.1 swarm — four on one bit per axis — in a Lighthouse-tracked arena on ROS 2. Accepted at ICAART 2026."
+          },
+          {
+            heading: "Stack Contributor — Intelligent Multi-Robot Coordination Lab",
+            meta: "May – Jul 2025 · Open Source",
+            body: "A PoseStamped subscription service with pose and position getters for the Crazyflie ROS 2 API stack; backward compatible."
+          },
+          {
+            heading: "Embedded Systems Intern — NeST Technologies",
+            meta: "Jul 2024 · Embedded",
+            body: "Embedded systems design across a range of microcontrollers; developed, programmed and tested solutions for real applications."
           }
         ]
       },
@@ -194,7 +209,7 @@ window.SITE = {
         title: "Technical Stack",
         type: "text",
         divider: true,
-        body: "ROS 2 · Crazyswarm2 · Probabilistic SLAM · Nav2 · SAC Deep RL · Gazebo / RViz · Docker · Crazyflie 2.1 · STM32 · Teensy 4.0 · ESP32 · FOC Drivers · 25:1 Cycloidal Drives · LiDAR · IMU · GPR · MATLAB / Simulink · Fusion 360"
+        body: "ROS 2 Jazzy · Gazebo Harmonic · Isaac Sim · PX4 · QGroundControl · Foxglove · Docker · Python · C++ · Embedded C · PyTorch · SAC Deep RL · Probabilistic SLAM · EKF & Sensor Fusion · Adaptive Control · FOC · Crazyflie 2.1 · Tarot · xArm 6 · CUAV X7 Pro · Jetson Orin Nano · STM32 · Teensy 4.0 · ESP32 · OptiTrack · Lighthouse · Dynamixel · LiDAR · IMU · GPR · Cycloidal Drives · MATLAB / Simulink · Fusion 360"
       }
     ]
   }

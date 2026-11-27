@@ -109,7 +109,7 @@ window.SECTIONS = [
             tagColor: "scope",
             org: "Robotics Research Center",
             logo: "assets/img/logos/robotics-research-center.webp",
-            role: "Research Intern",
+            role: "Research Assistant",
             orgColor: "ink",
             points: [
               "Building a learning-based adaptive control framework for an aerial manipulator, so it handles the shifting dynamics of a moving arm and a changing payload in real time.",
