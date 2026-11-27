@@ -78,7 +78,7 @@ window.MSRender = (function () {
   /* ---------- section shell ---------------------------------------- */
 
   function sectionHeader(sec) {
-    var wrap = el('div', 'flex flex-col sm:flex-row sm:items-end justify-between gap-2 border-b-2 border-ink pb-3.5 mb-8');
+    var wrap = el('div', 'section-head flex flex-col sm:flex-row sm:items-end justify-between gap-2 border-b-2 border-ink pb-4 mb-10');
     var left = el('div');
     if (sec.number || sec.kicker) {
       left.appendChild(el('div', 'font-mono text-xs font-bold uppercase tracking-widest text-signal mb-1',
@@ -792,7 +792,7 @@ window.MSRender = (function () {
       s.id = sec.id;
       if (sec.title) s.appendChild(sectionHeader(sec));
       var blocks = sec.blocks || [];
-      var inner = blocks.length > 1 ? el('div', 'space-y-10') : s;
+      var inner = blocks.length > 1 ? el('div', 'space-y-12') : s;
       blocks.forEach(function (b) { inner.appendChild(renderBlock(b)); });
       if (inner !== s) s.appendChild(inner);
       host.appendChild(s);

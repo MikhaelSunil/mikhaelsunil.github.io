@@ -63,9 +63,9 @@ window.MSProjects = (function () {
     }
     node.appendChild(fig);
 
-    var body = el('div', 'p-5 sm:p-6 flex flex-col flex-1');
+    var body = el('div', 'p-6 sm:p-7 flex flex-col flex-1');
 
-    var head = el('div', 'flex flex-wrap items-center justify-between gap-2 border-b-2 border-ink pb-2.5 mb-4 min-h-[1.75rem]');
+    var head = el('div', 'flex flex-wrap items-center justify-between gap-2 border-b-2 border-ink pb-3 mb-5 min-h-[1.75rem]');
     /* the project codes were shelf numbers for a shelf nobody browses,
        so the badge carries the status only, where there is one */
     if (p.status) {

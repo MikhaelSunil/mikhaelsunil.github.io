@@ -984,3 +984,53 @@ html.is-booting, html.is-booting body { overflow: hidden; }
 }
 /* the wide cards give their media more room */
 .project-card.is-wide .project-media.is-blank { aspect-ratio: 21 / 9; }
+
+/* =====================================================================
+   BREATHING ROOM
+   JetBrains Mono sets tight — every glyph is the same width, so lines
+   pack closer than a proportional face would at the same leading. These
+   rules open the text up across the site. ID-scoped so they win over
+   the utility classes without having to edit every call site.
+   ===================================================================== */
+
+#home p,
+#sections-root p,
+#detail-root p,
+#showcase-root p {
+  line-height: 1.85;
+}
+
+#sections-root li,
+#detail-root li {
+  line-height: 1.8;
+}
+
+/* paragraphs inside one block */
+#sections-root p + p,
+#detail-root p + p {
+  margin-top: 1rem;
+}
+
+/* headings want air above them, not just below */
+#sections-root h3,
+#detail-root h3 {
+  line-height: 1.3;
+}
+
+/* the experience and stack rows */
+.exp-point + .exp-point { margin-top: 0.6rem; }
+.exp-entry { padding-bottom: 2.6rem; }
+.stack-layer { margin-bottom: 1.4rem; }
+.stack-chip { padding: 0.32rem 0.65rem; }
+.spec-plate { padding: 1rem 1.05rem; }
+
+/* cards: give the text room away from the rule above it */
+.project-card h3 { line-height: 1.4; }
+.project-card p { line-height: 1.8; }
+
+/* section headers */
+.section-head { margin-bottom: 2.25rem; }
+
+@media (min-width: 640px) {
+  #home p, #sections-root p, #detail-root p { line-height: 1.9; }
+}
