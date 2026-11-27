@@ -457,6 +457,46 @@ window.MSRender = (function () {
 
   /* ---------- hero -------------------------------------------------- */
 
+  /* A full-bleed band of photographs behind the hero text. Half opacity so
+     it reads as paper texture rather than a gallery, and masked away at the
+     bottom so the first section does not end on a hard horizontal edge. */
+  function slideshow(S) {
+    var cfg = S.heroSlideshow || {};
+    var shots = cfg.images || [];
+    var band = el('div', 'hero-slides');
+    band.setAttribute('aria-hidden', 'true');
+    if (!shots.length) return band;
+
+    var reduce = false;
+    try { reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) {}
+
+    var nodes = shots.map(function (shot, i) {
+      var fig = el('div', 'hero-slide' + (i === 0 ? ' is-on' : ''));
+      var img = el('img');
+      img.src = shot.src;
+      img.alt = '';
+      img.decoding = 'async';
+      if (i > 1) img.loading = 'lazy';
+      if (shot.position) img.style.objectPosition = shot.position;
+      fig.appendChild(img);
+      band.appendChild(fig);
+      return fig;
+    });
+    band.appendChild(el('div', 'hero-scrim'));
+
+    if (reduce || nodes.length < 2) return band;
+
+    var at = 0;
+    setInterval(function () {
+      if (document.hidden) return;
+      nodes[at].classList.remove('is-on');
+      at = (at + 1) % nodes.length;
+      nodes[at].classList.add('is-on');
+    }, cfg.intervalMs || 4500);
+
+    return band;
+  }
+
   function renderHero() {
     var S = window.SITE || {};
     var host = mount('home');
@@ -468,7 +508,7 @@ window.MSRender = (function () {
     /* 8/4 rather than 7/5: the heading needs the width to keep the wave on
        the first line. The portrait is capped at 330px anyway, so it barely
        changes. */
-    var left = el('div', 'md:col-span-8 space-y-6');
+    var left = el('div', 'md:col-span-9 lg:col-span-8 space-y-6');
     if (S.kicker) {
       left.appendChild(el('div', 'flex flex-wrap items-center gap-2.5 font-mono text-xs',
         '<span class="px-2.5 py-1 bg-ink text-cream font-bold uppercase tracking-wider">' + S.kicker + '</span>'));
@@ -486,10 +526,14 @@ window.MSRender = (function () {
     h1.setAttribute('data-greeting', greeting);
     h1.setAttribute('data-heading', headingText.split('{wave}').join('').replace(/\s+/g, ' ').trim());
     h1.setAttribute('aria-label', (greeting ? greeting + ' \u2014 ' : '') + headingText.split('{wave}').join('').replace(/\s+/g, ' ').trim());
+    /* the smiley only appears if heroHeading actually asks for it */
+    var wantsWave = headingText.indexOf('{wave}') !== -1;
     h1.innerHTML =
       '<span id="hero-text" class="hero-text" aria-hidden="true"></span>' +
       '<span id="hero-caret" class="hero-caret" aria-hidden="true"></span>' +
-      '<span id="hero-wave-slot" class="hero-wave-slot" aria-hidden="true">' + WAVE_SVG + '</span>';
+      (wantsWave
+        ? '<span id="hero-wave-slot" class="hero-wave-slot" aria-hidden="true">' + WAVE_SVG + '</span>'
+        : '');
     nameBlock.appendChild(h1);
     if (S.tagline && S.showTaglineInHero !== false) {
       nameBlock.appendChild(el('p', 'font-mono text-sm sm:text-base font-bold text-signal uppercase tracking-wide pt-1', S.tagline));
@@ -518,62 +562,10 @@ window.MSRender = (function () {
     }
     grid.appendChild(left);
 
-    /* right column: portrait */
-    var right = el('div', 'md:col-span-4 flex justify-center md:justify-end');
-    var mat = el('div', 'w-full max-w-[330px] bg-cream border-2 border-ink shadow-hard p-3');
-    var port = el('div', 'relative aspect-[4/4.5] w-full bg-paper border-2 border-ink overflow-hidden flex items-center justify-center');
-    port.innerHTML =
-      '<span class="absolute top-2 left-2 w-3.5 h-3.5 border-t-2 border-l-2 border-ink/70 z-10 pointer-events-none"></span>' +
-      '<span class="absolute top-2 right-2 w-3.5 h-3.5 border-t-2 border-r-2 border-ink/70 z-10 pointer-events-none"></span>' +
-      '<span class="absolute bottom-2 left-2 w-3.5 h-3.5 border-b-2 border-l-2 border-ink/70 z-10 pointer-events-none"></span>' +
-      '<span class="absolute bottom-2 right-2 w-3.5 h-3.5 border-b-2 border-r-2 border-ink/70 z-10 pointer-events-none"></span>';
-
-    if (S.photo) {
-      var photo = el('img', 'w-full h-full object-cover object-center');
-      photo.src = S.photo;
-      photo.alt = S.photoAlt || S.name || '';
-      port.appendChild(photo);
-    } else {
-      var ph = el('div', 'w-full h-full halftone-dots flex items-center justify-center relative');
-      ph.innerHTML = portraitPlaceholderSVG();
-      port.appendChild(ph);
-    }
-    mat.appendChild(port);
-    right.appendChild(mat);
-    grid.appendChild(right);
-
+    host.appendChild(slideshow(S));
     host.appendChild(grid);
   }
 
-  function portraitPlaceholderSVG() {
-    return '' +
-'<svg viewBox="0 0 320 360" class="w-full h-full" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Illustrated portrait placeholder">' +
-'<circle cx="160" cy="148" r="96" fill="#E8E0CE" stroke="#1C1B18" stroke-width="2" stroke-dasharray="6 4" />' +
-'<circle cx="160" cy="148" r="78" fill="#D49B2A" opacity="0.22" />' +
-'<line x1="20" y1="148" x2="52" y2="148" stroke="#1C1B18" stroke-width="1.5" />' +
-'<line x1="268" y1="148" x2="300" y2="148" stroke="#1C1B18" stroke-width="1.5" />' +
-'<path d="M44 360 C50 280, 92 246, 160 246 C228 246, 270 280, 276 360 Z" fill="#1C1B18" stroke="#1C1B18" stroke-width="2.5" />' +
-'<polygon points="130,246 160,296 190,246" fill="#FAF7F0" stroke="#1C1B18" stroke-width="2" />' +
-'<rect x="200" y="296" width="38" height="24" fill="#D94E28" stroke="#FAF7F0" stroke-width="1.8" />' +
-'<line x1="206" y1="304" x2="232" y2="304" stroke="#FAF7F0" stroke-width="2" />' +
-'<line x1="206" y1="312" x2="224" y2="312" stroke="#FAF7F0" stroke-width="2" />' +
-'<rect x="142" y="212" width="36" height="42" rx="10" fill="#FAF7F0" stroke="#1C1B18" stroke-width="2.5" />' +
-'<path d="M112 148 C112 104, 132 84, 160 84 C188 84, 208 104, 208 148 C208 190, 188 218, 160 218 C132 218, 112 190, 112 148 Z" fill="#FAF7F0" stroke="#1C1B18" stroke-width="3" />' +
-'<path d="M110 144 C108 96, 134 74, 166 76 C196 78, 212 98, 210 142 C200 118, 184 110, 158 112 C134 114, 120 124, 110 144 Z" fill="#1C1B18" />' +
-'<rect x="122" y="138" width="32" height="22" rx="4" fill="#2D6A4F" fill-opacity="0.16" stroke="#1C1B18" stroke-width="2.5" />' +
-'<rect x="166" y="138" width="32" height="22" rx="4" fill="#2D6A4F" fill-opacity="0.16" stroke="#1C1B18" stroke-width="2.5" />' +
-'<line x1="154" y1="147" x2="166" y2="147" stroke="#1C1B18" stroke-width="2.5" />' +
-'<line x1="112" y1="146" x2="122" y2="146" stroke="#1C1B18" stroke-width="2.5" />' +
-'<line x1="198" y1="146" x2="208" y2="146" stroke="#1C1B18" stroke-width="2.5" />' +
-'<circle cx="138" cy="149" r="2.8" fill="#1C1B18" />' +
-'<circle cx="182" cy="149" r="2.8" fill="#1C1B18" />' +
-'<path d="M158 158 L156 172 L164 172" fill="none" stroke="#1C1B18" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />' +
-'<path d="M146 190 Q160 199 174 190" fill="none" stroke="#1C1B18" stroke-width="2.5" stroke-linecap="round" />' +
-'<g transform="translate(50, 226)">' +
-'<circle cx="0" cy="0" r="14" fill="#FAF7F0" stroke="#1C1B18" stroke-width="2" />' +
-'<circle cx="0" cy="0" r="5" fill="#D94E28" stroke="#1C1B18" stroke-width="1.5" />' +
-'</g></svg>';
-  }
 
   /* ---------- sections --------------------------------------------- */
 

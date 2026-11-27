@@ -518,3 +518,85 @@ a.project-card:hover .project-media video { transform: scale(1.03); }
 
 /* The boot sequence runs to the end: nothing behind it scrolls meanwhile. */
 html.is-booting, html.is-booting body { overflow: hidden; }
+
+
+/* =====================================================================
+   HERO PHOTO BAND
+   A full-bleed strip of workshop photographs behind the intro text.
+   ===================================================================== */
+
+/* the band is wider than its container, so nothing may scroll sideways */
+html { overflow-x: clip; }
+
+#home { position: relative; isolation: isolate; }
+
+.hero-slides {
+  position: absolute;
+  z-index: -1;
+  top: -3.5rem;
+  bottom: -2.5rem;
+  left: 50%;
+  width: 100vw;
+  margin-left: -50vw;
+  overflow: hidden;
+  pointer-events: none;
+  /* dissolve into the paper instead of ending on a ruled edge, so the
+     band never reads as the top border of the section below it */
+  -webkit-mask-image: linear-gradient(to bottom,
+      transparent 0%, #000 12%, #000 46%, rgba(0,0,0,0.45) 74%, transparent 100%);
+          mask-image: linear-gradient(to bottom,
+      transparent 0%, #000 12%, #000 46%, rgba(0,0,0,0.45) 74%, transparent 100%);
+}
+
+.hero-slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 1.4s ease-in-out;
+}
+.hero-slide.is-on { opacity: 0.5; }
+
+.hero-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  filter: saturate(0.82) contrast(1.02);
+}
+
+/* keep the heading readable: paper washes in from the left, where the
+   text sits, and thins out across the picture */
+.hero-scrim {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to right,
+      rgb(var(--c-paper) / 0.9) 0%,
+      rgb(var(--c-paper) / 0.72) 38%,
+      rgb(var(--c-paper) / 0.34) 72%,
+      rgb(var(--c-paper) / 0.2) 100%);
+}
+
+/* On dark paper the same photographs go muddy at half opacity, so they
+   get a little more light and a little less contrast. */
+[data-theme="dark"] .hero-slide img {
+  filter: saturate(0.78) brightness(1.12) contrast(0.94);
+}
+[data-theme="dark"] .hero-scrim {
+  background:
+    linear-gradient(to right,
+      rgb(var(--c-paper) / 0.88) 0%,
+      rgb(var(--c-paper) / 0.7) 38%,
+      rgb(var(--c-paper) / 0.36) 72%,
+      rgb(var(--c-paper) / 0.22) 100%);
+}
+
+@media (max-width: 767px) {
+  /* narrow screens put the text over the middle of the picture */
+  .hero-scrim { background: rgb(var(--c-paper) / 0.76); }
+  .hero-slides { top: -2rem; bottom: -1.5rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-slide { transition: none; }
+}

@@ -428,3 +428,31 @@ Animated GIFs are 5–10× larger than the same clip as MP4. Convert them:
 ffmpeg -i in.gif -movflags +faststart -pix_fmt yuv420p -an \
   -vf "scale='min(1280,iw)':-2:flags=lanczos" -c:v libx264 -crf 26 out.mp4
 ```
+
+## The photo band behind the hero
+
+`heroSlideshow` in `content/site.js` drives it. Drop a picture in
+`assets/img/hero/` and add a line:
+
+```js
+{ src: "assets/img/hero/new-thing.webp", position: "center 40%" }
+```
+
+`position` is optional — any CSS `object-position`, for choosing what stays
+in frame when a tall photo is cropped into a wide band. `intervalMs` sets how
+long each one is held.
+
+The pictures sit at 50% opacity under a scrim, in both light and dark mode,
+and the band is masked away at the bottom so it dissolves into the paper
+rather than ending on a line. To turn the whole thing off, delete the
+`images` list (or set it to `[]`).
+
+Convert photos before adding them — a phone JPEG is several megabytes:
+
+```bash
+python3 -c "
+from PIL import Image, ImageOps
+im = ImageOps.exif_transpose(Image.open('IN.jpg')).convert('RGB')
+if im.width > 1600: im = im.resize((1600, round(im.height*1600/im.width)))
+im.save('assets/img/hero/OUT.webp','WEBP',quality=80,method=6)"
+```

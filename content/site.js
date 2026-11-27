@@ -27,7 +27,7 @@ window.SITE = {
      Set heroGreeting to "" to skip straight to the heading.
      Write {wave} in heroHeading to place the smiley. */
   heroGreeting: "Glad you wandered in",
-  heroHeading: "I'm Mikhael {wave}",
+  heroHeading: "I'm Mikhael",
 
   /* Pace of that sequence, in milliseconds. Bigger charMs = slower typing. */
   heroTiming: {
@@ -50,12 +50,27 @@ window.SITE = {
   // HTML is allowed here. <strong> makes text bold.
   intro: "Just too obsessed on designing and building robots and seeing ideas actually come alive on real hardware. Most of my time goes into tinkering across the full stack,whether it’s experimenting with <strong class=\"font-bold text-ink\">model-based learning for ground and aerial manipulators</strong>, getting <strong class=\"font-bold text-ink\">aerial drone swarms</strong> to coordinate on their own, or engineering <strong class=\"font-bold text-ink\">wearable exoskeletons</strong> for rehabilitation. Those are just a few of the systems I enjoy taking from rough algorithms all the way into the real world.",
 
-  /* ---- Your portrait ------------------------------------------------
-     Put a photo in assets/img/ then write its path here, e.g.
-         photo: "assets/img/portrait.jpg",
-     Leave it as "" to show the illustrated placeholder instead.      */
-  photo: "assets/img/portrait.webp",
-  photoAlt: "Portrait of Mikhael Sunil",
+  /* ---- The photo band behind the hero -------------------------------
+     These sit at half opacity behind the intro text and cross-fade. Add
+     or remove lines freely; drop the file in assets/img/hero/ first.
+     `position` is optional and is any CSS object-position, for nudging
+     what stays in frame when the picture is cropped.                   */
+  heroSlideshow: {
+    intervalMs: 4500,
+    images: [
+      { src: "assets/img/hero/aerial-manipulator.webp", position: "center 40%" },
+      { src: "assets/img/hero/icaart-talk-arena.webp",  position: "center 35%" },
+      { src: "assets/img/hero/exoskeleton-worn.webp",   position: "center 35%" },
+      { src: "assets/img/hero/mobile-manipulator.webp", position: "center 45%" },
+      { src: "assets/img/hero/drone-hover-test.webp" },
+      { src: "assets/img/hero/arm-gripper.webp",        position: "center 40%" },
+      { src: "assets/img/hero/rover-sim.webp" },
+      { src: "assets/img/hero/icaart-talk-equations.webp", position: "center 35%" },
+      { src: "assets/img/hero/fabrication.webp",        position: "center 40%" },
+      { src: "assets/img/hero/rover-chassis.webp" },
+      { src: "assets/img/hero/rover-expo.webp" }
+    ]
+  },
 
   /* ---- Hero buttons ------------------------------------------------
      "action": "cv"  opens the CV pop-up.
@@ -65,8 +80,7 @@ window.SITE = {
   ],
 
   /* ---- Fun extras: set to false to switch them off ------------------ */
-  bootScreen: true,   // the spinning-drone loading screen
-  armRobot: true,     // the cloth-folding robot arms, bottom right
+  bootScreen: true,   // the spinning-drone loading screen (not skippable)
 
   /* ---- Social / contact channels ----------------------------------- */
   social: [
