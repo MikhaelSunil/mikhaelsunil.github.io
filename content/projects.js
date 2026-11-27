@@ -295,6 +295,11 @@ window.PROJECTS = [
     badgeColor: "paper",
     title: "Vision-Based UAV Path Following & Landing",
     summary: "Real-time image segmentation, centroid path prediction, yaw-rate correction and autonomous landing-marker descent on the Parrot Mambo minidrone, via MATLAB/Simulink.",
+    media: {
+      src: "assets/media/projects/uav-vision.mp4",
+      poster: "assets/media/projects/uav-vision.webp",
+      alt: "The drone flying the gate course in Simulink, with its camera feed and the colour mask it tracks"
+    },
     tags: ["MATLAB / Simulink", "Parrot Mambo", "Vision Control"]
   }
 
