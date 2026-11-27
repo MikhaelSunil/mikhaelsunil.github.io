@@ -36,7 +36,10 @@
 body {
   background-color: rgb(var(--c-paper));
   color: rgb(var(--c-ink));
-  overflow-x: hidden;
+  /* `clip`, never `hidden`: hidden makes the body a scroll container,
+     which stops the sticky header sticking. clip holds back the
+     full-bleed hero band without creating one. */
+  overflow-x: clip;
   background-image:
     radial-gradient(rgb(var(--c-ink) / 0.14) 1px, transparent 1px),
     linear-gradient(to right, rgb(var(--c-ink) / 0.035) 1px, transparent 1px),
@@ -533,8 +536,9 @@ html.is-booting, html.is-booting body { overflow: hidden; }
    A full-bleed contact sheet of workshop photographs behind the intro.
    ===================================================================== */
 
-/* the band is wider than its container, so nothing may scroll sideways */
-html { overflow-x: clip; }
+/* The band is wider than its container. The clipping that holds it back
+   lives on the body (above) — putting it on html stops the page being
+   the scroll container and the sticky header comes unstuck. */
 
 /* the first screen is the photograph: fill the viewport below the header */
 #home {
