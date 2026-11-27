@@ -43,7 +43,6 @@ window.SECTIONS = [
     id: "about",
     nav: "About",
     number: "01",
-    kicker: "WHO IS BEHIND THIS",
     title: "About Me",
     meta: "THE SHORT VERSION",
     blocks: [
@@ -51,16 +50,10 @@ window.SECTIONS = [
         type: "about",
         image: "assets/img/about.webp",
         imageAlt: "Mikhael Sunil",
-        caption: "— MIKHAEL SUNIL",
         body: [
           "I build robots and then make them work outside the simulator. That second part is most of the job, and it is the part I like: the gap between a control law that converges beautifully on a plot and the same law on real hardware, where the sensors are noisy, the loop runs late and the payload is not where the model thinks it is.",
           "Most of my work sits in three areas. <strong class=\"text-ink\">Aerial swarms</strong> — flying distributed consensus, containment and formation protocols on real nano-drones, including ones that run on a single bit of information per axis. <strong class=\"text-ink\">Model-based and learned control</strong> for ground and aerial manipulators, where the dynamics shift under you as an arm swings or a payload changes. And <strong class=\"text-ink\">rehabilitation exoskeletons</strong>, which is where I learned that a mechanism nobody can comfortably wear is not a working mechanism.",
           "I like the whole stack — the gearbox, the firmware, the estimator, the controller, the ROS graph — because the interesting failures usually live between two of those and not inside either one."
-        ],
-        facts: [
-          { label: "Focus", value: "Aerial swarms · Manipulation" },
-          { label: "Control", value: "Model-based & learned" },
-          { label: "Hardware", value: "Built, flown, worn" }
         ]
       }
     ]
