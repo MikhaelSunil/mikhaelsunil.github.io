@@ -925,8 +925,8 @@ html.is-booting, html.is-booting body { overflow: hidden; }
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 3.4rem;
-  height: 3.4rem;
+  width: 4.5rem;
+  height: 4.5rem;
 }
 .org-mark img { width: 100%; height: 100%; object-fit: contain; display: block; }
 
@@ -951,7 +951,7 @@ html.is-booting, html.is-booting body { overflow: hidden; }
 .org-mark.has-logo.is-dark,
 [data-theme="dark"] .org-mark.has-logo.is-dark {
   background: #0B0B0C;
-  padding: 0.3rem;
+  padding: 0.22rem;
 }
 
 

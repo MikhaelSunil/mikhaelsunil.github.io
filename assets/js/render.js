@@ -417,7 +417,7 @@ window.MSRender = (function () {
 
       var pts = r.points || (r.body ? [r.body] : []);
       if (pts.length) {
-        var ul = el('ul', 'mt-3 space-y-1.5 sm:pl-[4.25rem]');
+        var ul = el('ul', 'mt-3 space-y-1.5 sm:pl-[5.4rem]');
         pts.forEach(function (t) {
           ul.appendChild(el('li', 'exp-point text-sm leading-relaxed text-ink/85', t));
         });
