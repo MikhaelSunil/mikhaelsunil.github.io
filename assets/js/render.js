@@ -401,7 +401,7 @@ window.MSRender = (function () {
          consistent without borrowing anyone's artwork */
       var nameRow = el('div', 'flex items-start gap-3');
       if (r.logo || r.mark) {
-        var badge = el('span', 'org-mark' + (r.logo ? ' has-logo' : ''));
+        var badge = el('span', 'org-mark' + (r.logo ? ' has-logo' : '') + (r.logoDark ? ' is-dark' : ''));
         if (r.logo) {
           var lg = el('img');
           lg.src = r.logo;

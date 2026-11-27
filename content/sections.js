@@ -99,7 +99,7 @@ window.SECTIONS = [
     number: "03",
     kicker: "ENGINEERING LOGBOOK",
     title: "Experience",
-    meta: "7 ENTRIES // MOST RECENT FIRST",
+    meta: "6 ENTRIES // MOST RECENT FIRST",
     blocks: [
       {
         type: "ledger",
@@ -108,7 +108,7 @@ window.SECTIONS = [
             tag: "MAY 2026 — PRESENT",
             tagColor: "scope",
             org: "Robotics Research Center",
-            mark: "RRC",   // or logo: "assets/img/logos/....svg"
+            logo: "assets/img/logos/robotics-research-center.webp",
             role: "Research Intern",
             orgColor: "ink",
             points: [
@@ -121,7 +121,8 @@ window.SECTIONS = [
             tag: "AUG 2025 — MAY 2026",
             tagColor: "amber",
             org: "Botnova Robotics",
-            mark: "BN",   // or logo: "assets/img/logos/....svg"
+            logo: "assets/img/logos/botnova.webp",
+            logoDark: true,
             role: "Robotics Engineer · Internship",
             orgColor: "ink",
             points: [
@@ -134,7 +135,8 @@ window.SECTIONS = [
             tag: "MAY — NOV 2025",
             tagColor: "paper",
             org: "Mercedes-Benz Coastal Star",
-            mark: "MB",   // or logo: "assets/img/logos/....svg"
+            logo: "assets/img/logos/mercedes-benz.webp",
+            logoDark: true,
             role: "Project Developer · Internship",
             orgColor: "ink",
             points: [
@@ -145,7 +147,7 @@ window.SECTIONS = [
             tag: "MAY — JUL 2025",
             tagColor: "amber",
             org: "IISER Bhopal",
-            mark: "IISER",   // or logo: "assets/img/logos/....svg"
+            logo: "assets/img/logos/iiser-bhopal.webp",
             role: "Research Project Intern",
             orgColor: "ink",
             points: [
@@ -158,7 +160,7 @@ window.SECTIONS = [
             tag: "MAY — JUL 2025",
             tagColor: "paper",
             org: "Intelligent Multi-Robot Coordination Lab",
-            mark: "IMRC",   // or logo: "assets/img/logos/....svg"
+            logo: "assets/img/logos/imrc-lab.webp",
             role: "Stack Contributor",
             orgColor: "ink",
             points: [
@@ -168,22 +170,10 @@ window.SECTIONS = [
             ]
           },
           {
-            tag: "JUL — AUG 2024",
-            tagColor: "paper",
-            org: "Acmegrade",
-            mark: "AG",   // or logo: "assets/img/logos/....svg"
-            role: "Embedded Systems Intern · Internship",
-            orgColor: "ink",
-            points: [
-              "An IoT irrigation system reporting to ThingSpeak, using live soil-moisture readings to cut water use.",
-              "Integrated the sensors and microcontrollers behind the environmental monitoring and control loop."
-            ]
-          },
-          {
             tag: "JUL 2024",
             tagColor: "paper",
             org: "NeST Technologies",
-            mark: "NeST",   // or logo: "assets/img/logos/....svg"
+            logo: "assets/img/logos/nest-technologies.webp",
             role: "Embedded Systems Intern · Internship",
             orgColor: "ink",
             points: [

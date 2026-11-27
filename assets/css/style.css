@@ -892,3 +892,7 @@ html { overflow-x: clip; }
 
 /* a logo keeps its own colours, so give it a light tile in dark mode too */
 [data-theme="dark"] .org-mark.has-logo { background: #F4F1EA; }
+
+/* two of the marks are light artwork on black and need the tile to match */
+.org-mark.has-logo.is-dark,
+[data-theme="dark"] .org-mark.has-logo.is-dark { background: #0B0B0C; padding: 0.22rem; }
