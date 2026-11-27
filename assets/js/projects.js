@@ -45,7 +45,7 @@ window.MSProjects = (function () {
 
   function card(p) {
     var linked = !!p.detail;
-    var node = el(linked ? 'a' : 'article', 'project-card retro-card flex flex-col' + (linked ? ' is-linked' : ''));
+    var node = el(linked ? 'a' : 'article', 'project-card retro-card flex flex-col h-full' + (linked ? ' is-linked' : ''));
     if (linked) {
       node.href = url('projects/' + p.slug + '/');
       node.setAttribute('aria-label', p.title + ' — read more');
@@ -65,10 +65,12 @@ window.MSProjects = (function () {
 
     var body = el('div', 'p-5 sm:p-6 flex flex-col flex-1');
 
-    var head = el('div', 'flex flex-wrap items-center justify-between gap-2 border-b-2 border-ink pb-2.5 mb-4');
-    var left = el('span', 'font-mono text-xs font-bold uppercase px-2 py-0.5 ' + (BADGE[p.badgeColor] || BADGE.signal),
-      p.code + (p.status ? ' // ' + p.status : ''));
-    head.appendChild(left);
+    var head = el('div', 'flex flex-wrap items-center justify-between gap-2 border-b-2 border-ink pb-2.5 mb-4 min-h-[1.75rem]');
+    /* the project codes were shelf numbers for a shelf nobody browses,
+       so the badge carries the status only, where there is one */
+    if (p.status) {
+      head.appendChild(el('span', 'font-mono text-xs font-bold uppercase px-2 py-0.5 ' + (BADGE[p.badgeColor] || BADGE.signal), p.status));
+    }
     if (p.kicker) head.appendChild(el('span', 'font-mono text-[11px] font-semibold uppercase text-muted', p.kicker));
     body.appendChild(head);
 
@@ -106,7 +108,7 @@ window.MSProjects = (function () {
      becoming a column of identical blocks. */
   function renderFeatured(block) {
     var list = all();
-    var g = el('div', 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-6 items-start');
+    var g = el('div', 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-6 items-stretch');
     list.forEach(function (p, i) {
       var wide = (i % 5) < 2;                       /* 2 wide, then 3 */
       var c = card(p);

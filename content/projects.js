@@ -59,10 +59,10 @@ window.PROJECTS = [
     title: "Binary-Measurement Consensus & Formation Control on a Crazyflie Swarm",
     summary: "Six consensus and formation-control protocols put on five Crazyflie 2.1 nano-quadrotors and benchmarked against their own simulations. Four of them fly on one bit per axis — only the <em>sign</em> of a neighbour's relative position, no velocity measurement at all. Nearly all consensus work stops at simulation; this reports what actually survives sensor noise, latency and a 10 Hz loop.",
     media: {
-      src: "assets/media/swarm/p1-hw.mp4",
-      poster: "assets/media/swarm/card-poster.webp",
-      alt: "Five Crazyflie 2.1 nano-quadrotors reaching consensus in the Lighthouse arena",
-      caption: "Five Crazyflie 2.1s reaching consensus on one bit per axis, replayed in Foxglove from the flight log."
+      src: "assets/media/projects/swarm-flight.mp4",
+      poster: "assets/media/projects/swarm-flight.webp",
+      alt: "Five Crazyflie 2.1 nano-quadrotors flying consensus in the netted arena",
+      caption: "Five Crazyflie 2.1s reaching consensus on one bit per axis, in the Lighthouse-tracked arena."
     },
     tags: ["5 × Crazyflie 2.1", "ROS 2 Jazzy", "Gazebo Harmonic", "Lighthouse + EKF", "Binary feedback"],
 
