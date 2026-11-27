@@ -83,7 +83,7 @@ window.SECTIONS = [
             role: "Research Intern",
             org: "MuSiC@IISERB — IISER Bhopal",
             orgColor: "scope",
-            body: "Conducted real-world experimental benchmarking of classic, fractional-order, double-integrator, and binary-measurement consensus algorithms on Crazyflie 2.1 aerial swarms with ROS 2 and <code class=\"font-mono text-xs bg-paper px-1 border border-ink/30\">crazyswarm2</code>."
+            body: "Benchmarked six consensus, containment and formation-control protocols on a five-drone Crazyflie 2.1 swarm — four of them on one bit per axis — against their own simulations, on ROS 2 Jazzy with Gazebo Harmonic and a Lighthouse-tracked arena. Accepted at ICAART 2026."
           },
           {
             tag: "R&D & OSS",
@@ -131,7 +131,7 @@ window.SECTIONS = [
             kicker: "AERIAL SWARMS",
             title: "Multi-Agent Aerial Swarms",
             body: "Designing, benchmarking, and flying decentralized consensus, containment, and formation control algorithms on physical nano-drone swarms using minimal local feedback.",
-            tags: ["Crazyflie 2.1", "ROS 2", "Crazyswarm2", "Distributed Control"]
+            tags: ["Crazyflie 2.1", "ROS 2 Jazzy", "Binary feedback", "Distributed Control"]
           },
           {
             badge: "DOMAIN-03",
