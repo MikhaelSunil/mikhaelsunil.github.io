@@ -58,7 +58,7 @@ window.SECTIONS = [
           "I like the whole stack — the gearbox, the firmware, the estimator, the controller, the ROS graph — because the interesting failures usually live between two of those and not inside either one."
         ],
         facts: [
-          { label: "Focus", value: "Aerial swarms · Manipulation" },
+          { label: "Focus", value: "Manipulators · Drones · AGVs" },
           { label: "Control", value: "Model-based & learned" },
           { label: "Hardware", value: "Built, flown, worn" }
         ]
