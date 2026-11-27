@@ -61,38 +61,74 @@ window.SECTIONS = [
     number: "02",
     kicker: "ENGINEERING LOGBOOK",
     title: "Experience",
-    meta: "CHRONOLOGICAL SERVICE LEDGER",
+    meta: "7 ENTRIES // MOST RECENT FIRST",
     blocks: [
       {
         type: "ledger",
         headers: ["STATUS / LOG", "ROLE & INSTITUTION", "ENGINEERING RECORD"],
         rows: [
           {
-            tag: "CURRENT",
+            tag: "MAY 2026 — PRESENT",
             tagColor: "scope",
-            log: "LOG #03 // AUTONOMY",
-            role: "Robotics Researcher & Engineer",
+            log: "LOG #07 // AERIAL MANIPULATION",
+            role: "Research Intern",
             org: "Robotics Research Center",
             orgColor: "signal",
-            body: "Designing and deploying end-to-end autonomy pipelines, focusing on multi-sensor fusion, real-time perception, optimization-based motion planning, and sim-to-real policy transfer."
+            body: "Building a learning-based adaptive control framework for an aerial manipulator, so it can handle the shifting dynamics of a moving arm and a changing payload in real time. Validated in PX4 and Gazebo against the stock PX4 controller, including aggressive arm-swing stress tests. Hardware flight testing is underway."
           },
           {
-            tag: "MAY – AUG 2025",
+            tag: "AUG 2025 — MAY 2026",
             tagColor: "amber",
-            log: "LOG #02 // RESEARCH LAB",
-            role: "Research Intern",
-            org: "MuSiC@IISERB — IISER Bhopal",
-            orgColor: "scope",
-            body: "Benchmarked six consensus, containment and formation-control protocols on a five-drone Crazyflie 2.1 swarm — four of them on one bit per axis — against their own simulations, on ROS 2 Jazzy with Gazebo Harmonic and a Lighthouse-tracked arena. Accepted at ICAART 2026."
+            log: "LOG #06 // FIELD ROBOTICS",
+            role: "Robotics Engineer",
+            org: "Botnova Robotics · Internship",
+            orgColor: "ink",
+            body: "Software and system architecture for <strong class=\"text-ink\">Zerion</strong>, an autonomous solar-panel cleaning robot, for reliable navigation on inclined terrain. Built the embedded telemetry for live system monitoring and designed the communication pipelines behind it."
           },
           {
-            tag: "R&D & OSS",
+            tag: "MAY — NOV 2025",
             tagColor: "paper",
-            log: "LOG #01 // COLLABORATIONS",
-            role: "R&D Engineer & Open-Source Contributor",
-            org: "BotNova Robotics · Mercedes-Benz · Bitcraze & IMRC Labs",
+            log: "LOG #05 // COMPUTER VISION",
+            role: "Project Developer",
+            org: "Mercedes-Benz Coastal Star · Internship",
             orgColor: "ink",
-            body: "Worked across industrial robotics R&D at BotNova Robotics and Mercedes-Benz, and collaborated with <strong class=\"text-ink\">Bitcraze</strong> and <strong class=\"text-ink\">IMRC Labs</strong> on open-source quadcopter swarm tooling."
+            body: "Computer-vision project work."
+          },
+          {
+            tag: "MAY — JUL 2025",
+            tagColor: "amber",
+            log: "LOG #04 // AERIAL SWARMS",
+            role: "Research Project Intern",
+            org: "IISER Bhopal",
+            orgColor: "scope",
+            body: "Benchmarked six consensus, containment and formation-control protocols on a five-drone Crazyflie 2.1 swarm — four of them on one bit per axis — against their own simulations, in a Lighthouse-tracked arena on ROS 2. Accepted at <strong class=\"text-ink\">ICAART 2026</strong>."
+          },
+          {
+            tag: "MAY — JUL 2025",
+            tagColor: "paper",
+            log: "LOG #03 // OPEN SOURCE",
+            role: "Stack Contributor",
+            org: "Intelligent Multi-Robot Coordination Lab",
+            orgColor: "signal",
+            body: "Contributed a <code class=\"font-mono text-xs bg-paper px-1 border border-ink/30\">PoseStamped</code> subscription service, with pose and position getters, to the Crazyflie ROS 2 API stack. Gives downstream nodes a standard ROS 2 pose interface, makes planners and visualisers simpler to wire up, and brings pose to parity with how status is already exposed — backward compatible."
+          },
+          {
+            tag: "JUL — AUG 2024",
+            tagColor: "paper",
+            log: "LOG #02 // EMBEDDED & IOT",
+            role: "Embedded Systems Intern",
+            org: "Acmegrade · Internship",
+            orgColor: "ink",
+            body: "An IoT irrigation system reporting to ThingSpeak, using live soil-moisture readings to cut water use. Integrated the sensors and microcontrollers behind the environmental monitoring and control loop."
+          },
+          {
+            tag: "JUL 2024",
+            tagColor: "paper",
+            log: "LOG #01 // EMBEDDED",
+            role: "Embedded Systems Intern",
+            org: "NeST Technologies · Internship",
+            orgColor: "ink",
+            body: "Embedded systems design across a range of microcontrollers — developing, programming and testing solutions for real applications, and a lot of troubleshooting and optimisation along the way."
           }
         ]
       }
@@ -300,7 +336,7 @@ window.SECTIONS = [
             badge: "AWD-02",
             badgeColor: "none",
             title: "Best Poster Award — Confluence 2.0",
-            subtitle: "RSET Kochi · PHYSIOBOT",
+            subtitle: "RSET · PHYSIOBOT",
             subtitleColor: "scope",
             body: "Awarded Best Poster at the Mechanical Engineering Poster Expo for PHYSIOBOT adaptive multi-limb rehabilitation robotics.",
             footer: { left: "CONFLUENCE 2.0", right: "✓" }
