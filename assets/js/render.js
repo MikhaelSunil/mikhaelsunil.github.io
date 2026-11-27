@@ -458,9 +458,11 @@ window.MSRender = (function () {
   /* ---------- hero -------------------------------------------------- */
 
   /* A full-bleed band of photographs behind the hero text, cross-fading
-     one at a time at half opacity. Each picture is shown whole, sized by
-     the band's height and pinned to the right, away from the text — it is
-     never stretched across the viewport or cropped to fill it. */
+     one at a time at half opacity, filling the first screen. Each picture
+     is shown whole, sized by the band's height and pinned to the right,
+     away from the text; a blurred copy of it fills the width behind, so
+     the screen is covered without the photograph itself being stretched
+     across it or cropped to fit. */
   function slideshow(S) {
     var cfg = S.heroSlideshow || {};
     var shots = cfg.images || [];
@@ -473,6 +475,12 @@ window.MSRender = (function () {
 
     var nodes = shots.map(function (shot, i) {
       var fig = el('div', 'hero-slide' + (i === 0 ? ' is-on' : ''));
+      /* a blurred copy of the same picture fills the rest of the screen,
+         so the band is never half empty paper, while the photograph
+         itself stays whole and unstretched on top of it */
+      var bg = el('div', 'hero-slide-bg');
+      bg.style.backgroundImage = 'url("' + shot.src + '")';
+      fig.appendChild(bg);
       var img = el('img');
       img.src = shot.src;
       img.alt = '';

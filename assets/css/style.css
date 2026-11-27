@@ -528,7 +528,15 @@ html.is-booting, html.is-booting body { overflow: hidden; }
 /* the band is wider than its container, so nothing may scroll sideways */
 html { overflow-x: clip; }
 
-#home { position: relative; isolation: isolate; min-height: 30rem; }
+/* the first screen is the photograph: fill the viewport below the header */
+#home {
+  position: relative;
+  isolation: isolate;
+  min-height: calc(100svh - 10rem);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
 
 .hero-slides {
   position: absolute;
@@ -561,11 +569,24 @@ html { overflow-x: clip; }
    rather than being blown up to the width of the screen. Pinned right,
    which is the half of the band the heading does not sit on. */
 .hero-slide img {
+  position: relative;
   width: 100%;
   height: 100%;
   object-fit: contain;
   object-position: right center;
   filter: saturate(0.82) contrast(1.02);
+}
+
+/* the fill behind it — same picture, blurred past recognition, scaled a
+   little so the blur has no soft edge at the border */
+.hero-slide-bg {
+  position: absolute;
+  inset: 0;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  filter: blur(42px) saturate(0.7);
+  transform: scale(1.14);
 }
 
 /* keep the heading readable: paper washes in from the left, where the
@@ -586,6 +607,9 @@ html { overflow-x: clip; }
 [data-theme="dark"] .hero-slide img {
   filter: saturate(0.78) brightness(1.12) contrast(0.94);
 }
+[data-theme="dark"] .hero-slide-bg {
+  filter: blur(42px) saturate(0.6) brightness(1.1);
+}
 [data-theme="dark"] .hero-scrim {
   background:
     linear-gradient(to right,
@@ -599,7 +623,9 @@ html { overflow-x: clip; }
   /* narrow screens put the text over the middle of the strip */
   .hero-scrim { background: rgb(var(--c-paper) / 0.78); }
   .hero-slides { top: -2rem; bottom: -1.5rem; }
-  #home { min-height: 26rem; }
+  #home { min-height: calc(100svh - 8rem); }
+  .hero-slide img { object-position: center; }
+  .hero-slide-bg { filter: blur(30px) saturate(0.7); }
 }
 
 @media (prefers-reduced-motion: reduce) {
