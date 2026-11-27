@@ -522,13 +522,13 @@ html.is-booting, html.is-booting body { overflow: hidden; }
 
 /* =====================================================================
    HERO PHOTO BAND
-   A full-bleed strip of workshop photographs behind the intro text.
+   A full-bleed contact sheet of workshop photographs behind the intro.
    ===================================================================== */
 
 /* the band is wider than its container, so nothing may scroll sideways */
 html { overflow-x: clip; }
 
-#home { position: relative; isolation: isolate; }
+#home { position: relative; isolation: isolate; min-height: 30rem; }
 
 .hero-slides {
   position: absolute;
@@ -548,24 +548,38 @@ html { overflow-x: clip; }
       transparent 0%, #000 12%, #000 46%, rgba(0,0,0,0.45) 74%, transparent 100%);
 }
 
-.hero-slide {
+.hero-strip {
   position: absolute;
-  inset: 0;
-  opacity: 0;
-  transition: opacity 1.4s ease-in-out;
-}
-.hero-slide.is-on { opacity: 0.5; }
-
-.hero-slide img {
-  width: 100%;
+  top: 0;
+  left: 0;
   height: 100%;
-  object-fit: cover;
-  object-position: center;
+  display: flex;
+  align-items: stretch;
+  width: max-content;
+  animation: hero-drift 150s linear infinite;
+  will-change: transform;
+}
+
+/* Height-driven, width-free: each photo is shown whole at the band's
+   height, so nothing is enlarged to fill the viewport and nothing is
+   cropped. The margin is on every image, last one included, so half the
+   strip is exactly half its width and the loop does not jump. */
+.hero-strip img {
+  height: 100%;
+  width: auto;
+  flex: 0 0 auto;
+  margin-right: 12px;
+  opacity: 0.5;
   filter: saturate(0.82) contrast(1.02);
 }
 
+@keyframes hero-drift {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
 /* keep the heading readable: paper washes in from the left, where the
-   text sits, and thins out across the picture */
+   text sits, and thins out across the pictures */
 .hero-scrim {
   position: absolute;
   inset: 0;
@@ -579,7 +593,7 @@ html { overflow-x: clip; }
 
 /* On dark paper the same photographs go muddy at half opacity, so they
    get a little more light and a little less contrast. */
-[data-theme="dark"] .hero-slide img {
+[data-theme="dark"] .hero-strip img {
   filter: saturate(0.78) brightness(1.12) contrast(0.94);
 }
 [data-theme="dark"] .hero-scrim {
@@ -592,11 +606,12 @@ html { overflow-x: clip; }
 }
 
 @media (max-width: 767px) {
-  /* narrow screens put the text over the middle of the picture */
-  .hero-scrim { background: rgb(var(--c-paper) / 0.76); }
+  /* narrow screens put the text over the middle of the strip */
+  .hero-scrim { background: rgb(var(--c-paper) / 0.78); }
   .hero-slides { top: -2rem; bottom: -1.5rem; }
+  #home { min-height: 26rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .hero-slide { transition: none; }
+  .hero-strip { animation: none; }
 }

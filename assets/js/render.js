@@ -457,9 +457,12 @@ window.MSRender = (function () {
 
   /* ---------- hero -------------------------------------------------- */
 
-  /* A full-bleed band of photographs behind the hero text. Half opacity so
-     it reads as paper texture rather than a gallery, and masked away at the
-     bottom so the first section does not end on a hard horizontal edge. */
+  /* A full-bleed contact sheet behind the hero text. Every picture keeps
+     its own aspect ratio — it is sized by the band's height and takes
+     whatever width that gives it — so a tall phone photo stays a narrow
+     column instead of being blown up to fill the screen. The strip is
+     duplicated once and drifts by exactly half its width, which loops
+     seamlessly. */
   function slideshow(S) {
     var cfg = S.heroSlideshow || {};
     var shots = cfg.images || [];
@@ -467,33 +470,20 @@ window.MSRender = (function () {
     band.setAttribute('aria-hidden', 'true');
     if (!shots.length) return band;
 
-    var reduce = false;
-    try { reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) {}
-
-    var nodes = shots.map(function (shot, i) {
-      var fig = el('div', 'hero-slide' + (i === 0 ? ' is-on' : ''));
-      var img = el('img');
-      img.src = shot.src;
-      img.alt = '';
-      img.decoding = 'async';
-      if (i > 1) img.loading = 'lazy';
-      if (shot.position) img.style.objectPosition = shot.position;
-      fig.appendChild(img);
-      band.appendChild(fig);
-      return fig;
-    });
+    var strip = el('div', 'hero-strip');
+    for (var pass = 0; pass < 2; pass++) {
+      shots.forEach(function (shot, i) {
+        var img = el('img');
+        img.src = shot.src;
+        img.alt = '';
+        img.decoding = 'async';
+        if (pass === 0 && i > 2) img.loading = 'lazy';
+        strip.appendChild(img);
+      });
+    }
+    if (cfg.secondsPerLoop) strip.style.animationDuration = cfg.secondsPerLoop + 's';
+    band.appendChild(strip);
     band.appendChild(el('div', 'hero-scrim'));
-
-    if (reduce || nodes.length < 2) return band;
-
-    var at = 0;
-    setInterval(function () {
-      if (document.hidden) return;
-      nodes[at].classList.remove('is-on');
-      at = (at + 1) % nodes.length;
-      nodes[at].classList.add('is-on');
-    }, cfg.intervalMs || 4500);
-
     return band;
   }
 

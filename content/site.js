@@ -51,22 +51,21 @@ window.SITE = {
   intro: "Just too obsessed on designing and building robots and seeing ideas actually come alive on real hardware. Most of my time goes into tinkering across the full stack,whether it’s experimenting with <strong class=\"font-bold text-ink\">model-based learning for ground and aerial manipulators</strong>, getting <strong class=\"font-bold text-ink\">aerial drone swarms</strong> to coordinate on their own, or engineering <strong class=\"font-bold text-ink\">wearable exoskeletons</strong> for rehabilitation. Those are just a few of the systems I enjoy taking from rough algorithms all the way into the real world.",
 
   /* ---- The photo band behind the hero -------------------------------
-     These sit at half opacity behind the intro text and cross-fade. Add
-     or remove lines freely; drop the file in assets/img/hero/ first.
-     `position` is optional and is any CSS object-position, for nudging
-     what stays in frame when the picture is cropped.                   */
+     These drift slowly behind the intro text at half opacity, each shown
+     whole at the band's height. Add or remove lines freely; drop the file
+     in assets/img/hero/ first. Order is the order they appear in.      */
   heroSlideshow: {
-    intervalMs: 4500,
+    secondsPerLoop: 150,   // how long one full pass of the strip takes
     images: [
-      { src: "assets/img/hero/aerial-manipulator.webp", position: "center 40%" },
-      { src: "assets/img/hero/icaart-talk-arena.webp",  position: "center 35%" },
-      { src: "assets/img/hero/exoskeleton-worn.webp",   position: "center 35%" },
-      { src: "assets/img/hero/mobile-manipulator.webp", position: "center 45%" },
+      { src: "assets/img/hero/aerial-manipulator.webp" },
+      { src: "assets/img/hero/icaart-talk-arena.webp" },
+      { src: "assets/img/hero/exoskeleton-worn.webp" },
+      { src: "assets/img/hero/mobile-manipulator.webp" },
       { src: "assets/img/hero/drone-hover-test.webp" },
-      { src: "assets/img/hero/arm-gripper.webp",        position: "center 40%" },
+      { src: "assets/img/hero/arm-gripper.webp" },
       { src: "assets/img/hero/rover-sim.webp" },
-      { src: "assets/img/hero/icaart-talk-equations.webp", position: "center 35%" },
-      { src: "assets/img/hero/fabrication.webp",        position: "center 40%" },
+      { src: "assets/img/hero/icaart-talk-equations.webp" },
+      { src: "assets/img/hero/fabrication.webp" },
       { src: "assets/img/hero/rover-chassis.webp" },
       { src: "assets/img/hero/rover-expo.webp" }
     ]
