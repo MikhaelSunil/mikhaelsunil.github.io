@@ -168,7 +168,7 @@ window.SITE = {
         ]
       },
       {
-        title: "Education & Credentials",
+        title: "Education",
         type: "entries",
         half: true,
         items: [
@@ -176,10 +176,6 @@ window.SITE = {
             heading: "B.Tech in Electronics & Communication Eng.",
             meta: "Rajagiri School of Engineering & Technology (2022 – 2026)",
             body: "Co-Lead & Student Secretary, ECE Dept Club; Core Organizer, CarbonX – Vegathon 42h Hackathon."
-          },
-          {
-            heading: "ISWDP Semiconductor Program (L1: 94% & L2)",
-            meta: "NPTEL Advanced Robotics Applications · MathWorks ML"
           }
         ]
       },

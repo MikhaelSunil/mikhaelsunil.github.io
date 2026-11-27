@@ -251,11 +251,11 @@ window.SECTIONS = [
     number: "05",
     kicker: "ACADEMIC RECORD",
     title: "Education",
-    meta: "DEGREE & TECHNICAL CERTIFICATIONS",
+    meta: "DEGREE",
     blocks: [
       {
         type: "cards",
-        columns: 2,
+        columns: 1,
         items: [
           {
             badge: "2022 – 2026",
@@ -266,17 +266,6 @@ window.SECTIONS = [
             subtitle: "Rajagiri School of Engineering & Technology (RSET)",
             body: "Focused on robotics, embedded systems, control engineering, and autonomous navigation. Served as Co-Lead and Student Secretary of the ECE Department Club, and core organizer of the 42-hour <strong class=\"text-ink\">CarbonX – Vegathon</strong> hackathon in collaboration with C-DAC &amp; IEDC.",
             tags: ["Embedded Systems", "Control Theory", "Signal Processing", "ECE Club Co-Lead"]
-          },
-          {
-            badge: "CREDENTIALS",
-            badgeColor: "amber",
-            kicker: "VERIFIED",
-            list: [
-              { title: "ISWDP Semiconductor Program — L1 (94%) & L2", meta: "India Semiconductor Workforce Dev. Program · 2025" },
-              { title: "Advanced Robotics Applications", meta: "NPTEL · May 2025" },
-              { title: "Machine Learning Onramp", meta: "MathWorks · Jul 2025" },
-              { title: "VLSI Chip Design & Simulation (Electric EDA)", meta: "Coursera · Oct 2024" }
-            ]
           }
         ]
       }
