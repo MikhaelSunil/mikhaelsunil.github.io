@@ -39,6 +39,10 @@ window.PROJECTS = [
     badgeColor: "amber",
     title: "PHYSIOBOT — Wearable Upper-Limb Robotic Exoskeleton",
     summary: "Portable rear-mounted rehabilitation exoskeleton for shoulder and elbow physiotherapy. Pairs custom 25:1 cycloidal gear actuators with a cable-driven shoulder abduction transmission, STM32 embedded control, FOC drivers and magnetic encoders — reaching smooth shoulder flexion up to 150&deg;.",
+    media: {
+      src: "assets/media/projects/physiobot.webp",
+      alt: "The PHYSIOBOT elbow exoskeleton worn on a test subject in the lab"
+    },
     tags: ["25:1 Cycloidal Drive", "Cable-Driven", "STM32 & FOC", "Magnetic Encoders"]
   },
 
@@ -264,6 +268,10 @@ window.PROJECTS = [
     badgeColor: "ink",
     title: "GeoScout — 6WD Autonomous Mine-Mapping Rover",
     summary: "Six-wheel-drive GPS-denied exploration rover on Jetson Nano/RPi and Teensy 4.0, fusing 3D LiDAR, IMU, ground-penetrating radar and hazardous gas sensors for real-time ROS 2 SLAM.",
+    media: {
+      src: "assets/media/projects/geoscout.webp",
+      alt: "The GeoScout six-wheel rover, LiDAR and depth camera on its sensor deck"
+    },
     tags: ["ROS 2 SLAM", "Jetson / Teensy 4.0", "LiDAR · GPR"]
   },
   {
@@ -273,6 +281,11 @@ window.PROJECTS = [
     badgeColor: "paper",
     title: "Deep RL (SAC) Mapless Autonomous Navigation",
     summary: "Containerised Soft Actor-Critic navigation stack replacing classical planners with continuous control and automatic entropy tuning, on TurtleBot3 in ROS 2 Foxy and Gazebo Classic.",
+    media: {
+      src: "assets/media/projects/sac-navigation.mp4",
+      poster: "assets/media/projects/sac-navigation.webp",
+      alt: "The SAC policy navigating the simulated arena, with its training curves alongside"
+    },
     tags: ["SAC DRL", "ROS 2 Foxy", "Docker · TurtleBot3"]
   },
   {
