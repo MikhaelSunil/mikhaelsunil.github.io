@@ -88,6 +88,10 @@ window.SECTIONS = [
      SECTION 03 — EXPERIENCE
      A rail of dated entries. Each row: tag (the dates), org, role and a
      `points` list. No log numbers, no column headers.
+
+     Each row shows a mark beside the organisation. `mark` is a stencilled
+     monogram; swap in `logo: "assets/img/logos/name.svg"` on any row to
+     use the real logo instead (drop the file in that folder first).
      =================================================================== */
   {
     id: "experience",
@@ -104,6 +108,7 @@ window.SECTIONS = [
             tag: "MAY 2026 — PRESENT",
             tagColor: "scope",
             org: "Robotics Research Center",
+            mark: "RRC",   // or logo: "assets/img/logos/....svg"
             role: "Research Intern",
             orgColor: "ink",
             points: [
@@ -116,6 +121,7 @@ window.SECTIONS = [
             tag: "AUG 2025 — MAY 2026",
             tagColor: "amber",
             org: "Botnova Robotics",
+            mark: "BN",   // or logo: "assets/img/logos/....svg"
             role: "Robotics Engineer · Internship",
             orgColor: "ink",
             points: [
@@ -128,6 +134,7 @@ window.SECTIONS = [
             tag: "MAY — NOV 2025",
             tagColor: "paper",
             org: "Mercedes-Benz Coastal Star",
+            mark: "MB",   // or logo: "assets/img/logos/....svg"
             role: "Project Developer · Internship",
             orgColor: "ink",
             points: [
@@ -138,6 +145,7 @@ window.SECTIONS = [
             tag: "MAY — JUL 2025",
             tagColor: "amber",
             org: "IISER Bhopal",
+            mark: "IISER",   // or logo: "assets/img/logos/....svg"
             role: "Research Project Intern",
             orgColor: "ink",
             points: [
@@ -150,6 +158,7 @@ window.SECTIONS = [
             tag: "MAY — JUL 2025",
             tagColor: "paper",
             org: "Intelligent Multi-Robot Coordination Lab",
+            mark: "IMRC",   // or logo: "assets/img/logos/....svg"
             role: "Stack Contributor",
             orgColor: "ink",
             points: [
@@ -162,6 +171,7 @@ window.SECTIONS = [
             tag: "JUL — AUG 2024",
             tagColor: "paper",
             org: "Acmegrade",
+            mark: "AG",   // or logo: "assets/img/logos/....svg"
             role: "Embedded Systems Intern · Internship",
             orgColor: "ink",
             points: [
@@ -173,6 +183,7 @@ window.SECTIONS = [
             tag: "JUL 2024",
             tagColor: "paper",
             org: "NeST Technologies",
+            mark: "NeST",   // or logo: "assets/img/logos/....svg"
             role: "Embedded Systems Intern · Internship",
             orgColor: "ink",
             points: [

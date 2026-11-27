@@ -395,12 +395,34 @@ window.MSRender = (function () {
       grid.appendChild(when);
 
       var what = el('div', 'md:col-span-9');
-      if (r.org)  what.appendChild(el('h3', 'font-display font-bold text-lg sm:text-xl leading-tight ' + textColor(r.orgColor, 'ink'), r.org));
-      if (r.role) what.appendChild(el('div', 'font-mono text-xs sm:text-[13px] font-bold uppercase tracking-wider text-signal mt-1', r.role));
+
+      /* the organisation, with its mark: a supplied logo if there is one,
+         otherwise a stencilled monogram plate, which keeps the row
+         consistent without borrowing anyone's artwork */
+      var nameRow = el('div', 'flex items-start gap-3');
+      if (r.logo || r.mark) {
+        var badge = el('span', 'org-mark' + (r.logo ? ' has-logo' : ''));
+        if (r.logo) {
+          var lg = el('img');
+          lg.src = r.logo;
+          lg.alt = (r.org || '') + ' logo';
+          lg.loading = 'lazy';
+          badge.appendChild(lg);
+        } else {
+          var m = String(r.mark);
+          badge.appendChild(el('span', 'org-mark-text' + (m.length > 3 ? ' is-long' : ''), m));
+        }
+        nameRow.appendChild(badge);
+      }
+      var names = el('div', 'min-w-0');
+      if (r.org)  names.appendChild(el('h3', 'font-display font-bold text-lg sm:text-xl leading-tight ' + textColor(r.orgColor, 'ink'), r.org));
+      if (r.role) names.appendChild(el('div', 'font-mono text-xs sm:text-[13px] font-bold uppercase tracking-wider text-signal mt-1', r.role));
+      nameRow.appendChild(names);
+      what.appendChild(nameRow);
 
       var pts = r.points || (r.body ? [r.body] : []);
       if (pts.length) {
-        var ul = el('ul', 'mt-3 space-y-1.5');
+        var ul = el('ul', 'mt-3 space-y-1.5 sm:pl-[3.65rem]');
         pts.forEach(function (t) {
           ul.appendChild(el('li', 'exp-point text-sm leading-relaxed text-ink/85', t));
         });

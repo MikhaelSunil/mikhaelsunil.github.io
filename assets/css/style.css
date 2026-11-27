@@ -864,3 +864,31 @@ html { overflow-x: clip; }
   .exp-entry { transition: none; }
   .exp-entry.is-waiting { opacity: 1; transform: none; }
 }
+
+/* The organisation mark beside each experience entry: a real logo when
+   one is supplied, otherwise a stencilled monogram on a plate. */
+.org-mark {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  background: rgb(var(--c-cream));
+  border: 2px solid rgb(var(--c-ink));
+  box-shadow: 3px 3px 0 rgb(var(--c-ink));
+  overflow: hidden;
+}
+.org-mark.has-logo { background: #fff; padding: 0.3rem; }
+.org-mark img { width: 100%; height: 100%; object-fit: contain; display: block; }
+.org-mark-text {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-weight: 800;
+  font-size: 0.95rem;
+  letter-spacing: -0.02em;
+  color: rgb(var(--c-ink));
+}
+.org-mark-text.is-long { font-size: 0.68rem; letter-spacing: 0; }
+
+/* a logo keeps its own colours, so give it a light tile in dark mode too */
+[data-theme="dark"] .org-mark.has-logo { background: #F4F1EA; }
