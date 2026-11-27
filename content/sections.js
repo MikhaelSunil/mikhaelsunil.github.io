@@ -204,15 +204,17 @@ window.SECTIONS = [
             code: "L2",
             name: "Middleware",
             note: "How the parts talk",
-            items: ["ROS 2 Jazzy", "Gazebo Harmonic", "ros_gz_bridge", "Foxglove", "rosbag · .mcap",
-                    "Docker", "Python", "C++", "Embedded C"]
+            items: ["ROS 2 Jazzy", "Gazebo Harmonic", "Isaac Sim", "ros_gz_bridge", "QGroundControl",
+                    "Foxglove", "rosbag · .mcap", "Docker", "Python", "C++", "Embedded C"]
           },
           {
             code: "L1",
             name: "Hardware",
             note: "What I crimp, wire and fly",
-            items: ["Crazyflie 2.1", "STM32", "Teensy 4.0", "ESP32", "Jetson Nano", "Lighthouse tracking",
-                    "LiDAR · IMU · GPR", "Cycloidal drives", "Magnetic encoders", "Fusion 360"]
+            items: ["Crazyflie 2.1", "Tarot drone", "xArm 6", "CUAV X7 Pro", "Jetson Orin Nano",
+                    "STM32", "Teensy 4.0", "ESP32", "OptiTrack motion capture", "Lighthouse tracking",
+                    "Dynamixel servos", "LiDAR · IMU · GPR", "Cycloidal drives", "Magnetic encoders",
+                    "Fusion 360"]
           }
         ]
       }
