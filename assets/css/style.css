@@ -795,7 +795,7 @@ html { overflow-x: clip; }
 
 .about-tag {
   position: absolute;
-  top: 0.7rem;
+  bottom: 0.7rem;
   z-index: 2;
   padding: 0.25rem 0.6rem;
   font-family: 'JetBrains Mono', ui-monospace, monospace;
