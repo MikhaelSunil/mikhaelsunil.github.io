@@ -655,3 +655,22 @@ html { overflow-x: clip; }
 @media (prefers-reduced-motion: reduce) {
   .social-dot { transition: none; }
 }
+
+
+/* The focus-area plates under the About text. */
+.spec-plate {
+  background: rgb(var(--c-cream));
+  border: 2px solid rgb(var(--c-ink));
+  box-shadow: 4px 4px 0 rgb(var(--c-ink));
+  padding: 0.85rem 0.9rem;
+  transition: transform 0.14s ease, box-shadow 0.14s ease;
+}
+.spec-plate:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 rgb(var(--c-ink));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spec-plate { transition: none; }
+  .spec-plate:hover { transform: none; box-shadow: 4px 4px 0 rgb(var(--c-ink)); }
+}

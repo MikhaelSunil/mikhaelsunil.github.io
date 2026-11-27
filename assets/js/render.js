@@ -247,14 +247,24 @@ window.MSRender = (function () {
       txt.appendChild(el('p', 'text-[15px] sm:text-base leading-relaxed text-ink/90', t));
     });
     if (block.facts && block.facts.length) {
-      var strip = el('dl', 'grid grid-cols-2 sm:grid-cols-3 gap-px bg-ink border-2 border-ink mt-6');
-      block.facts.forEach(function (f) {
-        var cell = el('div', 'bg-cream p-3');
-        cell.appendChild(el('dt', 'font-mono text-[10px] font-bold uppercase tracking-wider text-muted mb-1', f.label));
-        cell.appendChild(el('dd', 'font-mono text-xs font-bold text-ink leading-snug', f.value));
+      var ACCENT = ['bg-signal', 'bg-amberretro', 'bg-scope', 'bg-ink'];
+      var box = el('div', 'pt-7 space-y-3');
+      box.appendChild(el('div', 'font-mono text-[11px] font-bold uppercase tracking-widest text-muted flex items-center gap-2',
+        '<span class="h-px flex-1 bg-ink/25"></span>' +
+        '<span>' + (block.factsLabel || 'Focus areas') + '</span>' +
+        '<span class="h-px flex-1 bg-ink/25"></span>'));
+
+      var strip = el('dl', 'grid grid-cols-1 sm:grid-cols-3 gap-4');
+      block.facts.forEach(function (f, i) {
+        var cell = el('div', 'spec-plate');
+        cell.appendChild(el('dt', 'font-mono text-[10px] font-bold uppercase tracking-widest text-muted flex items-center gap-1.5 mb-2',
+          '<span class="w-2 h-2 border border-ink inline-block ' + (ACCENT[i % ACCENT.length]) + '"></span>' +
+          '<span>' + f.label + '</span>'));
+        cell.appendChild(el('dd', 'font-display font-bold text-[0.95rem] leading-snug text-ink', f.value));
         strip.appendChild(cell);
       });
-      txt.appendChild(strip);
+      box.appendChild(strip);
+      txt.appendChild(box);
     }
     row.appendChild(txt);
     return row;
