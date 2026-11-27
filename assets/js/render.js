@@ -227,14 +227,17 @@ window.MSRender = (function () {
 
     var figCol = el('div', 'lg:col-span-5');
     var mat = el('div', 'bg-cream border-2 border-ink shadow-hard p-3 max-w-[26rem] lg:max-w-none mx-auto');
-    var frame = el('div', 'relative aspect-[4/5] w-full bg-paper border-2 border-ink overflow-hidden');
+    var frame = el('div', 'about-frame relative aspect-[4/5] w-full bg-paper border-2 border-ink overflow-hidden');
     if (block.image) {
-      var img = el('img', 'w-full h-full object-cover');
+      var img = el('img', 'about-photo w-full h-full object-cover');
       img.src = block.image;
       img.alt = block.imageAlt || '';
       img.loading = 'lazy';
       frame.appendChild(img);
     }
+    /* stencilled tags in the top corners, over the picture */
+    if (block.tagLeft)  frame.appendChild(el('span', 'about-tag is-left', block.tagLeft));
+    if (block.tagRight) frame.appendChild(el('span', 'about-tag is-right', block.tagRight));
     mat.appendChild(frame);
     if (block.caption) {
       mat.appendChild(el('div', 'font-mono text-[11px] uppercase tracking-wider text-muted pt-2.5 px-0.5', block.caption));
@@ -367,40 +370,48 @@ window.MSRender = (function () {
 
   /* ---------- block: ledger (experience table) --------------------- */
 
+  /* Experience as a logbook rail: the dates run down the left against a
+     drawing datum, each entry's organisation and role to the right with
+     its record beneath. No column headers and no log numbers — the dates
+     already order it. */
   function blockLedger(block) {
-    var wrap = el('div', 'bg-cream border-2 border-ink shadow-hard-lg overflow-hidden');
-    var heads = block.headers || [];
-    if (heads.length === 3) {
-      var hr = el('div', 'hidden md:grid md:grid-cols-12 bg-ink text-cream font-mono text-[11px] font-bold uppercase tracking-wider px-5 py-2.5');
-      hr.appendChild(el('div', 'col-span-3', heads[0]));
-      hr.appendChild(el('div', 'col-span-4', heads[1]));
-      hr.appendChild(el('div', 'col-span-5', heads[2]));
-      wrap.appendChild(hr);
-    }
-    var rows = block.rows || [];
-    rows.forEach(function (r, i) {
-      var last = i === rows.length - 1;
-      var row = el('div', 'grid grid-cols-1 md:grid-cols-12 gap-3 md:gap-4 p-5 hover:bg-paper/70 transition-colors' + (last ? '' : ' border-b-2 border-ink'));
+    var wrap = el('div', 'exp-rail');
+    (block.rows || []).forEach(function (r, i) {
+      var row = el('div', 'exp-entry is-waiting');
+      row.style.transitionDelay = Math.min(i, 6) * 70 + 'ms';
+      row.appendChild(el('span', 'exp-pin', '<span></span>'));
 
-      var c1 = el('div', 'md:col-span-3 font-mono text-xs');
+      var grid = el('div', 'grid grid-cols-1 md:grid-cols-12 gap-3 md:gap-7');
+
+      var when = el('div', 'md:col-span-3');
       if (r.tag) {
-        var tagCls = r.tagColor === 'scope' ? 'bg-scope text-cream'
-                   : r.tagColor === 'amber' ? 'bg-amberretro text-ink border border-ink'
-                   : r.tagColor === 'ink'   ? 'bg-ink text-cream'
-                   : 'bg-paper text-ink border border-ink';
-        c1.appendChild(el('span', 'inline-block px-2 py-0.5 font-bold uppercase mb-1 ' + tagCls, r.tag));
+        var tagCls = r.tagColor === 'scope' ? 'bg-scope text-cream border-2 border-ink'
+                   : r.tagColor === 'amber' ? 'bg-amberretro text-ink border-2 border-ink'
+                   : r.tagColor === 'ink'   ? 'bg-ink text-cream border-2 border-ink'
+                   : 'bg-cream text-ink border-2 border-ink';
+        when.appendChild(el('span',
+          'inline-block px-2.5 py-1 font-mono text-[11px] font-bold uppercase tracking-wider ' + tagCls, r.tag));
       }
-      if (r.log) c1.appendChild(el('div', 'text-muted text-[11px]', r.log));
+      grid.appendChild(when);
 
-      var c2 = el('div', 'md:col-span-4');
-      if (r.role) c2.appendChild(el('h3', 'font-display font-bold text-base sm:text-lg text-ink', r.role));
-      if (r.org)  c2.appendChild(el('div', 'font-mono text-xs font-bold mt-0.5 ' + textColor(r.orgColor, 'signal'), r.org));
+      var what = el('div', 'md:col-span-9');
+      if (r.org)  what.appendChild(el('h3', 'font-display font-bold text-lg sm:text-xl leading-tight ' + textColor(r.orgColor, 'ink'), r.org));
+      if (r.role) what.appendChild(el('div', 'font-mono text-xs sm:text-[13px] font-bold uppercase tracking-wider text-signal mt-1', r.role));
 
-      var c3 = el('div', 'md:col-span-5 text-sm text-ink/85 leading-relaxed', r.body || '');
+      var pts = r.points || (r.body ? [r.body] : []);
+      if (pts.length) {
+        var ul = el('ul', 'mt-3 space-y-1.5');
+        pts.forEach(function (t) {
+          ul.appendChild(el('li', 'exp-point text-sm leading-relaxed text-ink/85', t));
+        });
+        what.appendChild(ul);
+      }
+      grid.appendChild(what);
 
-      row.appendChild(c1); row.appendChild(c2); row.appendChild(c3);
+      row.appendChild(grid);
       wrap.appendChild(row);
     });
+    reveal(wrap.children);
     return wrap;
   }
 

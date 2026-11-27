@@ -50,6 +50,8 @@ window.SECTIONS = [
         type: "about",
         image: "assets/img/about.webp",
         imageAlt: "Mikhael Sunil",
+        tagLeft: "IISc",
+        tagRight: "ICC25",
         body: [
           "I build robots and then make them work outside the simulator. That second part is most of the job, and it is the part I like: the gap between a control law that converges beautifully on a plot and the same law on real hardware, where the sensors are noisy, the loop runs late and the payload is not where the model thinks it is.",
           "Most of my work sits in three areas. <strong class=\"text-ink\">Aerial swarms</strong> — flying distributed consensus, containment and formation protocols on real nano-drones, including ones that run on a single bit of information per axis. <strong class=\"text-ink\">Model-based and learned control</strong> for ground and aerial manipulators, where the dynamics shift under you as an arm swings or a payload changes. And <strong class=\"text-ink\">rehabilitation exoskeletons</strong>, which is where I learned that a mechanism nobody can comfortably wear is not a working mechanism.",
@@ -84,6 +86,8 @@ window.SECTIONS = [
 
   /* ===================================================================
      SECTION 03 — EXPERIENCE
+     A rail of dated entries. Each row: tag (the dates), org, role and a
+     `points` list. No log numbers, no column headers.
      =================================================================== */
   {
     id: "experience",
@@ -95,70 +99,86 @@ window.SECTIONS = [
     blocks: [
       {
         type: "ledger",
-        headers: ["STATUS / LOG", "ROLE & INSTITUTION", "ENGINEERING RECORD"],
         rows: [
           {
             tag: "MAY 2026 — PRESENT",
             tagColor: "scope",
-            log: "LOG #07 // AERIAL MANIPULATION",
-            role: "Research Intern",
             org: "Robotics Research Center",
-            orgColor: "signal",
-            body: "Building a learning-based adaptive control framework for an aerial manipulator, so it can handle the shifting dynamics of a moving arm and a changing payload in real time. Validated in PX4 and Gazebo against the stock PX4 controller, including aggressive arm-swing stress tests. Hardware flight testing is underway."
+            role: "Research Intern",
+            orgColor: "ink",
+            points: [
+              "Building a learning-based adaptive control framework for an aerial manipulator, so it handles the shifting dynamics of a moving arm and a changing payload in real time.",
+              "Validated in PX4 and Gazebo against the stock PX4 controller, including aggressive arm-swing stress tests.",
+              "Hardware flight testing is underway."
+            ]
           },
           {
             tag: "AUG 2025 — MAY 2026",
             tagColor: "amber",
-            log: "LOG #06 // FIELD ROBOTICS",
-            role: "Robotics Engineer",
-            org: "Botnova Robotics · Internship",
+            org: "Botnova Robotics",
+            role: "Robotics Engineer · Internship",
             orgColor: "ink",
-            body: "Software and system architecture for <strong class=\"text-ink\">Zerion</strong>, an autonomous solar-panel cleaning robot, for reliable navigation on inclined terrain. Built the embedded telemetry for live system monitoring and designed the communication pipelines behind it."
+            points: [
+              "Software and system architecture for <strong class=\"text-ink\">Zerion</strong>, an autonomous solar-panel cleaning robot, for reliable navigation on inclined terrain.",
+              "Built the embedded telemetry for live system monitoring.",
+              "Designed the communication pipelines behind it."
+            ]
           },
           {
             tag: "MAY — NOV 2025",
             tagColor: "paper",
-            log: "LOG #05 // COMPUTER VISION",
-            role: "Project Developer",
-            org: "Mercedes-Benz Coastal Star · Internship",
+            org: "Mercedes-Benz Coastal Star",
+            role: "Project Developer · Internship",
             orgColor: "ink",
-            body: "Computer-vision project work."
+            points: [
+              "Computer-vision project work."
+            ]
           },
           {
             tag: "MAY — JUL 2025",
             tagColor: "amber",
-            log: "LOG #04 // AERIAL SWARMS",
-            role: "Research Project Intern",
             org: "IISER Bhopal",
-            orgColor: "scope",
-            body: "Benchmarked six consensus, containment and formation-control protocols on a five-drone Crazyflie 2.1 swarm — four of them on one bit per axis — against their own simulations, in a Lighthouse-tracked arena on ROS 2. Accepted at <strong class=\"text-ink\">ICAART 2026</strong>."
+            role: "Research Project Intern",
+            orgColor: "ink",
+            points: [
+              "Benchmarked six consensus, containment and formation-control protocols on a five-drone Crazyflie 2.1 swarm — four of them on one bit per axis — against their own simulations.",
+              "Flown in a Lighthouse-tracked arena on ROS 2.",
+              "Accepted at <strong class=\"text-ink\">ICAART 2026</strong>."
+            ]
           },
           {
             tag: "MAY — JUL 2025",
             tagColor: "paper",
-            log: "LOG #03 // OPEN SOURCE",
-            role: "Stack Contributor",
             org: "Intelligent Multi-Robot Coordination Lab",
-            orgColor: "signal",
-            body: "Contributed a <code class=\"font-mono text-xs bg-paper px-1 border border-ink/30\">PoseStamped</code> subscription service, with pose and position getters, to the Crazyflie ROS 2 API stack. Gives downstream nodes a standard ROS 2 pose interface, makes planners and visualisers simpler to wire up, and brings pose to parity with how status is already exposed — backward compatible."
+            role: "Stack Contributor",
+            orgColor: "ink",
+            points: [
+              "Contributed a <code class=\"font-mono text-xs bg-paper px-1 border border-ink/30\">PoseStamped</code> subscription service, with pose and position getters, to the Crazyflie ROS 2 API stack.",
+              "Gives downstream nodes a standard ROS 2 pose interface and makes planners and visualisers simpler to wire up.",
+              "Brings pose to parity with how status is already exposed, and is backward compatible."
+            ]
           },
           {
             tag: "JUL — AUG 2024",
             tagColor: "paper",
-            log: "LOG #02 // EMBEDDED & IOT",
-            role: "Embedded Systems Intern",
-            org: "Acmegrade · Internship",
+            org: "Acmegrade",
+            role: "Embedded Systems Intern · Internship",
             orgColor: "ink",
-            body: "An IoT irrigation system reporting to ThingSpeak, using live soil-moisture readings to cut water use. Integrated the sensors and microcontrollers behind the environmental monitoring and control loop."
+            points: [
+              "An IoT irrigation system reporting to ThingSpeak, using live soil-moisture readings to cut water use.",
+              "Integrated the sensors and microcontrollers behind the environmental monitoring and control loop."
+            ]
           },
           {
             tag: "JUL 2024",
             tagColor: "paper",
-            log: "LOG #01 // EMBEDDED",
-            role: "Embedded Systems Intern",
-            org: "NeST Technologies · Internship",
+            org: "NeST Technologies",
+            role: "Embedded Systems Intern · Internship",
             orgColor: "ink",
-            body: "Embedded systems design across a range of microcontrollers — developing, programming and testing solutions for real applications, and a lot of troubleshooting and optimisation along the way."
+            points: [
+              "Embedded systems design across a range of microcontrollers.",
+              "Developed, programmed and tested solutions for real applications, with a lot of troubleshooting and optimisation along the way."
+            ]
           }
         ]
       }
