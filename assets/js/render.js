@@ -385,12 +385,7 @@ window.MSRender = (function () {
 
       var when = el('div', 'md:col-span-3');
       if (r.tag) {
-        var tagCls = r.tagColor === 'scope' ? 'bg-scope text-cream border-2 border-ink'
-                   : r.tagColor === 'amber' ? 'bg-amberretro text-ink border-2 border-ink'
-                   : r.tagColor === 'ink'   ? 'bg-ink text-cream border-2 border-ink'
-                   : 'bg-cream text-ink border-2 border-ink';
-        when.appendChild(el('span',
-          'inline-block px-2.5 py-1 font-mono text-[11px] font-bold uppercase tracking-wider ' + tagCls, r.tag));
+        when.appendChild(el('span', 'exp-date', r.tag));
       }
       grid.appendChild(when);
 
@@ -434,7 +429,37 @@ window.MSRender = (function () {
       wrap.appendChild(row);
     });
     reveal(wrap.children);
+    trackRail(wrap);
     return wrap;
+  }
+
+  /* The rail fills as you read down it, and each entry lights up once
+     the read head passes its tick. Position, not motion — so it is left
+     on under prefers-reduced-motion. */
+  function trackRail(wrap) {
+    var fill = el('span', 'exp-fill');
+    wrap.appendChild(fill);
+    var entries = [].slice.call(wrap.querySelectorAll('.exp-entry'));
+    var queued = false;
+
+    function update() {
+      queued = false;
+      var box = wrap.getBoundingClientRect();
+      if (!box.height) return;
+      var head = window.innerHeight * 0.52;          /* the reading line */
+      var done = (head - box.top) / box.height;
+      done = done < 0 ? 0 : done > 1 ? 1 : done;
+      fill.style.height = (done * 100) + '%';
+      entries.forEach(function (en) {
+        var pin = en.getBoundingClientRect().top + 14;
+        en.classList.toggle('is-reached', pin <= head);
+      });
+    }
+    function ping() { if (!queued) { queued = true; requestAnimationFrame(update); } }
+
+    window.addEventListener('scroll', ping, { passive: true });
+    window.addEventListener('resize', ping);
+    ping();
   }
 
   /* ---------- block: publications ---------------------------------- */

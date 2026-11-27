@@ -813,7 +813,39 @@ html { overflow-x: clip; }
   left: 0.8rem;
   top: 0.75rem;
   bottom: 0.75rem;
-  border-left: 2px solid rgb(var(--c-ink));
+  border-left: 2px solid rgb(var(--c-ink) / 0.3);
+}
+
+/* fills from the top as you read down the section */
+.exp-fill {
+  position: absolute;
+  left: 0.8rem;
+  top: 0.75rem;
+  width: 2px;
+  height: 0;
+  background: rgb(var(--c-signal));
+  pointer-events: none;
+}
+
+/* every date plate reads the same; nothing is picked out in yellow */
+.exp-date {
+  display: inline-block;
+  padding: 0.25rem 0.6rem;
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgb(var(--c-muted));
+  background: transparent;
+  border: 2px solid rgb(var(--c-ink) / 0.3);
+  transition: color 0.3s ease, border-color 0.3s ease, background-color 0.3s ease;
+}
+/* once the rail has reached it */
+.exp-entry.is-reached .exp-date {
+  color: rgb(var(--c-ink));
+  background: rgb(var(--c-cream));
+  border-color: rgb(var(--c-ink));
 }
 
 .exp-entry {
@@ -832,17 +864,25 @@ html { overflow-x: clip; }
   height: 2px;
   background: rgb(var(--c-ink));
 }
+.exp-pin { background: rgb(var(--c-ink) / 0.3); transition: background-color 0.3s ease; }
+.exp-entry.is-reached .exp-pin { background: rgb(var(--c-ink)); }
+
 .exp-pin > span {
   position: absolute;
   left: 0.3rem;
   top: -0.33rem;
   width: 0.7rem;
   height: 0.7rem;
-  background: rgb(var(--c-signal));
-  border: 2px solid rgb(var(--c-ink));
+  background: rgb(var(--c-paper));
+  border: 2px solid rgb(var(--c-ink) / 0.4);
+  transition: background-color 0.3s ease, border-color 0.3s ease;
 }
-/* the current post reads as live */
-.exp-entry:first-child .exp-pin > span { background: rgb(var(--c-scope)); }
+.exp-entry.is-reached .exp-pin > span {
+  background: rgb(var(--c-signal));
+  border-color: rgb(var(--c-ink));
+}
+/* the current post reads as live once reached */
+.exp-entry:first-child.is-reached .exp-pin > span { background: rgb(var(--c-scope)); }
 
 .exp-point { position: relative; padding-left: 1.15rem; }
 .exp-point::before {
@@ -863,6 +903,7 @@ html { overflow-x: clip; }
   .about-frame:hover .about-photo { transform: none; }
   .exp-entry { transition: none; }
   .exp-entry.is-waiting { opacity: 1; transform: none; }
+  .exp-date, .exp-pin, .exp-pin > span { transition: none; }
 }
 
 /* The organisation mark beside each experience entry: a real logo when
