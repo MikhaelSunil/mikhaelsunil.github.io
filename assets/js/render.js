@@ -221,6 +221,45 @@ window.MSRender = (function () {
     return art;
   }
 
+  /* Portrait on the left, the writing on the right. */
+  function blockAbout(block) {
+    var row = el('div', 'grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start');
+
+    var figCol = el('div', 'lg:col-span-5');
+    var mat = el('div', 'bg-cream border-2 border-ink shadow-hard p-3 max-w-[26rem] lg:max-w-none mx-auto');
+    var frame = el('div', 'relative aspect-[4/5] w-full bg-paper border-2 border-ink overflow-hidden');
+    if (block.image) {
+      var img = el('img', 'w-full h-full object-cover');
+      img.src = block.image;
+      img.alt = block.imageAlt || '';
+      img.loading = 'lazy';
+      frame.appendChild(img);
+    }
+    mat.appendChild(frame);
+    if (block.caption) {
+      mat.appendChild(el('div', 'font-mono text-[11px] uppercase tracking-wider text-muted pt-2.5 px-0.5', block.caption));
+    }
+    figCol.appendChild(mat);
+    row.appendChild(figCol);
+
+    var txt = el('div', 'lg:col-span-7 space-y-4');
+    (block.body || []).forEach(function (t) {
+      txt.appendChild(el('p', 'text-[15px] sm:text-base leading-relaxed text-ink/90', t));
+    });
+    if (block.facts && block.facts.length) {
+      var strip = el('dl', 'grid grid-cols-2 sm:grid-cols-3 gap-px bg-ink border-2 border-ink mt-6');
+      block.facts.forEach(function (f) {
+        var cell = el('div', 'bg-cream p-3');
+        cell.appendChild(el('dt', 'font-mono text-[10px] font-bold uppercase tracking-wider text-muted mb-1', f.label));
+        cell.appendChild(el('dd', 'font-mono text-xs font-bold text-ink leading-snug', f.value));
+        strip.appendChild(cell);
+      });
+      txt.appendChild(strip);
+    }
+    row.appendChild(txt);
+    return row;
+  }
+
   function blockCards(block) {
     /* widths: [7, 5] lays the cards out on a 12-column grid instead of
        equal columns. Otherwise columns: 1-4 gives an even grid. */
@@ -434,6 +473,7 @@ window.MSRender = (function () {
 
   function renderBlock(block) {
     switch (block.type) {
+      case 'about':        return blockAbout(block);
       case 'cards':        return blockCards(block);
       case 'featured-projects':
         return (window.MSProjects && window.MSProjects.renderFeatured)
@@ -511,8 +551,15 @@ window.MSRender = (function () {
 
   function socialRow(S) {
     var items = (S.social || []).slice();
-    var mail = S.contact && S.contact.email;
-    if (mail) items.push({ label: 'Email', url: 'mailto:' + mail });
+    /* The Email entry needs no url of its own: it becomes a mailto once
+       contact.email is filled in, and until then it jumps to the form. */
+    var mail = (S.contact && S.contact.email) || '';
+    var isMail = function (i) { return /^e-?mail$/i.test(i.label || ''); };
+    if (!items.some(isMail)) items.push({ label: 'Email', url: '' });
+    items.forEach(function (i) {
+      if (isMail(i) && !i.url) i.url = mail ? 'mailto:' + mail : '#contact';
+    });
+
     if (!items.length) return null;
 
     var row = el('div', 'flex flex-wrap items-center gap-3 pt-5');

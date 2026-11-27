@@ -35,7 +35,39 @@
 window.SECTIONS = [
 
   /* ===================================================================
-     SECTION 01 — PROJECTS
+     SECTION 01 — ABOUT
+     Portrait on the left, the writing on the right. Swap the photo by
+     dropping a new file in assets/img/ and changing `image` below.
+     =================================================================== */
+  {
+    id: "about",
+    nav: "About",
+    number: "01",
+    kicker: "WHO IS BEHIND THIS",
+    title: "About Me",
+    meta: "THE SHORT VERSION",
+    blocks: [
+      {
+        type: "about",
+        image: "assets/img/about.webp",
+        imageAlt: "Mikhael Sunil",
+        caption: "— MIKHAEL SUNIL",
+        body: [
+          "I build robots and then make them work outside the simulator. That second part is most of the job, and it is the part I like: the gap between a control law that converges beautifully on a plot and the same law on real hardware, where the sensors are noisy, the loop runs late and the payload is not where the model thinks it is.",
+          "Most of my work sits in three areas. <strong class=\"text-ink\">Aerial swarms</strong> — flying distributed consensus, containment and formation protocols on real nano-drones, including ones that run on a single bit of information per axis. <strong class=\"text-ink\">Model-based and learned control</strong> for ground and aerial manipulators, where the dynamics shift under you as an arm swings or a payload changes. And <strong class=\"text-ink\">rehabilitation exoskeletons</strong>, which is where I learned that a mechanism nobody can comfortably wear is not a working mechanism.",
+          "I like the whole stack — the gearbox, the firmware, the estimator, the controller, the ROS graph — because the interesting failures usually live between two of those and not inside either one."
+        ],
+        facts: [
+          { label: "Focus", value: "Aerial swarms · Manipulation" },
+          { label: "Control", value: "Model-based & learned" },
+          { label: "Hardware", value: "Built, flown, worn" }
+        ]
+      }
+    ]
+  },
+
+  /* ===================================================================
+     SECTION 02 — PROJECTS
      The cards themselves live in content/projects.js. The three marked
      featured show here; the button underneath goes to the showcase page
      at projects/, which lists them all.
@@ -43,7 +75,7 @@ window.SECTIONS = [
   {
     id: "projects",
     nav: "Projects",
-    number: "01",
+    number: "02",
     kicker: "HARDWARE DOSSIER",
     title: "Projects & Research",
     meta: "SELECTED WORK",
@@ -53,12 +85,12 @@ window.SECTIONS = [
   },
 
   /* ===================================================================
-     SECTION 02 — EXPERIENCE
+     SECTION 03 — EXPERIENCE
      =================================================================== */
   {
     id: "experience",
     nav: "Experience",
-    number: "02",
+    number: "03",
     kicker: "ENGINEERING LOGBOOK",
     title: "Experience",
     meta: "7 ENTRIES // MOST RECENT FIRST",
@@ -136,7 +168,7 @@ window.SECTIONS = [
   },
 
   /* ===================================================================
-     SECTION 03 — TECH STACK
+     SECTION 04 — TECH STACK
      The four domain cards live here for now. To list your actual stack
      (languages, frameworks, hardware, tools), there is a ready-made
      example further down this section, switched off behind a comment.
@@ -144,7 +176,7 @@ window.SECTIONS = [
   {
     id: "tech-stack",
     nav: "Tech Stack",
-    number: "03",
+    number: "04",
     kicker: "TOOLS & DOMAINS",
     title: "Tech Stack",
     meta: "4 CORE DOMAINS",
@@ -214,12 +246,12 @@ window.SECTIONS = [
   },
 
   /* ===================================================================
-     SECTION 04 — EDUCATION
+     SECTION 05 — EDUCATION
      =================================================================== */
   {
     id: "education",
     nav: "Education",
-    number: "04",
+    number: "05",
     kicker: "ACADEMIC RECORD",
     title: "Education",
     meta: "DEGREE & TECHNICAL CERTIFICATIONS",
@@ -255,14 +287,14 @@ window.SECTIONS = [
   },
 
   /* ===================================================================
-     SECTION 05 — RESEARCH, PATENTS & AWARDS
+     SECTION 06 — RESEARCH, PATENTS & AWARDS
      This section stacks several blocks: papers, a sub-heading, patent
      cards, then award cards.
      =================================================================== */
   {
     id: "research",
     nav: "Research",
-    number: "05",
+    number: "06",
     kicker: "PUBLICATIONS, PATENTS & HONORS",
     title: "Research, Patents & Awards",
     meta: "PEER-REVIEWED PAPERS, PATENTS & MILESTONES",
@@ -394,12 +426,12 @@ window.SECTIONS = [
   */
 
   /* ===================================================================
-     SECTION 06 — CONTACT  (keep this last)
+     SECTION 07 — CONTACT  (keep this last)
      =================================================================== */
   {
     id: "contact",
     nav: "Contact",
-    number: "06",
+    number: "07",
     kicker: "DISPATCH & TRANSMISSION",
     title: "Contact",
     meta: "DIRECT CHANNELS",

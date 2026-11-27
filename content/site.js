@@ -85,11 +85,15 @@ window.SITE = {
   social: [
     { label: "GitHub",    url: "https://github.com/MikhaelSunil",            display: "github.com/MikhaelSunil" },
     { label: "LinkedIn",  url: "https://www.linkedin.com/in/mikhael-sunil",  display: "linkedin.com/in/mikhael-sunil" },
-    { label: "Instagram", url: "https://www.instagram.com/__.mikks.__/",     display: "@__.mikks.__" }
+    { label: "Email",     url: "",                                           display: "Send a message" }
     /* Add more and a round icon appears in the hero automatically.
        Icons exist for LinkedIn, GitHub, Instagram, YouTube and Email;
        anything else shows its first letter. Example:
-    , { label: "YouTube", url: "https://youtube.com/@yourchannel", display: "@yourchannel" } */
+    , { label: "YouTube", url: "https://youtube.com/@yourchannel", display: "@yourchannel" }
+
+       The Email entry has no url on purpose: fill in contact.email below
+       and it becomes a mailto link. Until then it jumps to the contact
+       form instead. */
   ],
 
   /* ---- Contact section --------------------------------------------- */
