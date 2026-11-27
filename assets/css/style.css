@@ -631,3 +631,27 @@ html { overflow-x: clip; }
   .hero-slide { transition: none; }
   .hero-slide.is-on img { animation: none; }
 }
+
+
+/* Round social buttons under the hero intro. */
+.social-dot {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.9rem;
+  height: 2.9rem;
+  border: 2px solid rgb(var(--c-ink));
+  border-radius: 9999px;
+  background: rgb(var(--c-cream));
+  color: rgb(var(--c-ink));
+  box-shadow: 3px 3px 0 rgb(var(--c-ink));
+  transition: transform 0.12s ease, background-color 0.18s ease, box-shadow 0.12s ease;
+}
+.social-dot svg { width: 1.2rem; height: 1.2rem; display: block; }
+.social-dot:hover { background: rgb(var(--c-amberretro)); }
+.social-dot:active { transform: translate(3px, 3px); box-shadow: 0 0 0 rgb(var(--c-ink)); }
+.social-dot:focus-visible { outline: 2px solid rgb(var(--c-signal)); outline-offset: 3px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .social-dot { transition: none; }
+}

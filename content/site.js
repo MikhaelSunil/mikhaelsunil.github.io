@@ -40,7 +40,7 @@ window.SITE = {
   },
 
   /* The small dark badge above the heading. */
-  kicker: "ABOUT ME",
+  kicker: "",   // leave empty: the hero is not the About section
   /* The hero deliberately has NO job-title line under your name.
      This tagline is still used by the CV pop-up and by search engines.
      Set showTaglineInHero to true if you ever want it back on the page. */
@@ -86,6 +86,10 @@ window.SITE = {
     { label: "GitHub",    url: "https://github.com/MikhaelSunil",            display: "github.com/MikhaelSunil" },
     { label: "LinkedIn",  url: "https://www.linkedin.com/in/mikhael-sunil",  display: "linkedin.com/in/mikhael-sunil" },
     { label: "Instagram", url: "https://www.instagram.com/__.mikks.__/",     display: "@__.mikks.__" }
+    /* Add more and a round icon appears in the hero automatically.
+       Icons exist for LinkedIn, GitHub, Instagram, YouTube and Email;
+       anything else shows its first letter. Example:
+    , { label: "YouTube", url: "https://youtube.com/@yourchannel", display: "@yourchannel" } */
   ],
 
   /* ---- Contact section --------------------------------------------- */

@@ -498,6 +498,40 @@ window.MSRender = (function () {
     return band;
   }
 
+  /* Round outline buttons under the hero intro. Keyed on the label in
+     SITE.social, so adding a line there is all it takes — anything with
+     no icon of its own falls back to its first letter. */
+  var SOCIAL_ICONS = {
+    linkedin: '<path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3zM9 9h3.8v1.7h.05A4.2 4.2 0 0 1 16.6 8.7c4 0 4.4 2.5 4.4 5.8V21h-4v-5.6c0-1.4 0-3.1-1.9-3.1s-2.2 1.5-2.2 3V21H9z"/>',
+    github: '<path d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48l-.01-1.7c-2.78.6-3.37-1.34-3.37-1.34-.45-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.9 1.52 2.34 1.08 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.56-1.11-4.56-4.95 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.64 0 0 .84-.27 2.75 1.02a9.5 9.5 0 0 1 5 0c1.91-1.29 2.75-1.02 2.75-1.02.55 1.37.2 2.39.1 2.64.64.7 1.03 1.59 1.03 2.68 0 3.85-2.34 4.7-4.57 4.94.36.31.68.92.68 1.86l-.01 2.75c0 .27.18.58.69.48A10 10 0 0 0 12 2z"/>',
+    instagram: '<path d="M12 2.2c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41-.56-.22-.96-.48-1.38-.9-.42-.42-.68-.82-.9-1.38-.16-.42-.36-1.06-.41-2.23C2.21 15.58 2.2 15.2 2.2 12s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41C8.42 2.21 8.8 2.2 12 2.2zm0 3.18a6.62 6.62 0 1 0 0 13.24 6.62 6.62 0 0 0 0-13.24zm0 10.92a4.3 4.3 0 1 1 0-8.6 4.3 4.3 0 0 1 0 8.6zm6.88-11.1a1.55 1.55 0 1 1-3.1 0 1.55 1.55 0 0 1 3.1 0z"/>',
+    youtube: '<path d="M22.5 7.2a2.8 2.8 0 0 0-1.96-1.98C18.8 4.75 12 4.75 12 4.75s-6.8 0-8.54.47A2.8 2.8 0 0 0 1.5 7.2C1.04 8.95 1.04 12 1.04 12s0 3.05.46 4.8a2.8 2.8 0 0 0 1.96 1.98c1.74.47 8.54.47 8.54.47s6.8 0 8.54-.47a2.8 2.8 0 0 0 1.96-1.98c.46-1.75.46-4.8.46-4.8s0-3.05-.46-4.8zM9.82 15.3V8.7L15.5 12z"/>',
+    email: '<path d="M3 5h18a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1zm9 7.1L4.4 7h15.2z" stroke="none"/>'
+  };
+
+  function socialRow(S) {
+    var items = (S.social || []).slice();
+    var mail = S.contact && S.contact.email;
+    if (mail) items.push({ label: 'Email', url: 'mailto:' + mail });
+    if (!items.length) return null;
+
+    var row = el('div', 'flex flex-wrap items-center gap-3 pt-5');
+    items.forEach(function (it) {
+      var key = String(it.label || '').toLowerCase().replace(/[^a-z]/g, '');
+      if (key === 'mail') key = 'email';
+      var a = el('a', 'social-dot');
+      a.href = it.url || '#';
+      a.setAttribute('aria-label', it.label || 'link');
+      a.title = it.label || '';
+      if (/^https?:/.test(it.url || '')) { a.target = '_blank'; a.rel = 'noopener noreferrer'; }
+      a.innerHTML = SOCIAL_ICONS[key]
+        ? '<svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor">' + SOCIAL_ICONS[key] + '</svg>'
+        : '<span class="font-mono font-bold text-sm">' + (it.label || '?').charAt(0).toUpperCase() + '</span>';
+      row.appendChild(a);
+    });
+    return row;
+  }
+
   function renderHero() {
     var S = window.SITE || {};
     var host = mount('home');
@@ -522,7 +556,7 @@ window.MSRender = (function () {
        the heading readable while its text is still being typed. */
     var greeting = S.heroGreeting || '';
     var headingText = S.heroHeading || S.name || '';
-    var h1 = el('h1', 'hero-heading font-display font-bold text-[1.55rem] sm:text-[2.8rem] md:text-[2.2rem] lg:text-[2.95rem] xl:text-[3.35rem] leading-[1.18] tracking-tight text-ink');
+    var h1 = el('h1', 'hero-heading font-display font-bold text-[2rem] sm:text-[3.4rem] md:text-[3rem] lg:text-[4rem] xl:text-[4.6rem] leading-[1.12] tracking-tight text-ink');
     h1.id = 'hero-heading';
     h1.setAttribute('data-greeting', greeting);
     h1.setAttribute('data-heading', headingText.split('{wave}').join('').replace(/\s+/g, ' ').trim());
@@ -537,15 +571,15 @@ window.MSRender = (function () {
         : '');
     nameBlock.appendChild(h1);
     if (S.tagline && S.showTaglineInHero !== false) {
-      nameBlock.appendChild(el('p', 'font-mono text-sm sm:text-base font-bold text-signal uppercase tracking-wide pt-1', S.tagline));
+      nameBlock.appendChild(el('p', 'font-mono text-base sm:text-lg font-bold text-signal uppercase tracking-wide pt-1', S.tagline));
     }
     left.appendChild(nameBlock);
-    if (S.intro) left.appendChild(el('p', 'text-base sm:text-lg leading-relaxed text-ink/90 max-w-xl', S.intro));
+    if (S.intro) left.appendChild(el('p', 'text-lg sm:text-xl lg:text-[1.35rem] leading-relaxed text-ink/90 max-w-2xl', S.intro));
 
     if (S.buttons && S.buttons.length) {
       var btnRow = el('div', 'flex flex-wrap items-center gap-4 pt-2');
       S.buttons.forEach(function (b) {
-        var base = 'retro-btn inline-flex items-center gap-2 px-6 py-3 font-mono text-xs sm:text-sm font-bold uppercase tracking-wider ';
+        var base = 'retro-btn inline-flex items-center gap-2 px-7 py-4 font-mono text-sm sm:text-base font-bold uppercase tracking-wider ';
         var cls = base + (b.style === 'primary' ? 'bg-signal text-cream' : 'bg-cream text-ink hover:bg-amberretro');
         var node;
         if (b.action === 'cv') {
@@ -561,6 +595,8 @@ window.MSRender = (function () {
       });
       left.appendChild(btnRow);
     }
+    var dots = socialRow(S);
+    if (dots) left.appendChild(dots);
     grid.appendChild(left);
 
     host.appendChild(slideshow(S));
