@@ -435,12 +435,12 @@ ffmpeg -i in.gif -movflags +faststart -pix_fmt yuv420p -an \
 `assets/img/hero/` and add a line:
 
 ```js
-{ src: "assets/img/hero/new-thing.webp", position: "center 40%" }
+{ src: "assets/img/hero/new-thing.webp" }
 ```
 
-`position` is optional — any CSS `object-position`, for choosing what stays
-in frame when a tall photo is cropped into a wide band. `intervalMs` sets how
-long each one is held.
+`intervalMs` sets how long each photograph is held before the next fades in.
+Pictures are shown whole at the band's height and pinned to the right, so
+nothing is cropped — no need to pick a focal point.
 
 The pictures sit at 50% opacity under a scrim, in both light and dark mode,
 and the band is masked away at the bottom so it dissolves into the paper

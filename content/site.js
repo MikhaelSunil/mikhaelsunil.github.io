@@ -51,11 +51,11 @@ window.SITE = {
   intro: "Just too obsessed on designing and building robots and seeing ideas actually come alive on real hardware. Most of my time goes into tinkering across the full stack,whether it’s experimenting with <strong class=\"font-bold text-ink\">model-based learning for ground and aerial manipulators</strong>, getting <strong class=\"font-bold text-ink\">aerial drone swarms</strong> to coordinate on their own, or engineering <strong class=\"font-bold text-ink\">wearable exoskeletons</strong> for rehabilitation. Those are just a few of the systems I enjoy taking from rough algorithms all the way into the real world.",
 
   /* ---- The photo band behind the hero -------------------------------
-     These drift slowly behind the intro text at half opacity, each shown
+     These cross-fade behind the intro text at half opacity, each shown
      whole at the band's height. Add or remove lines freely; drop the file
      in assets/img/hero/ first. Order is the order they appear in.      */
   heroSlideshow: {
-    secondsPerLoop: 150,   // how long one full pass of the strip takes
+    intervalMs: 4500,   // how long each photograph is held
     images: [
       { src: "assets/img/hero/aerial-manipulator.webp" },
       { src: "assets/img/hero/icaart-talk-arena.webp" },
