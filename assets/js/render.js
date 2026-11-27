@@ -274,8 +274,9 @@ window.MSRender = (function () {
      read bottom to top. The rail down the left side is drawn in CSS. */
   function blockStack(block) {
     var wrap = el('div', 'stack-ladder');
-    (block.layers || []).forEach(function (L) {
-      var row = el('div', 'stack-layer');
+    (block.layers || []).forEach(function (L, idx) {
+      var row = el('div', 'stack-layer is-waiting');
+      row.style.transitionDelay = (idx * 90) + 'ms';
       row.appendChild(el('span', 'stack-pin', '<span></span>'));
 
       var card = el('div', 'retro-card p-4 sm:p-5 grid grid-cols-1 md:grid-cols-[13rem_1fr] gap-4 md:gap-6 items-start');
@@ -298,7 +299,29 @@ window.MSRender = (function () {
       row.appendChild(card);
       wrap.appendChild(row);
     });
+    reveal(wrap.children);
     return wrap;
+  }
+
+  /* Bring elements in once they scroll into view, and only then. Falls
+     back to showing them immediately where the observer is unavailable
+     or the reader has asked for less motion. */
+  function reveal(nodes) {
+    var list = [].slice.call(nodes);
+    var reduce = false;
+    try { reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) {}
+    if (reduce || !window.IntersectionObserver) {
+      list.forEach(function (n) { n.classList.remove('is-waiting'); });
+      return;
+    }
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        e.target.classList.remove('is-waiting');
+        io.unobserve(e.target);
+      });
+    }, { rootMargin: '0px 0px -12% 0px' });
+    list.forEach(function (n) { io.observe(n); });
   }
 
   function blockCards(block) {
@@ -517,6 +540,14 @@ window.MSRender = (function () {
       case 'about':        return blockAbout(block);
       case 'stack':        return blockStack(block);
       case 'cards':        return blockCards(block);
+      case 'prose': {
+        var pw = el('div', 'space-y-3 max-w-3xl');
+        if (block.heading) pw.appendChild(el('h3', 'font-display font-bold text-xl text-ink', block.heading));
+        (block.body || []).forEach(function (t) {
+          pw.appendChild(el('p', 'text-[15px] sm:text-base leading-relaxed text-ink/90', t));
+        });
+        return pw;
+      }
       case 'featured-projects':
         return (window.MSProjects && window.MSProjects.renderFeatured)
           ? window.MSProjects.renderFeatured(block)
